@@ -1,0 +1,14 @@
+$color-principal: rgb(142, 202, 187);
+$color-secundario: rgb(238, 208, 169);
+$color-tipografia-principal: rgb(13, 36, 13);
+$color-tipografia-secundario: rgb(177, 68, 131);
+$color-extra: rgb(0, 55, 128);
+
+/*Mapas*/
+$colores:(
+    principal: $color-principal,
+    secundario: $color-secundario,
+    tipoPrincipal: $color-tipografia-principal,
+    tipoSecundario: $color-tipografia-secundario,
+    extra: $color-extra
+)

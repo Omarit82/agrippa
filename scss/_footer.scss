@@ -1,0 +1,4 @@
+.footer{
+    background-image: linear-gradient(map-get($colores,principal),map-get($colores,tipoPrincipal));
+    color: map-get($colores, extra);
+}

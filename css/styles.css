@@ -1,0 +1,23 @@
+/*Mapas*/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Raleway", sans-serif;
+}
+
+.header {
+  background-color: rgb(142, 202, 187);
+}
+.header a {
+  color: rgb(177, 68, 131);
+}
+
+.footer {
+  background-image: linear-gradient(rgb(142, 202, 187), rgb(13, 36, 13));
+  color: rgb(0, 55, 128);
+}
+
+/*# sourceMappingURL=styles.css.map */
