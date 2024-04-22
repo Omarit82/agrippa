@@ -1,6 +1,6 @@
 .header {
     background-color: map-get($colores,principal);
     a{
-        color: map-get($colores,tipoSecundario);
+        color: map-get($colores,tipoPrincipal);
     }
 }
