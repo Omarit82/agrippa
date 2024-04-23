@@ -1,5 +1,5 @@
 .footer{
-    background-image: linear-gradient(map-get($colores,principal),map-get($colores,tipoPrincipal));
+    background-image: linear-gradient(map-get($colores,tipoPrincipal),map-get($colores,principal));
     color: map-get($colores, extra);
     min-height: 150px;
 }
