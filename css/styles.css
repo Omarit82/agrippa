@@ -9,14 +9,14 @@ body {
 }
 
 .header {
-  background-color: #97BEAD;
+  background-color: #DFC1CE;
 }
 .header a {
-  color: #428568;
+  color: #6F2748;
 }
 
 .footer {
-  background-image: linear-gradient(#97BEAD, #428568);
+  background-image: linear-gradient(#DFC1CE, #6F2748);
   color: rgb(0, 55, 128);
   min-height: 150px;
 }
