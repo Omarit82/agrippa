@@ -1,27 +1,32 @@
 <?php
-require_once 'home.php';
-require_once 'calendar.php';
-require_once 'pacientes.php';
+require_once './controller/PacienteController.php';
 /*VERSION INICIAL DEL ROUTER*/
 define('BASE_URL','//'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].dirname($_SERVER['PHP_SELF']).'/');
 
-if($_GET['action']==''){ /** si en el llamado no hay action..va al home.**/
-    showHome();
+$controller = new PacienteController(); // instancio el controlador
+
+if (!empty($_GET['action'])){
+    $action = $_GET['action'];
 }else{
-    $partesURL = explode('/',$_GET['action']);
+    $action = 'login'; // Esta es la accion por defecto.
+}
+
+$partesURL = explode('/',$action);
 
     switch ($partesURL[0]) {
-        case 'home':
-            showHome();
+        case 'login':
+            $controller->login();
             break;
         case 'calendar':
-            showCalendar();
+            $controller->calendar();
             break;
         case 'pacientes':
-            showPacientes();
+            $controller->lista();
+            break;
+        case 'home':
+            $controller->home();
             break;
         default:
             # code...404
             break;
-    }
 }

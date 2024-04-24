@@ -1,0 +1,10 @@
+.botones{
+    .btn{
+        background-color: map-get($colores, extra);
+        a{
+            color:map-get($colores,tipoPrincipal);
+            text-decoration: none;
+            
+        }
+    }
+}

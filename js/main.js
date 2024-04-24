@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         headerToolbar: {
             left: 'prev,next',
             center: 'title',
-            right: 'dayGridDay,dayGridWeek,,list' // user can switch between the two
+            right: 'dayGridDay,dayGridWeek' // user can switch between the two
           },
         locale: 'es',
         selectable: true
