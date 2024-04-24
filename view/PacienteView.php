@@ -19,6 +19,9 @@ class PacienteView{
                         <label for="pass" class="form-label">Password</label>
                         <input type="password" class="form-control" id="pass" placeholder="Su Password">
                     </div>
+                    <div class="botones m-2 d-flex justify-content-center">
+                        <button class="btn col-5 m-auto" type="submit">Ingresar</button>
+                    </div>
                 </form>
             </div>
         </main>
@@ -37,7 +40,7 @@ class PacienteView{
                         <a href="calendar">Ver Calendario</a>
                     </button>
                     <button class="btn btn-primary col-5 m-auto mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapseExample">
-                        <a href="calendar/evento">Agregar al calendario</a>
+                        <a href="calendar">Agregar al calendario</a>
                     </button>
                 </div>
                 <div class="col-5 card m-2 botones">
