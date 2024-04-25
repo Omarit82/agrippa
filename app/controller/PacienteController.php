@@ -1,6 +1,6 @@
 <?php
-require_once './model/PacienteModel.php';
-require_once './view/PacienteView.php';
+require_once 'app/model/PacienteModel.php';
+require_once 'app/view/PacienteView.php';
 class PacienteController{
     private $view;
     private $model;

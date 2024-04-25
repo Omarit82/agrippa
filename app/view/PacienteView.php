@@ -66,14 +66,14 @@ class PacienteView{
             <div class="container m-5 ">
                 <?php
                 foreach ($pacientes as $paciente) { ?>
-                    <div class="d-inline-flex gap-1 botones">
+                    <div class="d-inline-flex gap-1 botones mb-2">
                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapseExample">
                             <?php echo $paciente->apellido.', '.$paciente->nombre; ?>
                         </button>
                     </div>
-                    <div class="collapse" id="collapse">
-                        <div class="card card-body">
-                            <ul class="list-group m-3">
+                    <div class="collapse mb-2" id="collapse">
+                        <div class="card card-body mb-2">
+                            <ul class="list-group m-1">
                                 <li class="list-group-item d-flex justify-content-between"><p class="m-0">DNI:</p> <?php echo '<p class="m-0">'.$paciente->dni.'</p>'?></li>
                                 <li class="list-group-item d-flex justify-content-between"><p>TELEFONO:</p> <?php echo '<p>'.$paciente->telefono.'</p>' ?></li>
                                 <li class="list-group-item d-flex justify-content-between"><p>FECHA DE NACIMIENTO:</p> <?php echo '<p>'.$paciente->fecha_nacimiento.'</p>' ?></li>
