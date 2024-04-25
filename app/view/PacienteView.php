@@ -100,9 +100,9 @@ class PacienteView{
         ?>
         <main>
             <div class="row justify-content-center ">
-            <div class="col-10 col-md-8 p-5">
-                <div id='calendar'></div>
-            </div>
+                <div class="col-10 col-md-8 p-5">
+                    <div id='calendar'></div>
+                </div>
             </div>          
         </main> <?php
          require_once './pages/footer.html';
