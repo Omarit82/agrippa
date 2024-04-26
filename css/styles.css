@@ -23,12 +23,15 @@ body {
   text-decoration: none;
 }
 
+.botones .btn {
+  background-color: rgb(0, 55, 128);
+  color: #E0E0E0;
+}
+
 .footer {
-  background-image: linear-gradient(#E0E0E0, #82B1FF);
+  background-image: #82B1FF;
   color: rgb(0, 55, 128);
   min-height: 50px;
-  position: fixed;
-  bottom: 0;
 }
 
 /*# sourceMappingURL=styles.css.map */

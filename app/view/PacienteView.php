@@ -103,6 +103,31 @@ class PacienteView{
                 <div class="col-10 col-md-8 p-5">
                     <div id='calendar'></div>
                 </div>
+            </div>
+            <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-info">
+                            <h5 class="modal-title" id="titulo"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
+                            <form action="">
+                                <div class="modal-body">
+                                    <div class="form-floating mb-3">
+                                        <label for="start" class="form-label p-2">Fecha</label>
+                                        <input type="date" class="form-control" id="start">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-warning">Cancelar</button>
+                                    <button class="btn btn-danger">Eliminar</button>
+                                    <button class="btn btn-info" id="btn-action" type="submit">Registrar</button>
+                                </div>    
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>          
         </main> <?php
          require_once './pages/footer.html';

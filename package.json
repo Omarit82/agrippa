@@ -1,11 +1,15 @@
 {
   "dependencies": {
+    "@fullcalendar/bootstrap5": "^6.1.11",
     "@fullcalendar/core": "^6.1.11",
     "@fullcalendar/daygrid": "^6.1.11",
     "@fullcalendar/google-calendar": "^6.1.11",
     "@fullcalendar/interaction": "^6.1.11",
+    "@fullcalendar/moment": "^6.1.11",
+    "@fullcalendar/timegrid": "^6.1.11",
     "fullcalendar": "^6.1.11",
     "moment": "^2.30.1",
-    "sass": "^1.75.0"
+    "sass": "^1.75.0",
+    "sweetalert2": "^11.10.8"
   }
 }
