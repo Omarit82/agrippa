@@ -8,6 +8,7 @@ class ConfigApp{
         'home'=>'PacienteController#home',
         'calendar'=>'PacienteController#calendar',
         'lista'=>'PacienteController#lista',
-        'login'=>'PacienteController#login'
+        'login'=>'PacienteController#login',
+        'addPaciente'=>'PacienteController#addPaciente'
     ];
 }

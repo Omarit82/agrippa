@@ -24,4 +24,8 @@ class PacienteController{
     function calendar(){
         $this->view->calendar();
     }
+
+    function addPaciente(){
+        $this->view->formPaciente();
+    }
 }

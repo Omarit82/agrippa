@@ -134,7 +134,31 @@ class PacienteView{
                 </div>
             </div>          
         </main> <?php
-         require_once './Frontend/pages/footer.html';
+        require_once './Frontend/pages/footer.html';
+    }
+
+    function formPaciente(){
+        require_once './Frontend/pages/header.html'; ?>
+        <div class="container">
+            <h2 class="text-center">INGRESO DE NUEVO PACIENTE</h2>
+            <form action="addPaciente" method="post" class="d-flex flex-column col-8 m-auto">
+                <input type="text" name="nombre" id="nombrePaciente" placeholder="NOMBRE" class="m-2">
+                <input type="text" name="apellido" id="apellidoPaciente" placeholder="APELLIDO"class="m-2">
+                <input type="number" name="dni" id="dniPaciente" placeholder="DNI"class="m-2">
+                <input type="date" name="fechaNacimiento" id="nacimientoPaciente" class="m-2">
+                <input type="number" name="edad" id="edadPaciente" placeholder="EDAD"class="m-2">
+                <input type="date" name="fechaIngreso" id="ingresoPaciente" class="m-2">
+                <textarea name="anamnesis" id="anamnesisPaciente" cols="30" rows="10" placeholder="ANAMNESIS"class="m-2"></textarea>
+                <textarea name="evaluacion" id="evaluacionPaciente" cols="30" rows="10" placeholder="EVALUACION INICIAL"class="m-2"></textarea>
+                <textarea name="objetivos" id="objetivosPaciente" cols="30" rows="10" placeholder="OBJETIVOS TERAPEUTICOS"class="m-2"></textarea>
+                <textarea name="tratamiento" id="tratamientoPaciente" cols="30" rows="10" placeholder="TRATAMIENTO"class="m-2"></textarea>
+                <input name="estudios" type="file" id="estudioPaciente"class="m-2">
+                <input type="number" name="sesiones" id="sesionesPaciente" placeholder="SESIONES"class="m-2">
+                <button type="submit" class="btn btn-success col-3 m-auto">Cargar</button>
+            </form>
+        </div>
+        <?php
+        require_once './Frontend/pages/footer.html';
     }
 
 }
