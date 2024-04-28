@@ -1,7 +1,9 @@
 <?php
 
-class PacienteModel{
+class Model{
+    
     private $db;  
+    
     function __construct(){
         $this->db = $this->connect();
     }

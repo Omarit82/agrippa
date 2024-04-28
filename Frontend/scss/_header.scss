@@ -3,4 +3,7 @@
     a{
         color: map-get($colores,extra);
     }
+    h1{
+        color: map-get($colores,tipoPrincipal);
+    }
 }

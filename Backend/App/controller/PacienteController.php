@@ -6,13 +6,10 @@ class PacienteController{
     private $view;
     private $model;
     function __construct(){
-        $this->model = new PacienteModel();
+        $this->model = new Model();
         $this->view = new PacienteView();
     }
 
-    function login(){
-        $this->view->login();
-    }
     function home(){
         $this->view->home();
     }
@@ -27,5 +24,8 @@ class PacienteController{
 
     function addPaciente(){
         $this->view->formPaciente();
+    }
+    function getUser(){
+
     }
 }
