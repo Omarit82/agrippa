@@ -1,5 +1,5 @@
 <?php
-require_once 'Backend/App/model/PacienteModel.php';
+require_once 'Backend/App/model/Model.php';
 require_once 'Backend/App/view/PacienteView.php';
 
 class PacienteController{
