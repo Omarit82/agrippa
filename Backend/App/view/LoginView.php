@@ -8,7 +8,7 @@ class LoginView{
         
     }
 
-    function show(){
+    function show($message = ''){ //Por default el mensaje es vacio. Si llega contraseña incorrecta disparamos el modal.
         require_once './Frontend/pages/headerLogin.html';?>
         <main>
             <div class="container">
@@ -18,6 +18,13 @@ class LoginView{
                     <button type="submit" class="col-3 btn btn-success m-auto mb-2">Login</button>
                 </form>
             </div>
+            <?php if (!empty($message)){ ?>
+                <div class="container">
+                    <h5 class="text-center"><?php echo $message?></h5>
+                </div>
+            <?php        
+            }    
+            ?>
         </main>
         <?php
         require_once './Frontend/pages/footer.html';

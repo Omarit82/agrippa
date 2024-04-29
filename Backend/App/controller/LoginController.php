@@ -20,7 +20,30 @@ class LoginController{
         $user = $_POST['email'];
         $pass = $_POST['password'];
 
-        $this->model->getUser();
+        $dbUser = $this->model->getUser($user);
 
+        $hash = $dbUser[0]->pass_user;
+        if(isset($dbUser)){
+            if(password_verify($pass,$hash)){
+                session_start();
+                $_SESSION['USERNAME'] = $user;
+                $_SESSION['ID'] = $dbUser[0]->id_user;
+                $_SESSION['LAST_ACTIVITY'] = time();
+                header("Location: ".BASE_URL);
+                die();
+            }else{
+                $this->view->show("Contraseña Incorrecta");
+            }
+        }else{
+            // no existe el usuario
+            echo "no existe el usuario";
+        }
+    }
+
+    function checkOut(){
+        session_start();
+        session_destroy();
+        header('Location: '. LOGIN);
+        die();
     }
 }

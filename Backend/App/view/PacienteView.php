@@ -4,30 +4,7 @@ class PacienteView{
     function __construct(){
         
     }
-    function login(){
-        require_once '../Frontend/pages/headerLogin.html';
-        ?>
-        <main>
-            <div class="container-fluid row mt-5 mb-5">
-                <form action="post" method="" class="card col-6 m-auto">
-                    <h1 class="text-center">Login</h1>
-                    <div class="mb-3 pt-5">
-                        <label for="inputLogin" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="inputLogin" placeholder="nombre@ejemplo.com">
-                    </div>
-                    <div class="mb-3 pb-5">
-                        <label for="pass" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="pass" placeholder="Su Password">
-                    </div>
-                    <div class="botones m-2 d-flex justify-content-center">
-                        <button class="btn col-5 m-auto" type="submit">Ingresar</button>
-                    </div>
-                </form>
-            </div>
-        </main>
-        <?php
-        include_once './pages/footer.html';
-    }
+    
     function home(){
         require_once './Frontend/pages/header.html';
         ?>

@@ -127,4 +127,10 @@ class Model{
         return $sentencia->fetchAll(PDO::FETCH_OBJ);
     }
 
+    function getUser($user){
+        $query = $this->db->prepare("select * from users where name_user=?");
+        $query->execute(array($user));
+        return $query->fetchAll(PDO:: FETCH_OBJ);
+    }
+
 }
