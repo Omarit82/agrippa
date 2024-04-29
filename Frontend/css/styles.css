@@ -9,10 +9,10 @@ body {
 
 /*Mapas*/
 .header {
-  background-color: #82B1FF;
+  background-color: #edb0ff;
 }
 .header .btn-success {
-  background-color: rgb(0, 55, 128);
+  background-color: rgb(194, 130, 231);
   color: #E0E0E0;
   text-decoration: none;
 }
@@ -21,17 +21,17 @@ body {
 }
 
 .botones .btn {
-  background-color: rgb(0, 55, 128);
+  background-color: rgb(194, 130, 231);
   color: #E0E0E0;
 }
 
 form .btn {
-  background-color: rgb(0, 55, 128);
+  background-color: rgb(194, 130, 231);
   color: #E0E0E0;
 }
 
 .botones .btn {
-  background-color: rgb(0, 55, 128);
+  background-color: rgb(194, 130, 231);
 }
 .botones .btn a {
   color: #E0E0E0;
@@ -39,8 +39,8 @@ form .btn {
 }
 
 .footer {
-  background-image: #82B1FF;
-  color: rgb(0, 55, 128);
+  background-image: #edb0ff;
+  color: rgb(194, 130, 231);
   min-height: 50px;
 }
 

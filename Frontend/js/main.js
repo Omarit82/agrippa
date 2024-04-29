@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     let myModal = new bootstrap.Modal(document.getElementById('myModal'));
-    let frm = document.getElementById('formulario');
+    let frm = document.getElementById('formModalPaciente');
 
 
 
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 'dayGridMonth,dayGridWeek,list' // user can switch between the two
         },
         dateClick: function(info){
-            document.getElementById('start').value = info.dateStr;
+            document.getElementById('fechaTurno').value = info.dateStr;
             document.getElementById('titulo').textContent = 'Registro';
             myModal.show();
         },
@@ -29,13 +29,18 @@ document.addEventListener('DOMContentLoaded', function() {
       
     });
     calendar.render();
+
     frm.addEventListener('submit',function(e){
         e.preventDefault();
-        const title = document.getElementById('title').value;
-        const start = document.getElementById('start').value;
-        const color = document.getElementById('color').value;
-        if(title =='' || start =='' || color == ''){
-      //mostramos una alerta de sweetAlert
+        const title = document.getElementById('fechaTurno').value;
+        const start = document.getElementById('pacienteDD').value;
+        
+        if(title =='' || start ==''){
+            Swal.fire(
+                'Aviso',
+                'Todos los campos son necesarios',
+                'warning'
+            )
     
         }else{
             const url = 'Home/registrar';
@@ -43,11 +48,11 @@ document.addEventListener('DOMContentLoaded', function() {
             http.open('POST',url,true);
             http.send(new FormData(frm));
             http.onreadystatechange = function(){
-            if(this.readyState == 4 && this.status == 200){
-                console.log(this.responseText);
+                if(this.readyState == 4 && this.status == 200){
+                    console.log(this.responseText);
+                }
             }
         }
-    }
-  })
+    })
 });
 
