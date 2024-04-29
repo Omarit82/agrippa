@@ -36,7 +36,7 @@ class LoginController{
             }
         }else{
             // no existe el usuario
-            echo "no existe el usuario";
+            $this->view->show("No existe el usuario");
         }
     }
 

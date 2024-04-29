@@ -76,7 +76,7 @@ class PacienteView{
         <?php
         require_once './Frontend/pages/footer.html';
     }
-    function calendar(){
+    function calendar($lista){
         require_once './Frontend/pages/header.html'; 
         ?>
         <main>
@@ -103,8 +103,16 @@ class PacienteView{
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-floating mb-3">
-                                            <label for="pacienteDD" class="form-label p-2">Paciente</label>
-                                            <input type="text" class="form-control" id="pacienteDD">
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Paciente
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <?php foreach($lista as $item){
+                                                        echo' <li><a class="dropdown-item" id="'.$item->id_paciente.'">'.$item->apellido.', '.$item->nombre.'</a></li>';
+                                                    }?>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">

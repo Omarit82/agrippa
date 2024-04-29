@@ -27,7 +27,8 @@ class PacienteController extends SecuredController{
     }
 
     function calendar(){
-        $this->view->calendar();
+        $lista = $this->model->lista();
+        $this->view->calendar($lista);
     }
 
     function formPaciente(){

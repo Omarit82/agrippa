@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let myModal = new bootstrap.Modal(document.getElementById('myModal'));
     let frm = document.getElementById('formModalPaciente');
 
-
-
+    /*CAPTURO LOS EVENTOS DEL PACIENTE DROPDOWN*/
+       
     let calendarEl = document.getElementById('calendar');
     let calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
