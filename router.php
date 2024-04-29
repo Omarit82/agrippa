@@ -9,6 +9,7 @@ require_once 'Backend/App/controller/SecuredController.php';
 /* DEFINO CONSTANTES -  LA BASE DE LA URL - LA ACTION Y LOS PARAMETROS(ARRAY)*/
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
 define('LOGIN',BASE_URL.'login');
+define('LISTA',BASE_URL.'lista');
 define('ACTION',0);
 define('PARAMS',1);
 

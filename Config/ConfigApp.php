@@ -10,6 +10,7 @@ class ConfigApp{
         'lista'=>'PacienteController#lista',
         'login'=>'LoginController#login',
         'verifyLogin'=>'LoginController#verifyLogin',
+        'formPaciente'=>'PacienteController#formPaciente',
         'addPaciente'=>'PacienteController#addPaciente',
         'checkout'=>'LoginController#checkOut'
     ];

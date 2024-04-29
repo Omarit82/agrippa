@@ -133,4 +133,10 @@ class Model{
         return $query->fetchAll(PDO:: FETCH_OBJ);
     }
 
+    function addPaciente($new){
+      $query = $this->db->prepare("INSERT INTO paciente(nombre,apellido,dni,telefono,fecha_nacimiento,edad,fecha_ingreso,anamnesis,evaluacion_inicial,objetivos_terapeuticos,tratamiento,estudios,sesiones)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+      $query->execute(array($new['nombre'],$new['apellido'],$new['dni'],$new['telefono'],$new['fechaNacimiento'],$new['edad'],$new['fechaIngreso'],$new['anamnesis'],$new['evaluacion'],$new['objetivos'],$new['tratamiento'],$new['estudios'],$new['sesiones']));
+      header('Location: '.LISTA);
+      die();
+    }
 }

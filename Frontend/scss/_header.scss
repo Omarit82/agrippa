@@ -1,9 +1,12 @@
 .header {
     background-color: map-get($colores,principal);
-    a{
-        color: map-get($colores,extra);
+    .btn-success{
+        background-color: map-get($colores ,extra);
+        color: map-get($colores , tipoPrincipal);
+        text-decoration: none;
     }
     h1{
         color: map-get($colores,tipoPrincipal);
     }
+    
 }

@@ -30,7 +30,12 @@ class PacienteController extends SecuredController{
         $this->view->calendar();
     }
 
-    function addPaciente(){
+    function formPaciente(){
         $this->view->formPaciente();
+    }
+
+    function addPaciente(){
+        $paciente = $_POST;
+        $this->model->addPaciente($paciente);       
     }
 }
