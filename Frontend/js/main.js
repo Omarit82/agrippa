@@ -3,7 +3,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     let myModal = new bootstrap.Modal(document.getElementById('myModal'));
     let frm = document.getElementById('formModalPaciente');
-
+    
+    /*CAPTURO LOS EVENTOS DEL PACIENTE DROPDOWN*/
     /** AGREGADO DE ID Y CLASE A TODOS LOS BOTONES DE PACIENTES. */
     let pacientes = document.querySelectorAll(".selectPaciente");
     let selected = document.getElementById('campoPaciente');
@@ -22,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     }
 
-    /*CAPTURO LOS EVENTOS DEL PACIENTE DROPDOWN*/
        
     let calendarEl = document.getElementById('calendar');
     let calendar = new FullCalendar.Calendar(calendarEl, {

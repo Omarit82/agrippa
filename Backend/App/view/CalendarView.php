@@ -39,7 +39,7 @@ class CalendarView{
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <?php foreach($lista as $item){
-                                                        echo' <li><a class="dropdown-item selectPaciente" id="'.$item->id_paciente.'">'.$item->apellido.', '.$item->nombre.'</a></li>';
+                                                        echo' <li><a class="dropdown-item selectPaciente" id="'.$item->id_paciente.'">'.$item->apellido.', '.$item->nombre.'('.$item->sesiones.')</a></li>';
                                                     }?>
                                                 </ul>
                                                 <input type="text" name="campoPaciente" id="campoPaciente" disabled>
@@ -60,6 +60,7 @@ class CalendarView{
                                                     <li><a class="dropdown-item turno" id="">9° 14:20 - 15:00</a></li>
                                                 </ul>
                                                 <input type="text" name="campoTurno" id="campoTurno" disabled>
+                                                <input type="text" name="sesiones" id="sesiones" disabled value="<?php $item->sesiones ?>"> 
                                             </div>
                                         </div>
                                     </div>
