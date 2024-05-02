@@ -76,60 +76,7 @@ class PacienteView{
         <?php
         require_once './Frontend/pages/footer.html';
     }
-    function calendar($lista){
-        require_once './Frontend/pages/header.html'; 
-        ?>
-        <main>
-            <div class="container-fluid">
-                <div class="row justify-content-center ">
-                    <div class="col-10 col-md-8 p-5">
-                        <div id='calendar'></div>
-                    </div>
-                </div>
-                <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header bg-info">
-                                <h5 class="modal-title" id="titulo"></h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                    </button>
-                                </div>
-                                <form action="" id="formModalPaciente">
-                                    <div class="modal-body">
-                                        <div class="form-floating mb-3">
-                                            <label for="fechaTurno" class="form-label p-2">Fecha</label>
-                                            <input type="date" class="form-control" id="fechaTurno">
-                                        </div>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-floating mb-3">
-                                            <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Paciente
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <?php foreach($lista as $item){
-                                                        echo' <li><a class="dropdown-item" id="'.$item->id_paciente.'">'.$item->apellido.', '.$item->nombre.'</a></li>';
-                                                    }?>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-warning">Cancelar</button>
-                                        <button class="btn btn-danger">Eliminar</button>
-                                        <button class="btn btn-info" id="btn-action" type="submit">Registrar</button>
-                                    </div>    
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>          
-        </main> <?php
-        require_once './Frontend/pages/footer.html';
-    }
-
+    
     function formPaciente(){
         require_once './Frontend/pages/header.html'; ?>
         <div class="container">

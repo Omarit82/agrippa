@@ -4,6 +4,7 @@ require_once 'Config/ConfigApp.php';
 require_once 'Backend/App/controller/PacienteController.php';
 require_once 'Backend/App/controller/LoginController.php';
 require_once 'Backend/App/controller/SecuredController.php';
+require_once 'Backend/App/controller/CalendarController.php';
 # ROUTER AVANZADO
 /**POR LA PRESENCIA DEL ARCHIVO .HTACCESS CUANDO LEVANTE LA URL IRA AL ROUTER */
 /* DEFINO CONSTANTES -  LA BASE DE LA URL - LA ACTION Y LOS PARAMETROS(ARRAY)*/

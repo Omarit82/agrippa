@@ -6,7 +6,7 @@ class ConfigApp{
     public static $ACTIONS = [
         ''=>'PacienteController#home',
         'home'=>'PacienteController#home',
-        'calendar'=>'PacienteController#calendar',
+        'calendar'=>'CalendarController#calendar',
         'lista'=>'PacienteController#lista',
         'login'=>'LoginController#login',
         'verifyLogin'=>'LoginController#verifyLogin',

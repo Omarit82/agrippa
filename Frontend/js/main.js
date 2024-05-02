@@ -4,6 +4,24 @@ document.addEventListener('DOMContentLoaded', function() {
     let myModal = new bootstrap.Modal(document.getElementById('myModal'));
     let frm = document.getElementById('formModalPaciente');
 
+    /** AGREGADO DE ID Y CLASE A TODOS LOS BOTONES DE PACIENTES. */
+    let pacientes = document.querySelectorAll(".selectPaciente");
+    let selected = document.getElementById('campoPaciente');
+    for(let i = 0; i< pacientes.length ; i++){
+        pacientes[i].addEventListener('click',()=>{
+            let valor = pacientes[i].innerHTML;
+            selected.value = valor;
+        })
+    }
+    let turnos = document.querySelectorAll(".turno");
+    let turnoElegido = document.getElementById('campoTurno');
+    for (let i = 0 ; i<turnos.length ; i++){
+        turnos[i].addEventListener('click',()=>{
+            let trn = turnos[i].innerHTML;
+            turnoElegido.value = trn;
+        })
+    }
+
     /*CAPTURO LOS EVENTOS DEL PACIENTE DROPDOWN*/
        
     let calendarEl = document.getElementById('calendar');
@@ -54,5 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     })
+
 });
 
