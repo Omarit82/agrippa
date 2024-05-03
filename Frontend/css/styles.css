@@ -9,38 +9,38 @@ body {
 
 /*Mapas*/
 .header {
-  background-color: #edb0ff;
+  background-color: #FF69B4;
 }
 .header .btn-success {
-  background-color: rgb(194, 130, 231);
-  color: #E0E0E0;
+  background-color: #1f4788;
+  color: #87ceeb;
   text-decoration: none;
 }
 .header h1 {
-  color: #E0E0E0;
+  color: #87ceeb;
 }
 
 .botones .btn {
-  background-color: rgb(194, 130, 231);
-  color: #E0E0E0;
+  background-color: #1f4788;
+  color: #87ceeb;
 }
 
 form .btn {
-  background-color: rgb(194, 130, 231);
-  color: #E0E0E0;
+  background-color: #1f4788;
+  color: #87ceeb;
 }
 
 .botones .btn {
-  background-color: rgb(194, 130, 231);
+  background-color: #1f4788;
 }
 .botones .btn a {
-  color: #E0E0E0;
+  color: #87ceeb;
   text-decoration: none;
 }
 
 .footer {
-  background-image: #edb0ff;
-  color: rgb(194, 130, 231);
+  background-image: #FF69B4;
+  color: #1f4788;
   min-height: 50px;
 }
 
