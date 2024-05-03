@@ -1,10 +1,16 @@
 "use strict";
 
 document.addEventListener('DOMContentLoaded', function() {
+    /** Arreglo JSON de pacientes. */
+    let lista = JSON.parse(document.getElementById('lista').innerHTML);
+    for( let i=0; i< lista.length ; i++){
+        console.log(lista[i].nombre);
+    }
+    
     let myModal = new bootstrap.Modal(document.getElementById('myModal'));
     let frm = document.getElementById('formModalPaciente');
     
-    /*CAPTURO LOS EVENTOS DEL PACIENTE DROPDOWN*/
+    
     /** AGREGADO DE ID Y CLASE A TODOS LOS BOTONES DE PACIENTES. */
     let pacientes = document.querySelectorAll(".selectPaciente");
     let selected = document.getElementById('campoPaciente');
@@ -72,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     })
+
 
 });
 
