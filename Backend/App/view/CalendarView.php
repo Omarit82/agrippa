@@ -7,6 +7,7 @@ class CalendarView{
 
   
     function calendar($lista){
+        
         require_once './Frontend/pages/header.html'; 
         ?>
         <main>

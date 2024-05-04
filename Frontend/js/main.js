@@ -1,6 +1,7 @@
 "use strict";
-
+// inicializacion de documento
 document.addEventListener('DOMContentLoaded', function() {
+
     let myModal = new bootstrap.Modal(document.getElementById('myModal'));
     let frm = document.getElementById('formModalPaciente');
     
@@ -72,6 +73,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     })
+
+    // Comunicacion PHP con JS
+    fetch('./Backend/App/view/CalendarView.php').then(response => {
+            // Verificar si la respuesta es exitosa
+            if (!response.ok) {
+            throw new Error('Hubo un problema al obtener los datos.');
+            }
+            // Parsear la respuesta como JSON
+            console.log(response);
+            return response.json();
+        })
+        .then(data => {
+            // Procesar los datos recibidos
+            console.log(data);
+            // Por ejemplo, mostrar los datos en el HTML
+        })
+        .catch(error => {
+            console.error('Error!!:', error);
+    }); 
 
 });
 
