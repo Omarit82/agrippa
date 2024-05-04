@@ -11,6 +11,12 @@ class CalendarView{
         require_once './Frontend/pages/header.html'; 
         ?>
         <main>
+            <div class="d-none" id="lista">
+                <?php 
+                    $json = json_encode($lista);
+                    echo $json;
+                ?>
+            </div>
             <div class="container-fluid">
                 <div class="row justify-content-center ">
                     <div class="col-10 col-md-8 p-5">

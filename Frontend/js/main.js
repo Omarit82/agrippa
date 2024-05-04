@@ -1,11 +1,16 @@
 "use strict";
 // inicializacion de documento
 document.addEventListener('DOMContentLoaded', function() {
-
+    /** Arreglo JSON de pacientes. */
+    let lista = JSON.parse(document.getElementById('lista').innerHTML);
+    for( let i=0; i< lista.length ; i++){
+        console.log(lista[i].nombre);
+    }
+    
     let myModal = new bootstrap.Modal(document.getElementById('myModal'));
     let frm = document.getElementById('formModalPaciente');
     
-    /*CAPTURO LOS EVENTOS DEL PACIENTE DROPDOWN*/
+    
     /** AGREGADO DE ID Y CLASE A TODOS LOS BOTONES DE PACIENTES. */
     let pacientes = document.querySelectorAll(".selectPaciente");
     let selected = document.getElementById('campoPaciente');
@@ -74,24 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     })
 
-    // Comunicacion PHP con JS
-    fetch('./Backend/App/view/CalendarView.php').then(response => {
-            // Verificar si la respuesta es exitosa
-            if (!response.ok) {
-            throw new Error('Hubo un problema al obtener los datos.');
-            }
-            // Parsear la respuesta como JSON
-            console.log(response);
-            return response.json();
-        })
-        .then(data => {
-            // Procesar los datos recibidos
-            console.log(data);
-            // Por ejemplo, mostrar los datos en el HTML
-        })
-        .catch(error => {
-            console.error('Error!!:', error);
-    }); 
 
 });
 
