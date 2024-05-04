@@ -12,7 +12,8 @@ class CalendarController{
 
     function calendar(){
         $lista = $this->model->lista();
-        $this->view->calendar($lista);
+        $eventos = $this->model->eventos();
+        $this->view->calendar($lista,$eventos);
     }
 
 }

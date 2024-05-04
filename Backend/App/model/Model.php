@@ -126,6 +126,11 @@ class Model{
         $sentencia->execute();
         return $sentencia->fetchAll(PDO::FETCH_OBJ);
     }
+    function eventos(){
+        $sentencia = $this->db->prepare("select * from turno");
+        $sentencia->execute();
+        return $sentencia->fetchAll(PDO::FETCH_OBJ);
+    }
 
     function getUser($user){
         $query = $this->db->prepare("select * from users where name_user=?");
