@@ -4,8 +4,8 @@ class ConfigApp{
     public static $ACTION = 'action';
     public static $PARAMS = 'params';
     public static $ACTIONS = [
-        ''=>'PacienteController#home',
-        'home'=>'PacienteController#home',
+        ''=>'CalendarController#calendar',
+        'home'=>'CalendarController#calendar',
         'calendar'=>'CalendarController#calendar',
         'lista'=>'PacienteController#lista',
         'login'=>'LoginController#login',

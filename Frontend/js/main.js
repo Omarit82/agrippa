@@ -7,8 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(lista[i].nombre);
     }
     
-    let myModal = new bootstrap.Modal(document.getElementById('myModal'));
-    let frm = document.getElementById('formModalPaciente');
+    
     
     
     /** AGREGADO DE ID Y CLASE A TODOS LOS BOTONES DE PACIENTES. */
@@ -29,7 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     }
 
-       
+    let offcanvasLeft = new bootstrap.Offcanvas(document.getElementById('offcanvasLeft'));
+    let frm = document.getElementById('formModalPaciente');
+
     let calendarEl = document.getElementById('calendar');
     let calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -42,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         dateClick: function(info){
             document.getElementById('fechaTurno').value = info.dateStr;
             document.getElementById('titulo').textContent = 'Registro';
-            myModal.show();
+            offcanvasLeft.show();
         },
         selectable: true,
         slotDuration: '00:30:00', // Duración de las franjas horarias (30 minutos)
