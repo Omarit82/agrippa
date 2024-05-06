@@ -3,6 +3,7 @@
 // inicializacion de documento
 document.addEventListener('DOMContentLoaded', function() {
 
+    //------------------------PACIENTES---------------------------------
     //TOMA LA LISTA DE PACIENTES DEL BACKEND Y LA ENTREGA COMO UN JSON
     fetch('pacientes').then(response => {
             // Verificar si la respuesta es exitosa
@@ -45,7 +46,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }).catch(error => {
             console.error('Error:', error);
     });
-    
+
+    //-----------------------EVENTOS-----------------------------
+    //TOMA LA LISTA DE EVENTOS DEL BACKEND Y LA ENTREGA COMO UN JSON
+    fetch('events').then(response => {
+        // Verificar si la respuesta es exitosa
+        if (!response.ok) {
+        throw new Error('Hubo un problema al obtener los datos.');
+        }
+        // Parsear la respuesta como JSON
+        return response.json();
+    }).then(data => {
+        // Procesar los datos recibidos
+        //INGRESO LA LISTA DE EVENTOS
+            
+    }).catch(error => {
+            console.error('Error:', error);
+    });
+
     
     //dentro del canvas izquierdo permite seleccionar un turno y lo muestra en el html
     let turnosHorarios = document.querySelectorAll(".turno");
@@ -63,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //let turnos = JSON.parse(document.getElementById('turnos').innerHTML);
     //console.log(turnos);
 
-    //CALENDARIO//
+    //----------------------CALENDARIO-------------------------//
     let calendarEl = document.getElementById('calendar');
     let calendar = new FullCalendar.Calendar(calendarEl, {
         slotDuration: '00:40:00', // Duración de las franjas horarias (40 minutos)
@@ -89,21 +107,23 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         selectable: true,
        
-        //events: 'header("Location: ".events)',
+        //events: 
+        
 
         googleCalendarApiKey: 'AIzaSyDrWTSCOm7s4mpF2SDiP_yLUCik2OImtVE',
         events: {
             googleCalendarId: 'roselliomar82@gmail.com',
-            color:'red',
-            textColor:'black',
-            backgroundColor: 'green',
+            eventColor:'red',
+            eventTextColor:'black',
+            backgroundColor: '#1f4788',
 
         },
-      
+        eventColor: '#1f4788',
+        eventTextColor: '#ffffff'
     });
     calendar.render();
 
-    //FORMULARIO NUEVO TURNO//
+    //----------------FORMULARIO NUEVO TURNO-----------------//
     frm.addEventListener('submit',function(e){
         e.preventDefault();
         const title = document.getElementById('fechaTurno').value;
