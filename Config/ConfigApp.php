@@ -12,6 +12,8 @@ class ConfigApp{
         'verifyLogin'=>'LoginController#verifyLogin',
         'formPaciente'=>'PacienteController#formPaciente',
         'addPaciente'=>'PacienteController#addPaciente',
-        'checkout'=>'LoginController#checkOut'
+        'checkout'=>'LoginController#checkOut',
+        'events'=>'CalendarController#events',
+        'pacientes'=>'CalendarController#pacientes'
     ];
 }

@@ -132,6 +132,8 @@ class Model{
         return $sentencia->fetchAll(PDO::FETCH_OBJ);
     }
 
+    //INSERT INTO `turno`(`id_turno`, `id_paciente`, `fecha`, `turno`) VALUES ('','1','2024-5-5','1');
+
     function getUser($user){
         $query = $this->db->prepare("select * from users where name_user=?");
         $query->execute(array($user));

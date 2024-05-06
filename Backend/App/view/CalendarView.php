@@ -5,23 +5,28 @@ class CalendarView{
 
     }
 
+    function eventos($eventos){
+        header('Content-Type: application/json');
+        echo json_encode($eventos);
+    }
+
+    function lista($lista){
+        header('Content-Type: application/json');
+        echo json_encode($lista);
+    }
+
   
-    function calendar($lista,$turnos){   
+    function calendar(/*$lista*/){   
         require_once './Frontend/pages/header.html'; 
         ?>
         <main>
-            <div class="d-none" id="turnos">
-                <?php 
-                    $json_turnos = json_encode($turnos);
-                    echo $json_turnos;
-                ?>
-            </div>
+            <!-- 
             <div class="d-none" id="lista">
                 <?php 
-                    $json = json_encode($lista);
-                    echo $json;
+                //    $json = json_encode($lista);
+                //    echo $json;
                 ?>
-            </div>
+            </div> -->
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <!-- Botones de offcanvas -->
@@ -52,10 +57,8 @@ class CalendarView{
                                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Paciente
                                         </button>
-                                        <ul class="dropdown-menu">
-                                            <?php foreach($lista as $item){
-                                                echo' <li><a class="dropdown-item selectPaciente" id="'.$item->id_paciente.'">'.$item->apellido.', '.$item->nombre.'('.$item->sesiones.')</a></li>';
-                                            }?>
+                                        <ul class="dropdown-menu" id="dropPacientes">
+                                            
                                         </ul>
                                         <input type="text" name="campoPaciente" id="campoPaciente" disabled>
                                     </div>
@@ -75,7 +78,7 @@ class CalendarView{
                                             <li><a class="dropdown-item turno" id="turno_9">9° 14:20 - 15:00</a></li>
                                         </ul>
                                         <input type="text" name="campoTurno" id="campoTurno" disabled>
-                                        <input class="m-2" type="text" name="sesiones" id="sesiones" disabled value="<?php $item->sesiones ?>"> 
+                                        <input class="m-2" type="text" name="sesiones" id="sesiones" disabled> 
                                     </div>
                                 </div>
                             </div>
