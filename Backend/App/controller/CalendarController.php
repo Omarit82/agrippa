@@ -1,6 +1,8 @@
 <?php
 require_once 'Backend/App/model/Model.php';
 require_once 'Backend/App/view/CalendarView.php';
+
+
 class CalendarController{
     private $model;
     private $view;
@@ -11,8 +13,18 @@ class CalendarController{
     }
 
     function calendar(){
+        //$lista = $this->model->lista();
+        $this->view->calendar(/*$lista*/);
+    }
+
+    function events(){
+        $eventos = $this->model->eventos();
+        $this->view->eventos($eventos);
+    }
+
+    function pacientes(){
         $lista = $this->model->lista();
-        $this->view->calendar($lista);
+        $this->view->lista($lista);
     }
 
 }

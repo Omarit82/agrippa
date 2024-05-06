@@ -126,6 +126,13 @@ class Model{
         $sentencia->execute();
         return $sentencia->fetchAll(PDO::FETCH_OBJ);
     }
+    function eventos(){
+        $sentencia = $this->db->prepare("select * from turno");
+        $sentencia->execute();
+        return $sentencia->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    //INSERT INTO `turno`(`id_turno`, `id_paciente`, `fecha`, `turno`) VALUES ('','1','2024-5-5','1');
 
     function getUser($user){
         $query = $this->db->prepare("select * from users where name_user=?");
@@ -136,7 +143,7 @@ class Model{
     function addPaciente($new){
       $query = $this->db->prepare("INSERT INTO paciente(nombre,apellido,dni,telefono,fecha_nacimiento,edad,fecha_ingreso,anamnesis,evaluacion_inicial,objetivos_terapeuticos,tratamiento,estudios,sesiones)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
       $query->execute(array($new['nombre'],$new['apellido'],$new['dni'],$new['telefono'],$new['fechaNacimiento'],$new['edad'],$new['fechaIngreso'],$new['anamnesis'],$new['evaluacion'],$new['objetivos'],$new['tratamiento'],$new['estudios'],$new['sesiones']));
-      header('Location: '.LISTA);
+      header('Location: '.HOME);
       die();
     }
 }
