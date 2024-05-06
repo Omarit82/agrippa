@@ -121,12 +121,12 @@ class Model{
         }
     }
 
-    function lista(){
+    function lista(){ //DEVUELVE LA LISTA DE PACIENTES
         $sentencia = $this->db->prepare( "select * from paciente");
         $sentencia->execute();
         return $sentencia->fetchAll(PDO::FETCH_OBJ);
     }
-    function eventos(){
+    function eventos(){ // DEVUELVE LA LISTA DE EVENTOS
         $sentencia = $this->db->prepare("select * from turno");
         $sentencia->execute();
         return $sentencia->fetchAll(PDO::FETCH_OBJ);
@@ -134,13 +134,13 @@ class Model{
 
     //INSERT INTO `turno`(`id_turno`, `id_paciente`, `fecha`, `turno`) VALUES ('','1','2024-5-5','1');
 
-    function getUser($user){
+    function getUser($user){ //BUSCA UN USUARIO PASADO POR PARAMETROS EN EL MODELO Y LO DEVUELVE
         $query = $this->db->prepare("select * from users where name_user=?");
         $query->execute(array($user));
         return $query->fetchAll(PDO:: FETCH_OBJ);
     }
 
-    function addPaciente($new){
+    function addPaciente($new){ // AGREGA UN NUEVO PACIENTE
       $query = $this->db->prepare("INSERT INTO paciente(nombre,apellido,dni,telefono,fecha_nacimiento,edad,fecha_ingreso,anamnesis,evaluacion_inicial,objetivos_terapeuticos,tratamiento,estudios,sesiones)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
       $query->execute(array($new['nombre'],$new['apellido'],$new['dni'],$new['telefono'],$new['fechaNacimiento'],$new['edad'],$new['fechaIngreso'],$new['anamnesis'],$new['evaluacion'],$new['objetivos'],$new['tratamiento'],$new['estudios'],$new['sesiones']));
       header('Location: '.HOME);

@@ -5,35 +5,6 @@ class PacienteView{
         
     }
     
-    function home(){
-        require_once './Frontend/pages/header.html';
-        ?>
-        <main>
-            <h1 class="text-center">HOME</h1>
-            <div class="container col-10 d-flex justify-content-between">
-                <div class="col-5 card m-2 botones">
-                    <h3 class="text-center">Calendario</h3>
-                    <button class="btn btn-primary col-5 m-auto mb-2" type="button">
-                        <a href="calendar">Ver Calendario</a>
-                    </button>
-                    <button class="btn btn-primary col-5 m-auto mb-2" type="button">
-                        <a href="calendar">Agregar al calendario</a>
-                    </button>
-                </div>
-                <div class="col-5 card m-2 botones">
-                    <h3 class="text-center">Pacientes</h3>
-                    <button class="btn btn-primary col-5 m-auto mb-2" type="button">
-                        <a href="formPaciente">Ingresar Nuevo</a>
-                    </button>
-                    <button class="btn btn-primary col-5 m-auto mb-2" type="button">
-                        <a href="lista">Listado</a>
-                    </button>
-                </div>
-            </div>
-        </main>
-        <?php
-        include_once './Frontend/pages/footer.html';
-    }
     function lista($pacientes){
         require_once './Frontend/pages/header.html';   
         ?>

@@ -38,6 +38,18 @@ form .btn {
   text-decoration: none;
 }
 
+.btn-lateral-izq, .btn-lateral-der {
+  border: none;
+  background-color: transparent;
+}
+
+.pages-background {
+  background-image: linear-gradient(to bottom, #87ceeb, rgba(48, 121, 255, 0.3)), url(../assets/img/pantheon.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .footer {
   background-image: #FF69B4;
   color: #1f4788;

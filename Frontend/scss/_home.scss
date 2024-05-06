@@ -8,3 +8,17 @@
         }
     }
 }
+
+.btn-lateral-izq ,.btn-lateral-der{
+    border: none;
+    background-color: transparent;
+    
+}
+
+
+.pages-background{
+    background-image: linear-gradient(to bottom,map-get($colores,tipoPrincipal),rgba(48, 121, 255, 0.3)), url(../assets/img/pantheon.jpg); 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

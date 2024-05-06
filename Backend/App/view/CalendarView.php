@@ -14,30 +14,21 @@ class CalendarView{
         header('Content-Type: application/json');
         echo json_encode($lista);
     }
-
-  
-    function calendar(/*$lista*/){   
+    function calendar(){   
         require_once './Frontend/pages/header.html'; 
         ?>
-        <main>
-            <!-- 
-            <div class="d-none" id="lista">
-                <?php 
-                //    $json = json_encode($lista);
-                //    echo $json;
-                ?>
-            </div> -->
-            <div class="container-fluid">
-                <div class="row justify-content-center">
+        <main class="pages-background">
+            <div class="container-fluid p-0">
                     <!-- Botones de offcanvas -->
-                    <div class="mt-2 d-flex justify-content-between p-0">
-                        <button class="btn btn-primary " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
-                            >>
-                        </button>
-                        <button class="btn btn-primary " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                            <<
-                        </button>
-                    </div>
+                <div class=" d-flex justify-content-between p-0">
+                    <button class="btn-lateral-izq position-fixed bottom-50" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
+                        <img src="./Frontend/assets/img/izquierda.png" alt="">
+                    </button>
+                    <button class="btn-lateral-der  position-fixed bottom-50 end-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                        <img src="./Frontend/assets/img/derecha.png" alt="">
+                    </button>
+                </div>
+                <div class="row justify-content-center">
                     <!-- Insertamos la offcanvas izquierda CARGA DE TURNO-->
                     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasLeftLabel">
                         <div class="offcanvas-header">

@@ -66,7 +66,10 @@ document.addEventListener('DOMContentLoaded', function() {
     //CALENDARIO//
     let calendarEl = document.getElementById('calendar');
     let calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
+        slotDuration: '00:40:00', // Duración de las franjas horarias (40 minutos)
+         // Hora de finalización del último slot (15:00 PM)
+        nowIndicator: true,
+        initialView: 'list',
         locale: 'es',
         buttonText: {
             today: 'Hoy',
@@ -85,10 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
             offcanvasLeft.show();
         },
         selectable: true,
-        slotDuration: '00:40:00', // Duración de las franjas horarias (40 minutos)
-        slotMinTime: '9:00:00', // Hora de inicio del primer slot (9:00 AM)
-        slotMaxTime: '15:00:00', // Hora de finalización del último slot (15:00 PM)
-        nowIndicator: true,
+       
         //events: 'header("Location: ".events)',
 
         googleCalendarApiKey: 'AIzaSyDrWTSCOm7s4mpF2SDiP_yLUCik2OImtVE',
