@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //-----------------------EVENTOS-----------------------------
     //TOMA LA LISTA DE EVENTOS DEL BACKEND Y LA ENTREGA COMO UN JSON
-    fetch('events').then(response => {
+    /*fetch('events').then(response => {
         // Verificar si la respuesta es exitosa
         if (!response.ok) {
         throw new Error('Hubo un problema al obtener los datos.');
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
     }).catch(error => {
             console.error('Error:', error);
-    });
+    });*/
 
     
     //dentro del canvas izquierdo permite seleccionar un turno y lo muestra en el html
@@ -84,10 +84,12 @@ document.addEventListener('DOMContentLoaded', function() {
     //----------------------CALENDARIO-------------------------//
     let calendarEl = document.getElementById('calendar');
     let calendar = new FullCalendar.Calendar(calendarEl, {
-        slotDuration: '00:40:00', // Duración de las franjas horarias (40 minutos)
-         // Hora de finalización del último slot (15:00 PM)
+        slotDuration: '00:40:00',// Duración de las franjas horarias (40 minutos)
+        slotMinTime: '09:00:00',
+        slotMaxTime: '15:40:00',
+        // Hora de finalización del último slot (15:00 PM)
         nowIndicator: true,
-        initialView: 'list',
+        initialView: 'timeGridDay',
         locale: 'es',
         buttonText: {
             today: 'Hoy',
@@ -97,26 +99,60 @@ document.addEventListener('DOMContentLoaded', function() {
             list: 'Lista'
         },
         headerToolbar: {
-            left: 'prev,next,today',
+            left: 'prev,next,today,list',
             center: 'title',
-            right: 'dayGridMonth,dayGridWeek,list' // user can switch between the two
+            right: 'timeGridWeek,timeGridDay,dayGridMonth' // user can switch between the two
         },
         dateClick: function(info){
-            document.getElementById('fechaTurno').value = info.dateStr;
+            let cadena = info.dateStr.split('T');
+            let turn = cadena[1].split('-');
+            let dia = cadena[0];
+            let turno = turn[0];
+            let seleccion;
+            switch (turno) {
+                case '09:00:00':
+                    seleccion = document.getElementById('turno_1');
+                    break;
+                case '09:40:00':
+                    seleccion = document.getElementById('turno_2');
+                    break;
+                case '10:20:00':
+                    seleccion = document.getElementById('turno_3');
+                    break;
+                case '11:00:00':
+                    seleccion = document.getElementById('turno_4');
+                    break;
+                case '11:40:00':
+                    seleccion = document.getElementById('turno_5');
+                    break;
+                case '12:20:00':
+                    seleccion = document.getElementById('turno_6');
+                    break;
+                case '13:00:00':
+                    seleccion = document.getElementById('turno_7');
+                    break;
+                case '13:40:00':
+                    seleccion = document.getElementById('turno_8');
+                    break;
+                case '14:20:00':
+                    seleccion = document.getElementById('turno_9');
+                    break;
+                default:
+                    seleccion = document.getElementById('turno_1');
+                    break;
+            }
+            turnoElegido.value = seleccion.innerHTML;
+            document.getElementById('fechaTurno').value =dia;
             offcanvasLeft.show();
         },
         selectable: true,
-       
         //events: 
-        
-
         googleCalendarApiKey: 'AIzaSyDrWTSCOm7s4mpF2SDiP_yLUCik2OImtVE',
         events: {
             googleCalendarId: 'roselliomar82@gmail.com',
             eventColor:'red',
             eventTextColor:'black',
             backgroundColor: '#1f4788',
-
         },
         eventColor: '#1f4788',
         eventTextColor: '#ffffff'
@@ -129,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const title = document.getElementById('fechaTurno').value;
         const start = document.getElementById('campoPaciente').value;
         
+
         if(title =='' || start ==''){
             Swal.fire(
                 'Aviso',
