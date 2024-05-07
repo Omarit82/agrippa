@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //console.log(turnos);
 
     //----------------------CALENDARIO-------------------------//
-    let calendarEl = document.getElementById('calendar');
+    let calendarEl = document.getElementById('calendar');    
     let calendar = new FullCalendar.Calendar(calendarEl, {
         slotDuration: '00:40:00',// Duración de las franjas horarias (40 minutos)
         slotMinTime: '09:00:00',
@@ -155,8 +155,9 @@ document.addEventListener('DOMContentLoaded', function() {
             backgroundColor: '#1f4788',
         },
         eventColor: '#1f4788',
-        eventTextColor: '#ffffff'
+        eventTextColor: '#ffffff',
     });
+ 
     calendar.render();
 
     //----------------FORMULARIO NUEVO TURNO-----------------//

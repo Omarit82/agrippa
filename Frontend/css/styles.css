@@ -44,16 +44,35 @@ form .btn {
 }
 
 .pages-background {
-  background-image: linear-gradient(to bottom, #87ceeb, rgba(48, 121, 255, 0.3)), url(../assets/img/pantheon.jpg);
+  background-image: linear-gradient(to top, rgba(255, 180, 82, 0.7), rgba(255, 180, 82, 0.5)), url(../assets/img/pantheon.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.footer {
-  background-image: #FF69B4;
+.fc .fc-timegrid-slot {
+  height: 2.5em;
+}
+
+.fc-col-header-cell-cushion {
+  text-transform: uppercase;
+  text-decoration: none;
   color: #1f4788;
-  min-height: 50px;
+}
+
+.fc-toolbar-title {
+  text-transform: uppercase;
+}
+
+.fc-timegrid-slot-label-cushion, .fc-timegrid-axis-cushion {
+  font-weight: bold;
+  color: #1f4788;
+}
+
+.footer {
+  background-color: #87ceeb;
+  color: #1f4788;
+  min-height: 150px;
 }
 
 /*# sourceMappingURL=styles.css.map */
