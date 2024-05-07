@@ -4,7 +4,6 @@
         a{
             color:map-get($colores,tipoPrincipal);
             text-decoration: none;
-            
         }
     }
 }
@@ -16,11 +15,40 @@
 }
 
 .pages-background{
-    background-image: linear-gradient(to bottom,map-get($colores,tipoPrincipal),rgba(48, 121, 255, 0.3)), url(../assets/img/pantheon.jpg); 
+    background-image: linear-gradient(to top,rgba(255, 180, 82, 0.7) ,rgba(255, 180, 82, 0.5)), url(../assets/img/pantheon.jpg); 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.fc .fc-timegrid-slot{
+    height:2.5em;
+}
+.fc-col-header-cell-cushion{
+    text-transform: uppercase;
+    text-decoration: none;
+    color: map-get($colores,extra );
+}
+.fc-toolbar-title{
+    display:none;
+}
+.titulo{
+    color: map-get($colores, tipoPrincipal);
+    text-shadow: 2px 2px 2px map-get($colores,extra);
+}
+.fc-timegrid-slot-label-cushion , .fc-timegrid-axis-cushion{
+    font-weight: bold;
+    color: map-get($colores,extra );
+}
+.fc .fc-timegrid-divider{
+    background-color: map-get($colores,extra );
+    
+}
+.fc .fc-scrollgrid-section{
+    height:5px;
+}
+
+
 
 .offcanvas{
     background-color: map-get($colores,extra );

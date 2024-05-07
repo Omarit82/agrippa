@@ -8,7 +8,7 @@ class PacienteView{
     function lista($pacientes){
         require_once './Frontend/pages/header.html';   
         ?>
-        <main>
+        <main class="pages-background vh-100">
             <h1 class="text-center">Pacientes</h1>
             <h2 class="m-5 fs-2 card ps-5 pb-2 pt-2">Filtros</h2>
             <div class="container m-5 ">

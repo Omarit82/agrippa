@@ -110,8 +110,11 @@ class CalendarView{
                     </div>
                     <!-- Fin del offcanvas derecho -->
                 </div>
+                <div id="tituloFecha" class="text-center p-3 fs-5 titulo">
+
+                </div>
                 <!-- show calendar -->
-                <div class="col-10 col-md-8 p-5 m-auto">
+                <div class="col-10 col-md-8 pb-5 m-auto">
                         <div id='calendar'></div>
                 </div>
                 <!-- fin del showCalendar -->  
