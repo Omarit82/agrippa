@@ -84,8 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //----------------------CALENDARIO-------------------------//
     let calendarEl = document.getElementById('calendar');
     let calendar = new FullCalendar.Calendar(calendarEl, {
-        slotDuration: '00:40:00', // Duración de las franjas horarias (40 minutos)
-         // Hora de finalización del último slot (15:00 PM)
+        themeSystem: 'bootstrap5',
         nowIndicator: true,
         initialView: 'list',
         locale: 'es',
@@ -106,18 +105,22 @@ document.addEventListener('DOMContentLoaded', function() {
             offcanvasLeft.show();
         },
         selectable: true,
-       
-        //events: 
-        
-
-        googleCalendarApiKey: 'AIzaSyDrWTSCOm7s4mpF2SDiP_yLUCik2OImtVE',
-        events: {
-            googleCalendarId: 'roselliomar82@gmail.com',
-            eventColor:'red',
-            eventTextColor:'black',
-            backgroundColor: '#1f4788',
-
+        allDaySlot: true,
+        allDayText: 'all-day',
+        firstHour: 9,
+        slotMinutes: 40,   // <<< this
+        defaultEventMinutes: 40,
+        axisFormat: 'h(:mm)tt', 
+        timeFormat: {
+            agenda: 'h:mm{ - h:mm}'
         },
+        dragOpacity: {
+            agenda: .5
+        },
+        minTime: 9,
+        maxTime: 15, // Duración de las franjas horarias (40 minutos)
+         // Hora de finalización del último slot (15:00 PM)
+        //events: 
         eventColor: '#1f4788',
         eventTextColor: '#ffffff'
     });

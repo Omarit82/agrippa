@@ -31,30 +31,30 @@ class CalendarView{
                 <div class="row justify-content-center">
                     <!-- Insertamos la offcanvas izquierda CARGA DE TURNO-->
                     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasLeftLabel">
-                        <div class="offcanvas-header">
-                            <h5 class="offcanvas-title" id="offcanvasLeftLabel">Carga de Turno</h5>
+                        <div class="offcanvas-header ">
+                            <h5 class="offcanvas-title text-center w-100 fw-bold" id="offcanvasLeftLabel">NUEVO TURNO</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
-                        <form action="post" id="formCanvasTurno">
-                            <div class="offcanvas-body">
+                        <div class="offcanvas-body h-75">
+                            <form action="post" id="formCanvasTurno" class="nuevoTurno">
                                 <div>
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating m-2 d-flex">
                                         <label for="fechaTurno" class="form-label p-2">Fecha</label>
                                         <input type="date" class="form-control" id="fechaTurno">
                                     </div>
                                 </div>
-                                <div class="form-floating mb-3">
+                                <div class="form-floating mb-5">
                                     <div class="dropdown m-2">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn botonUno dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Paciente
                                         </button>
                                         <ul class="dropdown-menu" id="dropPacientes">
                                             
                                         </ul>
-                                        <input type="text" name="campoPaciente" id="campoPaciente" disabled>
+                                        <input class="w-100 mt-2 campoPaciente text-center" type="text" name="campoPaciente" id="campoPaciente" disabled>
                                     </div>
                                     <div class="dropdown m-2">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn botonUno dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Turno
                                         </button>
                                         <ul class="dropdown-menu">
@@ -68,17 +68,17 @@ class CalendarView{
                                             <li><a class="dropdown-item turno" id="turno_8">8° 13:40 - 14:20</a></li>
                                             <li><a class="dropdown-item turno" id="turno_9">9° 14:20 - 15:00</a></li>
                                         </ul>
-                                        <input type="text" name="campoTurno" id="campoTurno" disabled>
-                                        <input class="m-2" type="text" name="sesiones" id="sesiones" disabled> 
+                                        <input class="w-100 campoPaciente mt-2 text-center" type="text" name="campoTurno" id="campoTurno" disabled>
+                                        <input class="mt-2 w-100 text-center campoPaciente" type="text" name="sesiones" id="sesiones" disabled> 
                                     </div>
                                 </div>
-                            </div>
-                            <div class="mb-5 d-flex justify-content-around">
-                                <button class="btn btn-secondary" data-bs-dismiss="offcanvas">Cancelar</button>
-                                <button class="btn btn-danger">Eliminar</button>
-                                <button class="btn btn-success" id="canvasTurnoSubmit" type="submit">Registrar</button>
-                            </div> 
-                        </form> 
+                                <div class="mt-5 d-flex justify-content-around">
+                                    <button class="btn botonUno" data-bs-dismiss="offcanvas">Cancelar</button>
+                                    <button class="btn eliminar">Eliminar</button>
+                                    <button class="btn registrar" id="canvasTurnoSubmit" type="submit">Registrar</button>
+                                </div> 
+                            </form> 
+                        </div>
                     </div>
                     <!-- Fin del offcanvas izquierdo -->
                     <!-- Insertamos la offcanvas derecho CARGA DE PACIENTE -->

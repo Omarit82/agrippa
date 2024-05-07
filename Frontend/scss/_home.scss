@@ -15,10 +15,43 @@
     
 }
 
-
 .pages-background{
     background-image: linear-gradient(to bottom,map-get($colores,tipoPrincipal),rgba(48, 121, 255, 0.3)), url(../assets/img/pantheon.jpg); 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.offcanvas{
+    background-color: map-get($colores,extra );
+}
+.botonUno{
+    background-color: map-get($colores,secundario );
+    color:whitesmoke;
+    &:hover{
+        background-color: map-get($colores,principal );
+    }
+}
+.eliminar{
+    background-color: darkred;
+    color:whitesmoke;
+    &:hover{
+        background-color: map-get($colores,principal );
+    }
+}
+.registrar{
+    background-color: darkgreen;
+    color:whitesmoke;
+    &:hover{
+        background-color: map-get($colores,principal );
+    }
+}
+.offcanvas-title{
+    color: whitesmoke;
+}
+.campoPaciente{
+    color:map-get($colores,tipoSecundario )
+}
+:root {
+    --fc-daygrid-event-dot-width: 8px;
 }

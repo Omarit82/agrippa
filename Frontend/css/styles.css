@@ -25,11 +25,6 @@ body {
   color: #87ceeb;
 }
 
-form .btn {
-  background-color: #1f4788;
-  color: #87ceeb;
-}
-
 .botones .btn {
   background-color: #1f4788;
 }
@@ -48,6 +43,46 @@ form .btn {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.offcanvas {
+  background-color: #1f4788;
+}
+
+.botonUno {
+  background-color: #3498DB;
+  color: whitesmoke;
+}
+.botonUno:hover {
+  background-color: #FF69B4;
+}
+
+.eliminar {
+  background-color: darkred;
+  color: whitesmoke;
+}
+.eliminar:hover {
+  background-color: #FF69B4;
+}
+
+.registrar {
+  background-color: darkgreen;
+  color: whitesmoke;
+}
+.registrar:hover {
+  background-color: #FF69B4;
+}
+
+.offcanvas-title {
+  color: whitesmoke;
+}
+
+.campoPaciente {
+  color: #2c3e50;
+}
+
+:root {
+  --fc-daygrid-event-dot-width: 8px;
 }
 
 .footer {
