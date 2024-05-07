@@ -4,7 +4,6 @@
         a{
             color:map-get($colores,tipoPrincipal);
             text-decoration: none;
-            
         }
     }
 }
@@ -31,10 +30,21 @@
     color: map-get($colores,extra );
 }
 .fc-toolbar-title{
-    text-transform: uppercase;
-
+    display:none;
+}
+.titulo{
+    color: map-get($colores, tipoPrincipal);
+    text-shadow: 2px 2px 2px map-get($colores,extra);
 }
 .fc-timegrid-slot-label-cushion , .fc-timegrid-axis-cushion{
     font-weight: bold;
     color: map-get($colores,extra );
 }
+.fc .fc-timegrid-divider{
+    background-color: map-get($colores,extra );
+    
+}
+.fc .fc-scrollgrid-section{
+    height:5px;
+}
+

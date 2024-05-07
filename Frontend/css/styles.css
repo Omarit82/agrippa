@@ -61,12 +61,25 @@ form .btn {
 }
 
 .fc-toolbar-title {
-  text-transform: uppercase;
+  display: none;
+}
+
+.titulo {
+  color: #87ceeb;
+  text-shadow: 2px 2px 2px #1f4788;
 }
 
 .fc-timegrid-slot-label-cushion, .fc-timegrid-axis-cushion {
   font-weight: bold;
   color: #1f4788;
+}
+
+.fc .fc-timegrid-divider {
+  background-color: #1f4788;
+}
+
+.fc .fc-scrollgrid-section {
+  height: 5px;
 }
 
 .footer {
