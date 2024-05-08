@@ -14,6 +14,15 @@ class CalendarView{
         header('Content-Type: application/json');
         echo json_encode($lista);
     }
+
+    function registrar(){
+        if(isset($_POST)){
+            $datos = file_get_contents("php://input");
+            $reg = json_decode($datos,true);
+            return $reg;
+        }
+
+    }
     function calendar(){   
         require_once './Frontend/pages/header.html'; 
         ?>
@@ -22,10 +31,10 @@ class CalendarView{
                     <!-- Botones de offcanvas -->
                 <div class=" d-flex justify-content-between p-0">
                     <button class="btn-lateral-izq position-fixed bottom-50" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
-                        <img src="./Frontend/assets/img/izquierda.png" alt="">
+                        <img src="./Frontend/assets/img/izquierda.png" alt=""class="imagenBoton">
                     </button>
                     <button class="btn-lateral-der  position-fixed bottom-50 end-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                        <img src="./Frontend/assets/img/derecha.png" alt="">
+                        <img src="./Frontend/assets/img/derecha.png" alt=""class="imagenBoton">
                     </button>
                 </div>
                 <div class="row justify-content-center">
@@ -36,11 +45,11 @@ class CalendarView{
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body h-75">
-                            <form action="post" id="formCanvasTurno" class="nuevoTurno">
+                            <form method="POST" action="registrar" id="formCanvasTurno" class="nuevoTurno">
                                 <div>
                                     <div class="form-floating m-2 d-flex">
                                         <label for="fechaTurno" class="form-label p-2">Fecha</label>
-                                        <input type="date" class="form-control" id="fechaTurno">
+                                        <input type="date" class="form-control" id="fechaTurno" name="fechaTurno">
                                     </div>
                                 </div>
                                 <div class="form-floating mb-5">
@@ -51,15 +60,15 @@ class CalendarView{
                                         <ul class="dropdown-menu" id="dropPacientes">
                                             
                                         </ul>
-                                        <input class="w-100 mt-2 campoPaciente text-center" type="text" name="campoPaciente" id="campoPaciente" disabled>
+                                        <input class="w-100 mt-2 campoPaciente text-center" type="text" name="campoPaciente" id="campoPaciente">
                                     </div>
                                     <div class="dropdown m-2">
                                         <button class="btn botonUno dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Turno
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item turno" id="turno_1">1° 9:00 - 9:40</a></li>
-                                            <li><a class="dropdown-item turno" id="turno_2">2° 9:40 - 10:20</a></li>
+                                            <li><a class="dropdown-item turno" id="turno_1">1° 9:00 - 9:40</a></li>                                           
+                                            <li><a class="dropdown-item turno" id="turno_2">2° 9:40 - 10:20</a></li> 
                                             <li><a class="dropdown-item turno" id="turno_3">3° 10:20 - 11:00</a></li>
                                             <li><a class="dropdown-item turno" id="turno_4">4° 11:00 - 11:40</a></li>
                                             <li><a class="dropdown-item turno" id="turno_5">5° 11:40 - 12:20</a></li>
@@ -68,8 +77,8 @@ class CalendarView{
                                             <li><a class="dropdown-item turno" id="turno_8">8° 13:40 - 14:20</a></li>
                                             <li><a class="dropdown-item turno" id="turno_9">9° 14:20 - 15:00</a></li>
                                         </ul>
-                                        <input class="w-100 campoPaciente mt-2 text-center" type="text" name="campoTurno" id="campoTurno" disabled>
-                                        <input class="mt-2 w-100 text-center campoPaciente" type="text" name="sesiones" id="sesiones" disabled> 
+                                        <input class="w-100 campoPaciente mt-2 text-center" type="text" name="campoTurno" id="campoTurno">
+                                        <input class="mt-2 w-100 text-center campoPaciente" type="text" name="sesiones" id="sesiones"> 
                                     </div>
                                 </div>
                                 <div class="mt-5 d-flex justify-content-around">
@@ -110,7 +119,7 @@ class CalendarView{
                     </div>
                     <!-- Fin del offcanvas derecho -->
                 </div>
-                <div id="tituloFecha" class="text-center p-3 fs-5 titulo">
+                <div id="tituloFecha" class="text-center p-3 titulo">
 
                 </div>
                 <!-- show calendar -->

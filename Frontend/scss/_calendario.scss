@@ -1,0 +1,45 @@
+.titulo{
+    color: map-get($colores, tipoPrincipal);
+    text-shadow: 2px 2px 2px map-get($colores,extra);
+    font-size: 50px;
+}
+.fc .fc-timegrid-slot{
+    height: 6em;
+ }
+ 
+ .fc-col-header-cell-cushion{
+     text-transform: uppercase;
+     text-decoration: none;
+     color: map-get($colores,extra );
+ }
+ .fc-toolbar-title{
+     display:none;
+     
+ }
+ .fc .fc-button {
+    @media only screen and (max-width: 768px){
+        font-size: 16px; /* Cambia el tamaño de fuente */
+        padding: 5px 5px; /* Ajusta el padding para cambiar el tamaño del botón */
+    }
+}
+
+.fc-timegrid-slot-label-cushion , .fc-timegrid-axis-cushion{
+    font-weight: bold;
+    color: map-get($colores,extra );
+}
+.fc .fc-timegrid-divider{
+    background-color: map-get($colores,extra );
+     
+}
+.fc .fc-scrollgrid-section{
+    height:10px;
+}
+.fc .fc-timegrid-now-indicator-line{
+    border: solid 2px map-get($colores,extra);
+}
+.fc .fc-timegrid-now-indicator-arrow{
+    border-color: map-get($colores,extra);
+}
+.fc-theme-standard .fc-scrollgrid{
+    border: 1px solid map-get($colores,extra);
+}

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
@@ -25,6 +26,16 @@ body {
   color: #87ceeb;
 }
 
+.vh-75 {
+  height: 70vh;
+}
+
+input, textarea {
+  background-color: gray;
+  border: none;
+  color: #ffffff;
+}
+
 .botones .btn {
   background-color: #1f4788;
 }
@@ -39,42 +50,15 @@ body {
 }
 
 .pages-background {
-  background-image: linear-gradient(to top, rgba(255, 180, 82, 0.7), rgba(255, 180, 82, 0.5)), url(../assets/img/pantheon.jpg);
+  background-image: linear-gradient(to top, rgba(255, 204, 138, 0.7019607843), rgba(255, 180, 82, 0.5019607843)), url(../assets/img/pantheon.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
-
-.fc .fc-timegrid-slot {
-  height: 2.5em;
-}
-
-.fc-col-header-cell-cushion {
-  text-transform: uppercase;
-  text-decoration: none;
-  color: #1f4788;
-}
-
-.fc-toolbar-title {
-  display: none;
-}
-
-.titulo {
-  color: #87ceeb;
-  text-shadow: 2px 2px 2px #1f4788;
-}
-
-.fc-timegrid-slot-label-cushion, .fc-timegrid-axis-cushion {
-  font-weight: bold;
-  color: #1f4788;
-}
-
-.fc .fc-timegrid-divider {
-  background-color: #1f4788;
-}
-
-.fc .fc-scrollgrid-section {
-  height: 5px;
+@media only screen and (max-width: 768px) {
+  .pages-background {
+    height: 75vh;
+  }
 }
 
 .offcanvas {
@@ -113,8 +97,62 @@ body {
   color: #2c3e50;
 }
 
-:root {
-  --fc-daygrid-event-dot-width: 8px;
+@media only screen and (max-width: 768px) {
+  .imagenBoton {
+    height: 50px;
+  }
+}
+
+.titulo {
+  color: #87ceeb;
+  text-shadow: 2px 2px 2px #1f4788;
+  font-size: 50px;
+}
+
+.fc .fc-timegrid-slot {
+  height: 6em;
+}
+
+.fc-col-header-cell-cushion {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #1f4788;
+}
+
+.fc-toolbar-title {
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .fc .fc-button {
+    font-size: 16px; /* Cambia el tamaño de fuente */
+    padding: 5px 5px; /* Ajusta el padding para cambiar el tamaño del botón */
+  }
+}
+
+.fc-timegrid-slot-label-cushion, .fc-timegrid-axis-cushion {
+  font-weight: bold;
+  color: #1f4788;
+}
+
+.fc .fc-timegrid-divider {
+  background-color: #1f4788;
+}
+
+.fc .fc-scrollgrid-section {
+  height: 10px;
+}
+
+.fc .fc-timegrid-now-indicator-line {
+  border: solid 2px #1f4788;
+}
+
+.fc .fc-timegrid-now-indicator-arrow {
+  border-color: #1f4788;
+}
+
+.fc-theme-standard .fc-scrollgrid {
+  border: 1px solid #1f4788;
 }
 
 .footer {

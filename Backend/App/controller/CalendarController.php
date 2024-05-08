@@ -32,4 +32,10 @@ class CalendarController extends SecuredController{
         $this->view->lista($lista);
     }
 
+    function registrar(){
+        $evento = $this->view->registrar();
+        die();
+        $this->model->registrar($evento);
+    }
+
 }
