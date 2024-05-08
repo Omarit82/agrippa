@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
             for (let i=0; i<data.length;i++){
                 let newLi = document.createElement("li");
                 let anchor = document.createElement("a");
-                let contenido = document.createTextNode(data[i].id_paciente+" - "+data[i].apellido+", "+data[i].nombre);
+                let contenido = document.createTextNode(data[i].id_paciente+"- "+data[i].apellido+", "+data[i].nombre);
                 anchor.appendChild(contenido);
                 anchor.classList.add("dropdown-item","selectPaciente");
                 anchor.setAttribute("id",data[i].id_paciente);
