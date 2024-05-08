@@ -41,7 +41,7 @@
     color: map-get($colores,extra );
 }
 .fc .fc-timegrid-divider{
-    background-color: map-get($colores,extra );
+    background-color: map-get($colores,tipoPrincipal );
     
 }
 .fc .fc-scrollgrid-section{
