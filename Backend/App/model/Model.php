@@ -132,7 +132,8 @@ class Model{
         return $sentencia->fetchAll(PDO::FETCH_OBJ);
     }
     function registrar($evento){
-      
+        var_dump($evento);
+        die();
     }
 
     //INSERT INTO `turno`(`id_turno`, `id_paciente`, `fecha`, `turno`) VALUES ('','1','2024-5-5','1');

@@ -146,9 +146,9 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         selectable: true,
         allDaySlot: true,
-        allDayText: 'all-day',
-        firstHour: 9,
-        slotMinutes: 40,   // <<< this
+        allDayText: 'Hoy',
+        //firstHour: 9,
+        //slotMinutes: 40,   // <<< this
         defaultEventMinutes: 40,
         axisFormat: 'h(:mm)tt', 
         timeFormat: {
@@ -182,15 +182,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const title = document.getElementById('fechaTurno').value;
         const start = document.getElementById('campoPaciente').value;
         let infoForm = new FormData(frm);
+        //Tomamos el id del paciente
         let id_pac = infoForm.get('campoPaciente');
         let new_id_pac = id_pac.split("-");
         let id = new_id_pac[0];
+        //Tomamos el numero de turno
+        let num = infoForm.get('campoTurno').split('°');
+        let turno = num[0];
         // Creamos un objeto para pasarle
         let envio = {
             "date":infoForm.get('fechaTurno'),
             "id": id,
             "name":infoForm.get('campoPaciente'),
-            "pos": infoForm.get('campoTurno'),
+            "turno": turno,
             "ses":infoForm.get('sesiones'),
         }
         
@@ -209,7 +213,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 'body': JSON.stringify(envio)
             }).then(function(resp){
-                console.log(resp);
                 return resp.text();
                
             }).then(function(datos){

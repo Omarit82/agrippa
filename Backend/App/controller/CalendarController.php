@@ -34,7 +34,6 @@ class CalendarController extends SecuredController{
 
     function registrar(){
         $evento = $this->view->registrar();
-        die();
         $this->model->registrar($evento);
     }
 
