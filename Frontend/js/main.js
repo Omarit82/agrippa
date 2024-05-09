@@ -2,20 +2,35 @@
 
 // inicializacion de documento
 document.addEventListener('DOMContentLoaded', function() {
+    let eventos = allEvents();
+    console.log(eventos);
+    //dentro del canvas izquierdo permite seleccionar un turno y lo muestra en el html
+    let turnosHorarios = document.querySelectorAll(".turno");
+    let turnoElegido = document.getElementById('campoTurno');
+    let offcanvasLeft = new bootstrap.Offcanvas(document.getElementById('offcanvasLeft'));
+    let frm = document.getElementById('formCanvasTurno');
+    let calendarEl = document.getElementById('calendar'); 
+    for (let i = 0 ; i<turnosHorarios.length ; i++){
+        turnosHorarios[i].addEventListener('click',()=>{
+            let trn = turnosHorarios[i].innerHTML;
+            turnoElegido.value = trn;
+        })
+    }
+   
     //------------------------PACIENTES---------------------------------
     //TOMA LA LISTA DE PACIENTES DEL BACKEND Y LA ENTREGA COMO UN JSON
     fetch('pacientes').then(response => {
-            // Verificar si la respuesta es exitosa
-            if (!response.ok) {
-            throw new Error('Hubo un problema al obtener los datos.');
-            }
-            // Parsear la respuesta como JSON
-            return response.json();
+        // Verificar si la respuesta es exitosa
+        if (!response.ok) {
+        throw new Error('Hubo un problema al obtener los datos.');
+        }
+        // Parsear la respuesta como JSON
+        return response.json();
     }).then(data => {
             // Procesar los datos recibidos
             //INGRESO LA LISTA DE PACIENTES DENTRO DEL CANVAS
             let selecPaciente = document.getElementById('dropPacientes');
-             /*   
+            /*   
                 // AGREGADO DE ID Y CLASE A TODOS LOS BOTONES DE PACIENTES. 
             */
             for (let i=0; i<data.length;i++){
@@ -42,44 +57,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }).catch(error => {
             console.error('Error:', error);
     });
-
-    //-----------------------EVENTOS-----------------------------
-    //TOMA LA LISTA DE EVENTOS DEL BACKEND Y LA ENTREGA COMO UN JSON
-    /*fetch('events').then(response => {
-        // Verificar si la respuesta es exitosa
-        if (!response.ok) {
-        throw new Error('Hubo un problema al obtener los datos.');
-        }
-        // Parsear la respuesta como JSON
-        return response.json();
-    }).then(data => {
-        // Procesar los datos recibidos
-        //INGRESO LA LISTA DE EVENTOS
-            
-    }).catch(error => {
-            console.error('Error:', error);
-    });*/
-
     
-    //dentro del canvas izquierdo permite seleccionar un turno y lo muestra en el html
-    let turnosHorarios = document.querySelectorAll(".turno");
-    let turnoElegido = document.getElementById('campoTurno');
-
-    for (let i = 0 ; i<turnosHorarios.length ; i++){
-        turnosHorarios[i].addEventListener('click',()=>{
-            let trn = turnosHorarios[i].innerHTML;
-            turnoElegido.value = trn;
-        })
-    }
-
-    let offcanvasLeft = new bootstrap.Offcanvas(document.getElementById('offcanvasLeft'));
-    let frm = document.getElementById('formCanvasTurno');
-    //let turnos = JSON.parse(document.getElementById('turnos').innerHTML);
-    //console.log(turnos);
-
-    //----------------------CALENDARIO-------------------------//
-    let calendarEl = document.getElementById('calendar'); 
-   
+    //----------------------CALENDARIO-------------------------//   
     let calendar = new FullCalendar.Calendar(calendarEl, {
         slotDuration: '00:40:00',// Duración de las franjas horarias (40 minutos)
         slotMinTime: '09:00:00',
@@ -157,24 +136,28 @@ document.addEventListener('DOMContentLoaded', function() {
             agenda: .5
         },
         minTime: 9,
-        maxTime: 15, // Duración de las franjas horarias (40 minutos)
-         // Hora de finalización del último slot (15:00 PM)
-        //events: 
-        googleCalendarApiKey: 'AIzaSyDrWTSCOm7s4mpF2SDiP_yLUCik2OImtVE',
+        maxTime: 15,
+        events: [
+            { title: "2 - 8", start: "2024-05-09T09:00:00", end: "2024-05-09T09:40:00" },
+            { title: "3 - 15", start: "2024-05-10T09:40:00", end: "2024-05-10T10:20:00" }
+        ],
+        // Duración de las franjas horarias (40 minutos)
+        // Hora de finalización del último slot (15:00 PM)  
+
+        /*googleCalendarApiKey: 'AIzaSyDrWTSCOm7s4mpF2SDiP_yLUCik2OImtVE',
         events: {
             googleCalendarId: 'roselliomar82@gmail.com',
-          
+            dataEventos,
         },
         
         eventColor: '#1f4788',
-        eventTextColor: '#ffffff'
+        eventTextColor: '#ffffff'*/
     });
- 
     calendar.render();
+
     let test = document.getElementById('fc-dom-1').innerHTML;
     let titulo = document.getElementById('tituloFecha');
     titulo.innerHTML = test; 
-
     //----------------FORMULARIO NUEVO TURNO-----------------//
     frm.addEventListener('submit',function(e){
         e.preventDefault();
@@ -196,14 +179,12 @@ document.addEventListener('DOMContentLoaded', function() {
             "turno": turno,
             "ses":infoForm.get('sesiones'),
         }
-        
         if(title =='' || start ==''){
             Swal.fire(
                 'Aviso',
                 'Todos los campos son necesarios',
                 'warning'
             )
-    
         }else{
             fetch('registrar',{
                 'method':'POST',
@@ -217,10 +198,41 @@ document.addEventListener('DOMContentLoaded', function() {
             }).then(function(datos){
                 console.log(datos);
             })
-            
         }
         //limpio el fomulario y cierro
         frm.reset();
     })
+
+  
+    //-----------------------EVENTOS-----------------------------
+    //TOMA LA LISTA DE EVENTOS DEL BACKEND Y LA ENTREGA COMO UN JSON
+    function allEvents(){
+        let dataEventos=[];
+        fetch('events').then(response => {
+            // Verificar si la respuesta es exitosa
+            if (!response.ok) {
+            throw new Error('Hubo un problema al obtener los datos.');
+            }
+            // Parsear la respuesta como JSON
+            return response.json();
+        }).then(data => {
+            //Preparo la info para pasarla al calendar.
+            
+            for(let i=0;i<data.length;i++){
+                let fecha =data[i].fecha;
+                let turno = document.getElementById('turno_'+data[i].turno_id).innerHTML; 
+                let aux = turno.split("° ");
+                let tInicial = aux[1].split(" - ");
+                dataEventos.push({
+                    "title":data[i].paciente+" - "+data[i].sesiones_totales,
+                    "start":data[i].fecha+"T"+tInicial[0]+":00",
+                    "end":data[i].fecha+"T"+tInicial[1]+":00"
+                },);
+            }                
+        }).catch(error => {
+                console.error('Error:', error);
+        });
+        return dataEventos;
+    }
 });
 

@@ -66,8 +66,8 @@ class CalendarView{
                                             Turno
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item turno" id="turno_1">1° 9:00 - 9:40</a></li>                                           
-                                            <li><a class="dropdown-item turno" id="turno_2">2° 9:40 - 10:20</a></li> 
+                                            <li><a class="dropdown-item turno" id="turno_1">1° 09:00 - 09:40</a></li>                                           
+                                            <li><a class="dropdown-item turno" id="turno_2">2° 09:40 - 10:20</a></li> 
                                             <li><a class="dropdown-item turno" id="turno_3">3° 10:20 - 11:00</a></li>
                                             <li><a class="dropdown-item turno" id="turno_4">4° 11:00 - 11:40</a></li>
                                             <li><a class="dropdown-item turno" id="turno_5">5° 11:40 - 12:20</a></li>
