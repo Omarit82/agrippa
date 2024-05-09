@@ -2,7 +2,10 @@
 
 // inicializacion de documento
 document.addEventListener('DOMContentLoaded', function() {
-    let eventos = allEvents();
+    let datos = allEvents();
+    console.log(datos);
+    let eventos = JSON.stringify(datos);
+
     console.log(eventos);
     //dentro del canvas izquierdo permite seleccionar un turno y lo muestra en el html
     let turnosHorarios = document.querySelectorAll(".turno");
@@ -137,10 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         minTime: 9,
         maxTime: 15,
-        events: [
-            { title: "2 - 8", start: "2024-05-09T09:00:00", end: "2024-05-09T09:40:00" },
-            { title: "3 - 15", start: "2024-05-10T09:40:00", end: "2024-05-10T10:20:00" }
-        ],
+        events: 'eventos',
         // Duración de las franjas horarias (40 minutos)
         // Hora de finalización del último slot (15:00 PM)  
 
@@ -217,9 +217,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         }).then(data => {
             //Preparo la info para pasarla al calendar.
-            
             for(let i=0;i<data.length;i++){
-                let fecha =data[i].fecha;
+              
                 let turno = document.getElementById('turno_'+data[i].turno_id).innerHTML; 
                 let aux = turno.split("° ");
                 let tInicial = aux[1].split(" - ");
@@ -227,8 +226,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     "title":data[i].paciente+" - "+data[i].sesiones_totales,
                     "start":data[i].fecha+"T"+tInicial[0]+":00",
                     "end":data[i].fecha+"T"+tInicial[1]+":00"
-                },);
-            }                
+                });
+            }             
+            //dataEventos =JSON.stringify(dataEventos);
         }).catch(error => {
                 console.error('Error:', error);
         });
