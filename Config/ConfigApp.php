@@ -14,6 +14,7 @@ class ConfigApp{
         'addPaciente'=>'PacienteController#addPaciente',
         'checkout'=>'LoginController#checkOut',
         'events'=>'CalendarController#events',//TRANSFERENCIA DE JSON EVENTS AL FRONTEND
-        'pacientes'=>'CalendarController#pacientes'//TRANSFERENCIA DE JSON PACIENTES AL FRONTEND
+        'pacientes'=>'CalendarController#pacientes',//TRANSFERENCIA DE JSON PACIENTES AL FRONTEND
+        'registrar'=>'CalendarController#registrar'
     ];
 }

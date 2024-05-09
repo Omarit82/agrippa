@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
             for (let i=0; i<data.length;i++){
                 let newLi = document.createElement("li");
                 let anchor = document.createElement("a");
-                let contenido = document.createTextNode(data[i].apellido+", "+data[i].nombre)
+                let contenido = document.createTextNode(data[i].id_paciente+" - "+data[i].apellido+", "+data[i].nombre);
                 anchor.appendChild(contenido);
                 anchor.classList.add("dropdown-item","selectPaciente");
                 anchor.setAttribute("id",data[i].id_paciente);
@@ -40,9 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     sesiones.value = data[i].sesiones;
                 })
             }
-            
-        
-            
     }).catch(error => {
             console.error('Error:', error);
     });
@@ -87,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let calendar = new FullCalendar.Calendar(calendarEl, {
         slotDuration: '00:40:00',// Duración de las franjas horarias (40 minutos)
         slotMinTime: '09:00:00',
-        slotMaxTime: '15:40:00',
+        slotMaxTime: '15:00:00',
         // Hora de finalización del último slot (15:00 PM)
         themeSystem: 'bootstrap5',
         nowIndicator: true,
@@ -149,9 +146,9 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         selectable: true,
         allDaySlot: true,
-        allDayText: 'all-day',
-        firstHour: 9,
-        slotMinutes: 40,   // <<< this
+        allDayText: 'Hoy',
+        //firstHour: 9,
+        //slotMinutes: 40,   // <<< this
         defaultEventMinutes: 40,
         axisFormat: 'h(:mm)tt', 
         timeFormat: {
@@ -176,7 +173,6 @@ document.addEventListener('DOMContentLoaded', function() {
  
     calendar.render();
     let test = document.getElementById('fc-dom-1').innerHTML;
-    console.log(test);  
     let titulo = document.getElementById('tituloFecha');
     titulo.innerHTML = test; 
 
@@ -185,8 +181,23 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const title = document.getElementById('fechaTurno').value;
         const start = document.getElementById('campoPaciente').value;
+        let infoForm = new FormData(frm);
+        //Tomamos el id del paciente
+        let id_pac = infoForm.get('campoPaciente');
+        let new_id_pac = id_pac.split("-");
+        let id = new_id_pac[0];
+        //Tomamos el numero de turno
+        let num = infoForm.get('campoTurno').split('°');
+        let turno = num[0];
+        // Creamos un objeto para pasarle
+        let envio = {
+            "date":infoForm.get('fechaTurno'),
+            "id": id,
+            "name":infoForm.get('campoPaciente'),
+            "turno": turno,
+            "ses":infoForm.get('sesiones'),
+        }
         
-
         if(title =='' || start ==''){
             Swal.fire(
                 'Aviso',
@@ -195,15 +206,19 @@ document.addEventListener('DOMContentLoaded', function() {
             )
     
         }else{
-            const url = 'Home/registrar';
-            const http = new XMLHttpRequest();
-            http.open('POST',url,true);
-            http.send(new FormData(frm));
-            http.onreadystatechange = function(){
-                if(this.readyState == 4 && this.status == 200){
-                    console.log(this.responseText);
-                }
-            }
+            fetch('registrar',{
+                'method':'POST',
+                'headers': {
+                    "Content-Type":"application/json; charset=utf-8"
+                },
+                'body': JSON.stringify(envio)
+            }).then(function(resp){
+                return resp.text();
+               
+            }).then(function(datos){
+                console.log(datos);
+            })
+            
         }
     })
 });

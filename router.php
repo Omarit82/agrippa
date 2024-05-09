@@ -14,6 +14,7 @@ define('LISTA',BASE_URL.'lista');
 define('HOME',BASE_URL.'home');
 define('EVENTS',BASE_URL.'events');
 define('PACIENTES',BASE_URL.'pacientes');
+define('REGISTRAR',BASE_URL.'registrar');
 define('ACTION',0);
 define('PARAMS',1);
 

@@ -4,3 +4,12 @@
         color:map-get($colores,tipoPrincipal); 
     }
 }
+
+.vh-75{
+    height: 70vh;
+}
+input, textarea{
+    background-color: gray;
+    border: none;
+    color: #ffffff;
+}
