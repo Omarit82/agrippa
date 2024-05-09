@@ -2,7 +2,6 @@
 
 // inicializacion de documento
 document.addEventListener('DOMContentLoaded', function() {
-
     //------------------------PACIENTES---------------------------------
     //TOMA LA LISTA DE PACIENTES DEL BACKEND Y LA ENTREGA COMO UN JSON
     fetch('pacientes').then(response => {
@@ -220,6 +219,8 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             
         }
+        //limpio el fomulario y cierro
+        frm.reset();
     })
 });
 

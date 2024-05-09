@@ -21,7 +21,6 @@ class CalendarView{
             $reg = json_decode($datos,true);
             return $reg;
         }
-
     }
     function calendar(){   
         require_once './Frontend/pages/header.html'; 
@@ -82,9 +81,7 @@ class CalendarView{
                                     </div>
                                 </div>
                                 <div class="mt-5 d-flex justify-content-around">
-                                    <button class="btn botonUno" data-bs-dismiss="offcanvas">Cancelar</button>
-                                    <button class="btn eliminar">Eliminar</button>
-                                    <button class="btn registrar" id="canvasTurnoSubmit" type="submit">Registrar</button>
+                                    <button class="btn registrar"data-bs-dismiss="offcanvas" id="canvasTurnoSubmit" type="submit">Registrar</button>
                                 </div> 
                             </form> 
                         </div>
