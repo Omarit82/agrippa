@@ -30,13 +30,13 @@ class Model{
             /*!40101 SET NAMES utf8mb4 */;
 
             --
-            -- Base de datos: `agrippa`
+            -- Database: `agrippa`
             --
 
             -- --------------------------------------------------------
 
             --
-            -- Estructura de tabla para la tabla `paciente`
+            -- Table structure for table `paciente`
             --
 
             CREATE TABLE `paciente` (
@@ -58,7 +58,7 @@ class Model{
             ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
             --
-            -- Volcado de datos para la tabla `paciente`
+            -- Dumping data for table `paciente`
             --
 
             INSERT INTO `paciente` (`id_paciente`, `nombre`, `apellido`, `dni`, `telefono`, `fecha_nacimiento`, `edad`, `fecha_ingreso`, `anamnesis`, `evaluacion_inicial`, `objetivos_terapeuticos`, `tratamiento`, `estudios`, `sesiones`, `ses_completas`) VALUES
@@ -69,22 +69,28 @@ class Model{
             -- --------------------------------------------------------
 
             --
-            -- Estructura de tabla para la tabla `turno`
+            -- Table structure for table `turno`
             --
 
             CREATE TABLE `turno` (
-            `date` date NOT NULL,
+            `fecha` date NOT NULL,
             `paciente` int(11) NOT NULL,
-            `name` varchar(100) NOT NULL,
             `id_horario` int(11) NOT NULL,
             `sesiones_totales` int(11) NOT NULL,
             `turno_id` int(11) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+            --
+            -- Dumping data for table `turno`
+            --
+
+            INSERT INTO `turno` (`fecha`, `paciente`, `id_horario`, `sesiones_totales`, `turno_id`) VALUES
+            ('2024-05-09', 2, 3, 8, 1);
+
             -- --------------------------------------------------------
 
             --
-            -- Estructura de tabla para la tabla `users`
+            -- Table structure for table `users`
             --
 
             CREATE TABLE `users` (
@@ -94,63 +100,63 @@ class Model{
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
             --
-            -- Volcado de datos para la tabla `users`
+            -- Dumping data for table `users`
             --
 
             INSERT INTO `users` (`id_user`, `name_user`, `pass_user`) VALUES
             (1, 'malenagriffiths@gmail.com', '$2y$10\$X.NhwsrILBR87epH0RAMlOFdQTR/bqa8O1AskpM3ncI3Ndum7t5Xy');
 
             --
-            -- Índices para tablas volcadas
+            -- Indexes for dumped tables
             --
 
             --
-            -- Indices de la tabla `paciente`
+            -- Indexes for table `paciente`
             --
             ALTER TABLE `paciente`
             ADD PRIMARY KEY (`id_paciente`);
 
             --
-            -- Indices de la tabla `turno`
+            -- Indexes for table `turno`
             --
             ALTER TABLE `turno`
             ADD PRIMARY KEY (`turno_id`),
             ADD KEY `paciente` (`paciente`);
 
             --
-            -- Indices de la tabla `users`
+            -- Indexes for table `users`
             --
             ALTER TABLE `users`
             ADD PRIMARY KEY (`id_user`);
 
             --
-            -- AUTO_INCREMENT de las tablas volcadas
+            -- AUTO_INCREMENT for dumped tables
             --
 
             --
-            -- AUTO_INCREMENT de la tabla `paciente`
+            -- AUTO_INCREMENT for table `paciente`
             --
             ALTER TABLE `paciente`
             MODIFY `id_paciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
             --
-            -- AUTO_INCREMENT de la tabla `turno`
+            -- AUTO_INCREMENT for table `turno`
             --
             ALTER TABLE `turno`
-            MODIFY `turno_id` int(11) NOT NULL AUTO_INCREMENT;
+            MODIFY `turno_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
             --
-            -- AUTO_INCREMENT de la tabla `users`
+            -- AUTO_INCREMENT for table `users`
             --
             ALTER TABLE `users`
             MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
             --
-            -- Restricciones para tablas volcadas
+            -- Constraints for dumped tables
             --
 
             --
-            -- Filtros para la tabla `turno`
+            -- Constraints for table `turno`
             --
             ALTER TABLE `turno`
             ADD CONSTRAINT `turno_ibfk_1` FOREIGN KEY (`paciente`) REFERENCES `paciente` (`id_paciente`);

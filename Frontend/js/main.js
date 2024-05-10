@@ -1,12 +1,9 @@
 "use strict";
-
 // inicializacion de documento
 document.addEventListener('DOMContentLoaded', function() {
-    let datos = allEvents();
-    console.log(datos);
-    let eventos = JSON.stringify(datos);
-
-    console.log(eventos);
+    /*let datos = allEvents();
+    console.log(datos.length);*/
+    
     //dentro del canvas izquierdo permite seleccionar un turno y lo muestra en el html
     let turnosHorarios = document.querySelectorAll(".turno");
     let turnoElegido = document.getElementById('campoTurno');
@@ -140,7 +137,35 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         minTime: 9,
         maxTime: 15,
-        events: 'eventos',
+        events:function(){
+            let events = [];
+            fetch('events').then(response => {
+                // Verificar si la respuesta es exitosa
+                if (!response.ok) {
+                throw new Error('Hubo un problema al obtener los datos.');
+                }
+                // Parsear la respuesta como JSON
+                return response.json();
+            }).then(data => {
+                //Preparo la info para pasarla al calendar.
+                for(let i=0;i<data.length;i++){
+                    let turno = document.getElementById('turno_'+data[i].turno_id).innerHTML; 
+                    let aux = turno.split("° ");
+                    let tInicial = aux[1].split(" - ");
+                    let eventos = {
+                        "title":data[i].paciente+" - "+data[i].sesiones_totales,
+                        "start":data[i].fecha+"T"+tInicial[0]+":00",
+                        "end":data[i].fecha+"T"+tInicial[1]+":00"
+                    };
+                    events.push(eventos);
+                }             
+                events =JSON.stringify(events);
+                console.log(events);
+            }).catch(error => {
+                    console.error('Error:', error);
+            });
+            return events[0];
+        },
         // Duración de las franjas horarias (40 minutos)
         // Hora de finalización del último slot (15:00 PM)  
 
@@ -206,8 +231,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
     //-----------------------EVENTOS-----------------------------
     //TOMA LA LISTA DE EVENTOS DEL BACKEND Y LA ENTREGA COMO UN JSON
-    function allEvents(){
-        let dataEventos=[];
+   /* function allEvents(){
+        let dataEventos = [];
         fetch('events').then(response => {
             // Verificar si la respuesta es exitosa
             if (!response.ok) {
@@ -218,21 +243,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }).then(data => {
             //Preparo la info para pasarla al calendar.
             for(let i=0;i<data.length;i++){
-              
                 let turno = document.getElementById('turno_'+data[i].turno_id).innerHTML; 
                 let aux = turno.split("° ");
                 let tInicial = aux[1].split(" - ");
-                dataEventos.push({
+                let events = {
                     "title":data[i].paciente+" - "+data[i].sesiones_totales,
                     "start":data[i].fecha+"T"+tInicial[0]+":00",
                     "end":data[i].fecha+"T"+tInicial[1]+":00"
-                });
+                };
+                dataEventos.push(events)//JSON.stringify(events));
+                console.log(dataEventos);
+                console.log(dataEventos[0])
             }             
             //dataEventos =JSON.stringify(dataEventos);
         }).catch(error => {
                 console.error('Error:', error);
         });
         return dataEventos;
-    }
+    }*/
 });
 
