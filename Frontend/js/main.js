@@ -137,8 +137,8 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         minTime: 9,
         maxTime: 15,
-        events:function(){
-            let events = [];
+        events:function(info,successCallback,failureCallback){
+            let salida = [];
             fetch('events').then(response => {
                 // Verificar si la respuesta es exitosa
                 if (!response.ok) {
@@ -152,19 +152,32 @@ document.addEventListener('DOMContentLoaded', function() {
                     let turno = document.getElementById('turno_'+data[i].turno_id).innerHTML; 
                     let aux = turno.split("° ");
                     let tInicial = aux[1].split(" - ");
+                    // en el 0 de tInicial esta el horario de incio en 1 esta el horario de finalizacion.
                     let eventos = {
-                        "title":data[i].paciente+" - "+data[i].sesiones_totales,
-                        "start":data[i].fecha+"T"+tInicial[0]+":00",
-                        "end":data[i].fecha+"T"+tInicial[1]+":00"
+                        "eventTitle":data[i].paciente+" - "+data[i].sesiones_totales,
+                        "eventStartDate":data[i].fecha,
+                        "eventEndDate":data[i].fecha,
+                        "eventStartime":tInicial[0]+":00 AM",
+                        "eventEndTime": tInicial[1]+":00 AM",
                     };
-                    events.push(eventos);
+                    salida.push(eventos);
                 }             
+                let events = salida.map(function(event){
+                    return {
+                        title : event.eventTitle,
+                        start: new Date(event.eventStartDate),
+                        end: new Date(event.eventEndDate),
+                        timeStart: event.eventTimeStart,
+                        tiemEnd: event.eventTimeEnd
+                    }
+                }) 
+                console.log(events);
                 events =JSON.stringify(events);
                 console.log(events);
             }).catch(error => {
                     console.error('Error:', error);
             });
-            return events[0];
+           // return events[0];
         },
         // Duración de las franjas horarias (40 minutos)
         // Hora de finalización del último slot (15:00 PM)  
