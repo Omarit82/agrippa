@@ -97,18 +97,31 @@ class CalendarView{
                         <div class="offcanvas-body p-0">
                             <div class="container p-0">
                                 <form action="addPaciente" method="POST" id="formCanvasPaciente" class="d-flex flex-column col-11 m-auto pb-2">
+                                    <label for="nombre" class="elementoForm m-2 text-center">NOMBRE</label>
                                     <input type="text" name="nombre" id="nombrePaciente" placeholder="  NOMBRE" class="m-2">
+                                    <label for="apellido" class="elementoForm m-2 text-center">APELLIDO</label>
                                     <input type="text" name="apellido" id="apellidoPaciente" placeholder=" APELLIDO"class="m-2">
+                                    <label for="dni" class="elementoForm m-2 text-center">DNI</label>
                                     <input type="number" name="dni" id="dniPaciente" placeholder="  DNI"class="m-2">
+                                    <label for="telefono" class="elementoForm m-2 text-center">TELEFONO</label>
                                     <input type="number" name="telefono" id="telPaciente" placeholder="  TELEFONO"class="m-2">
+                                    <label for="fechaNacimiento" class="elementoForm m-2 text-center">FECHA DE NACIMIENTO</label>
                                     <input type="date" name="fechaNacimiento" id="nacimientoPaciente" class="m-2">
+                                    <label for="edad" class="elementoForm m-2 text-center">EDAD</label>
                                     <input type="number" name="edad" id="edadPaciente" placeholder="  EDAD"class="m-2">
+                                    <label for="fechaIngreso" class="elementoForm m-2 text-center">FECHA DE INGRESO</label>
                                     <input type="date" name="fechaIngreso" id="ingresoPaciente" class="m-2">
-                                    <textarea name="anamnesis" id="anamnesisPaciente" cols="30" rows="10" placeholder=" ANAMNESIS"class="m-2"></textarea>
-                                    <textarea name="evaluacion" id="evaluacionPaciente" cols="30" rows="10" placeholder="   EVALUACION INICIAL"class="m-2"></textarea>
-                                    <textarea name="objetivos" id="objetivosPaciente" cols="30" rows="10" placeholder=" OBJETIVOS TERAPEUTICOS"class="m-2"></textarea>
-                                    <textarea name="tratamiento" id="tratamientoPaciente" cols="30" rows="10" placeholder=" TRATAMIENTO"class="m-2"></textarea>
+                                    <label for="anamnesis" class="elementoForm m-2 text-center">ANAMNESIS</label>
+                                    <textarea name="anamnesis" id="anamnesisPaciente" cols="30" rows="5" placeholder=" ANAMNESIS"class="m-2"></textarea>
+                                    <label for="evaluacion" class="elementoForm m-2 text-center">EVALUACION</label>
+                                    <textarea name="evaluacion" id="evaluacionPaciente" cols="30" rows="5" placeholder="   EVALUACION INICIAL"class="m-2"></textarea>
+                                    <label for="objetivos" class="elementoForm m-2 text-center">OBJETIVOS</label>
+                                    <textarea name="objetivos" id="objetivosPaciente" cols="30" rows="5" placeholder=" OBJETIVOS TERAPEUTICOS"class="m-2"></textarea>
+                                    <label for="tratamiento" class="elementoForm m-2 text-center">TRATAMIENTO</label>
+                                    <textarea name="tratamiento" id="tratamientoPaciente" cols="30" rows="5" placeholder=" TRATAMIENTO"class="m-2"></textarea>
+                                    <label for="estudios" class="elementoForm m-2 text-center">ESTUDIOS</label>
                                     <input name="estudios" type="file" id="estudioPaciente"class="m-2">
+                                    <label for="sesiones" class="elementoForm m-2 text-center">SESIONES</label>
                                     <input type="number" name="sesiones" id="sesionesPaciente" placeholder=" SESIONES"class="m-2">
                                     <button type="submit"data-bs-dismiss="offcanvas" class="btn btn-success col-6 m-auto">Cargar</button>
                                 </form>

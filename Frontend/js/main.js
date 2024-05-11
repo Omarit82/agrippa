@@ -23,6 +23,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function ejecutaPacientes(){
         //------------------------PACIENTES---------------------------------
         //TOMA LA LISTA DE PACIENTES DEL BACKEND Y LA ENTREGA COMO UN JSON
+        // vaciar la lista antes de inciar
+        let selecPaciente = document.getElementById('dropPacientes');
+        selecPaciente.innerHTML="";
         fetch('pacientes').then(response => {
             // Verificar si la respuesta es exitosa
             if (!response.ok) {
@@ -32,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         }).then(data => {
                 //INGRESO LA LISTA DE PACIENTES DENTRO DEL CANVAS
-                let selecPaciente = document.getElementById('dropPacientes');
+                selecPaciente = document.getElementById('dropPacientes');
                 // AGREGADO DE ID Y CLASE A TODOS LOS BOTONES DE PACIENTES. 
                 for (let i=0; i<data.length;i++){
                     let newLi = document.createElement("li");

@@ -31,9 +31,9 @@ body {
 }
 
 input, textarea {
-  background-color: gray;
+  background-color: rgb(206, 206, 206);
   border: none;
-  color: #ffffff;
+  color: #666666;
 }
 
 .botones .btn {
@@ -101,6 +101,13 @@ input, textarea {
   .imagenBoton {
     height: 50px;
   }
+}
+
+#formCanvasPaciente {
+  color: #FFFFFF;
+}
+#formCanvasPaciente label {
+  background-color: #3498DB;
 }
 
 .titulo {
