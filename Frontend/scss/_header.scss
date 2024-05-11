@@ -8,5 +8,7 @@
     h1{
         color: map-get($colores,tipoPrincipal);
     }
-    
+    .navbar-brand {
+        margin-right: 2rem;
+    }
 }
