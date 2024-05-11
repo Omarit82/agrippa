@@ -34,4 +34,9 @@ class PacienteController extends SecuredController{
         $paciente = $_POST;
         $this->model->addPaciente($paciente);       
     }
+
+    function agregarPaciente(){
+        $paciente = $this->view->agregarPaciente();
+        $this->model->addPaciente($paciente);
+    }
 }

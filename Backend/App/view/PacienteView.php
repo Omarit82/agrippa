@@ -5,6 +5,14 @@ class PacienteView{
         
     }
     
+    function agregarPaciente(){
+        if(isset($_POST)){
+            $datos = file_get_contents("php://input");
+            $reg = json_decode($datos,true);
+            return $reg;
+        }
+    }
+
     function lista($pacientes){
         require_once './Frontend/pages/header.html';   
         ?>

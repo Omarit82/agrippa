@@ -43,3 +43,18 @@
 .fc-theme-standard .fc-scrollgrid{
     border: 1px solid map-get($colores,extra);
 }
+
+.fc-event-main{
+    width:80%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.fc-direction-ltr{
+    height: 500px;
+}
+.fc-list-event , .fc-v-event {
+    background-color:map-get($colores, evento);
+}
+.fc .fc-list-event-dot{
+    border-color: map-get($colores,principal);
+}

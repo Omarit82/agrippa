@@ -3,6 +3,7 @@ $color-secundario: #3498DB;//#b993ff;
 $color-tipografia-principal: #87ceeb;//#E0E0E0;
 $color-tipografia-secundario: #2c3e50;//#F5F5DC;
 $color-extra:#1f4788;//rgb(194, 130, 231);
+$color-evento:#ffaad583;
 
 /*Mapas*/
 $colores:(
@@ -10,5 +11,6 @@ $colores:(
     secundario: $color-secundario,
     tipoPrincipal: $color-tipografia-principal,
     tipoSecundario: $color-tipografia-secundario,
-    extra: $color-extra
+    extra: $color-extra,
+    evento:$color-evento
 )

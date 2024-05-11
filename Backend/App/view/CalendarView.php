@@ -77,6 +77,7 @@ class CalendarView{
                                             <li><a class="dropdown-item turno" id="turno_9">9° 14:20 - 15:00</a></li>
                                         </ul>
                                         <input class="w-100 campoPaciente mt-2 text-center" type="text" name="campoTurno" id="campoTurno">
+                                        <label for="sesiones" class=" botonUno btn w-100 mt-2">Sesiones remanentes</label>
                                         <input class="mt-2 w-100 text-center campoPaciente" type="text" name="sesiones" id="sesiones"> 
                                     </div>
                                 </div>
@@ -95,7 +96,7 @@ class CalendarView{
                         </div>
                         <div class="offcanvas-body p-0">
                             <div class="container p-0">
-                                <form action="addPaciente" method="post" class="d-flex flex-column col-11 m-auto pb-2">
+                                <form action="addPaciente" method="POST" id="formCanvasPaciente" class="d-flex flex-column col-11 m-auto pb-2">
                                     <input type="text" name="nombre" id="nombrePaciente" placeholder="  NOMBRE" class="m-2">
                                     <input type="text" name="apellido" id="apellidoPaciente" placeholder=" APELLIDO"class="m-2">
                                     <input type="number" name="dni" id="dniPaciente" placeholder="  DNI"class="m-2">
@@ -109,7 +110,7 @@ class CalendarView{
                                     <textarea name="tratamiento" id="tratamientoPaciente" cols="30" rows="10" placeholder=" TRATAMIENTO"class="m-2"></textarea>
                                     <input name="estudios" type="file" id="estudioPaciente"class="m-2">
                                     <input type="number" name="sesiones" id="sesionesPaciente" placeholder=" SESIONES"class="m-2">
-                                    <button type="submit" class="btn btn-success col-6 m-auto">Cargar</button>
+                                    <button type="submit"data-bs-dismiss="offcanvas" class="btn btn-success col-6 m-auto">Cargar</button>
                                 </form>
                             </div>
                         </div>
