@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
             turnoElegido.value = trn;
         })
     }
+
     function ejecutaPacientes(){
         //------------------------PACIENTES---------------------------------
         //TOMA LA LISTA DE PACIENTES DEL BACKEND Y LA ENTREGA COMO UN JSON
@@ -172,10 +173,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         calendar.render();
     }
-
-    let fechaTituloCalendar = document.getElementById('fc-dom-1').innerHTML;
-    let titulo = document.getElementById('tituloFecha');
-    titulo.innerHTML = fechaTituloCalendar; 
 
     //----------------FORMULARIO NUEVO TURNO-----------------//
     formNuevoTurno.addEventListener('submit',function(e){
