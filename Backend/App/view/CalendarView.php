@@ -22,6 +22,7 @@ class CalendarView{
             return $reg;
         }
     }
+    
     function calendar(){   
         require_once './Frontend/pages/header.html'; 
         ?>
@@ -77,8 +78,10 @@ class CalendarView{
                                             <li><a class="dropdown-item turno" id="turno_9">9° 14:20 - 15:00</a></li>
                                         </ul>
                                         <input class="w-100 campoPaciente mt-2 text-center" type="text" name="campoTurno" id="campoTurno">
-                                        <label for="sesiones" class=" botonUno btn w-100 mt-2">Sesiones remanentes</label>
-                                        <input class="mt-2 w-100 text-center campoPaciente" type="text" name="sesiones" id="sesiones"> 
+                                        <label for="sesiones" class=" botonUno btn w-100 mt-2">Sesiones Totales</label>
+                                        <input class="mt-2 w-100 text-center campoPaciente" type="number" name="sesiones" id="sesiones"> 
+                                        <label for="sesionesRemanentes" class="botonUno btn w-100 mt-2">Sesiones Remanentes</label>
+                                        <input type="number"class="mt-2 w-100 text-center campoPaciente" name="sesionesRemanentes" id="sesionesRemanentes">
                                     </div>
                                 </div>
                                 <div class="mt-5 d-flex justify-content-around">

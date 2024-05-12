@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Parsear la respuesta como JSON
             return response.json();
         }).then(data => {
+            console.log(data);
                 //INGRESO LA LISTA DE PACIENTES DENTRO DEL CANVAS
                 selecPaciente = document.getElementById('dropPacientes');
                 // AGREGADO DE ID Y CLASE A TODOS LOS BOTONES DE PACIENTES. 
@@ -51,11 +52,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 let botones = document.querySelectorAll('.selectPaciente');
                 let selected = document.getElementById('campoPaciente');
                 let sesiones = document.getElementById('sesiones');
+                let remanentes = document.getElementById('sesionesRemanentes');
                 for(let i = 0; i< botones.length ; i++){
                     botones[i].addEventListener('click',()=>{
                         let valor = botones[i].innerHTML;
                         selected.value = valor;
                         sesiones.value = data[i].sesiones;
+                        remanentes.value = data[i].ses_remanentes;
                     })
                 }
         }).catch(error => {
@@ -152,25 +155,31 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Parsear la respuesta como JSON
                     return response.json();
                 }).then(data => {
-                        let events = data.map(function(event){
-                            return {
-                                title: event.nombre,
-                                start: event.fechaInicio,
-                                end: event.fechaFinal,
-                                timeStart: event.inicio,
-                                timeEnd: event.final,
-                            }
-                        })  
-                        successCallback(events);
+                    let events = data.map(function(event){
+                        return {
+                            title: event.nombre,
+                            start: event.fechaInicio,
+                            end: event.fechaFinal,
+                            timeStart: event.inicio,
+                            timeEnd: event.final,
+                            extendedProps:{
+                                sesiones: event.sesiones,
+                                remanentes: event.ses_remanentes
+                            } 
+                        }
+                    })  
+                    console.log(events);
+                    successCallback(events);
                 }).catch(error => {
                         failureCallback('Error:', error);
                 });
             },
             eventContent: function(info){
                 //info la extrae de cada evento
+                
                 return {
                     html:`
-                        <div>${info.event.title}</div>`
+                        <div>${info.event.title} | ${info.event.extendedProps.remanentes} / ${info.event.extendedProps.sesiones}</div>`
                 }
             },            
         });
@@ -196,21 +205,29 @@ document.addEventListener('DOMContentLoaded', function() {
         let horaFinal = hora[1];
         let fechaInicio = fecha+"T"+horaInicio;
         let fechaFinal = fecha+"T"+horaFinal;
+        let remanentes = document.getElementById('sesionesRemanentes').value;
+        
         // Creamos un objeto para pasarle
         let envio = {
             "fechaInicio":fechaInicio,
             "fechaFinal":fechaFinal, //fecha
             "id": id, //id del paciente
             "name":nombre,
-            "incio": horaInicio,
+            "inicio": horaInicio,
             "final": horaFinal
         }
-        
+        console.log(envio);
         if(fecha =='' || paciente ==''){
             Swal.fire(
                 'Aviso',
                 'Todos los campos son necesarios',
                 'warning'
+            )
+        }else if(remanentes == 0){
+            Swal.fire(
+                'Aviso',
+                'El paciente ya realizó todas sus sesiones',
+                'error'
             )
         }else{
             fetch('registrar',{

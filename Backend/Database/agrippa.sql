@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2024 at 02:57 AM
+-- Generation Time: May 12, 2024 at 03:25 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,17 +42,26 @@ CREATE TABLE `paciente` (
   `tratamiento` varchar(1000) NOT NULL,
   `estudios` longblob NOT NULL,
   `sesiones` int(11) NOT NULL,
-  `ses_completas` int(11) NOT NULL DEFAULT 1
+  `ses_remanentes` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `paciente`
 --
 
-INSERT INTO `paciente` (`id_paciente`, `nombre`, `apellido`, `dni`, `telefono`, `fecha_nacimiento`, `edad`, `fecha_ingreso`, `anamnesis`, `evaluacion_inicial`, `objetivos_terapeuticos`, `tratamiento`, `estudios`, `sesiones`, `ses_completas`) VALUES
+INSERT INTO `paciente` (`id_paciente`, `nombre`, `apellido`, `dni`, `telefono`, `fecha_nacimiento`, `edad`, `fecha_ingreso`, `anamnesis`, `evaluacion_inicial`, `objetivos_terapeuticos`, `tratamiento`, `estudios`, `sesiones`, `ses_remanentes`) VALUES
 (1, 'Omar', 'Roselli', 29555208, 2234379450, '1982-07-11', 41, '2024-04-22', 'Esta todo roto', 'Si, está todo roto', 'Arreglarlo', 'Entrenamiento', '', 10, 0),
 (2, 'Malena', 'Griffiths', 31625325, 1158744291, '1985-07-01', 38, '2024-04-21', 'Es puerca', 'Si, es muy puerca', '', '', '', 8, 0),
-(3, 'Matu', 'Venier', 54210961, 2494576229, '2014-08-28', 9, '2024-04-27', 'Cochina como la tia', 'Muy puerca', 'Que sea mas puerca', 'porquedad', '', 15, 0);
+(3, 'Matu', 'Venier', 54210961, 2494576229, '2014-08-28', 9, '2024-04-27', 'Cochina como la tia', 'Muy puerca', 'Que sea mas puerca', 'porquedad', '', 15, 0),
+(7, 'carlos', 'test', 55555555, 44444444, '2024-05-10', 54, '2024-05-25', 'esta es la anamnesis', 'esta es la evaluacion inicial', 'Estos son los objetivos terapeuticos', 'Este es el tratamiento', 0x4172726179, 25, 25),
+(8, 'Pepe', 'Poo', 213234, 234235235, '0000-00-00', 23, '0000-00-00', '', '', '', '', '', 4, 4),
+(9, 'Winnie', 'Poo', 0, 0, '0000-00-00', 0, '0000-00-00', '', '', '', '', 0x4172726179, 4, 4),
+(10, 'Pepe', 'LePoo', 0, 0, '0000-00-00', 0, '0000-00-00', '', '', '', '', 0x4172726179, 0, 0),
+(11, 'Bugs', 'Bunny', 0, 0, '0000-00-00', 0, '0000-00-00', '', '', '', '', 0x4172726179, 0, 0),
+(12, 'Pato', 'Lucas', 0, 0, '0000-00-00', 0, '0000-00-00', '', '', '', '', 0x4172726179, 0, 0),
+(13, 'Mickey', 'Mouse', 0, 0, '0000-00-00', 0, '0000-00-00', '', '', '', '', 0x4172726179, 0, 0),
+(14, 'nuevo', 'otro', 0, 0, '0000-00-00', 0, '0000-00-00', '', '', '', '', 0x4172726179, 0, 0),
+(15, 'Segunda', 'Pruba', 0, 0, '0000-00-00', 0, '0000-00-00', '', '', '', '', 0x4172726179, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -61,19 +70,24 @@ INSERT INTO `paciente` (`id_paciente`, `nombre`, `apellido`, `dni`, `telefono`, 
 --
 
 CREATE TABLE `turno` (
-  `fecha` date NOT NULL,
+  `fechaInicio` datetime NOT NULL,
   `paciente` int(11) NOT NULL,
-  `id_horario` int(11) NOT NULL,
-  `sesiones_totales` int(11) NOT NULL,
-  `turno_id` int(11) NOT NULL
+  `inicio` time NOT NULL,
+  `turno_id` int(11) NOT NULL,
+  `final` time NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `fechaFinal` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `turno`
 --
 
-INSERT INTO `turno` (`fecha`, `paciente`, `id_horario`, `sesiones_totales`, `turno_id`) VALUES
-('2024-05-09', 2, 3, 8, 1);
+INSERT INTO `turno` (`fechaInicio`, `paciente`, `inicio`, `turno_id`, `final`, `nombre`, `fechaFinal`) VALUES
+('2024-05-11 09:00:00', 12, '09:00:00', 26, '09:40:00', 'Lucas, Pato', '2024-05-11 09:40:00'),
+('2024-05-11 09:00:00', 2, '09:00:00', 27, '09:40:00', 'Griffiths, Malena', '2024-05-11 09:40:00'),
+('2024-05-11 10:20:00', 3, '10:20:00', 28, '11:00:00', 'Venier, Matu', '2024-05-11 11:00:00'),
+('2024-05-11 10:20:00', 1, '10:20:00', 29, '11:00:00', 'Roselli, Omar', '2024-05-11 11:00:00');
 
 -- --------------------------------------------------------
 
@@ -125,13 +139,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `id_paciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_paciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `turno`
 --
 ALTER TABLE `turno`
-  MODIFY `turno_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `turno_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `users`
