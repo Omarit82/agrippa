@@ -34,14 +34,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Parsear la respuesta como JSON
             return response.json();
         }).then(data => {
-            console.log(data);
                 //INGRESO LA LISTA DE PACIENTES DENTRO DEL CANVAS
                 selecPaciente = document.getElementById('dropPacientes');
                 // AGREGADO DE ID Y CLASE A TODOS LOS BOTONES DE PACIENTES. 
                 for (let i=0; i<data.length;i++){
                     let newLi = document.createElement("li");
                     let anchor = document.createElement("a");
-                    let contenido = document.createTextNode(data[i].id_paciente+"- "+data[i].apellido+", "+data[i].nombre);
+                    let contenido = document.createTextNode(data[i].id_paciente+"- "+data[i].apellido+", "+data[i].nombre+" | ("+data[i].ses_remanentes+") / "+data[i].sesiones);
                     anchor.appendChild(contenido);
                     anchor.classList.add("dropdown-item","selectPaciente");
                     anchor.setAttribute("id",data[i].id_paciente);
@@ -164,10 +163,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             timeEnd: event.final,
                             extendedProps:{
                                 sesiones: event.sesiones,
-                                remanentes: event.ses_remanentes
+                                remanentes: event.ses_remanentes,
+                                idPaciente: event.id_paciente
                             } 
                         }
-                    })  
+                    }) 
                     console.log(events);
                     successCallback(events);
                 }).catch(error => {
@@ -176,10 +176,9 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             eventContent: function(info){
                 //info la extrae de cada evento
-                
                 return {
                     html:`
-                        <div>${info.event.title} | ${info.event.extendedProps.remanentes} / ${info.event.extendedProps.sesiones}</div>`
+                        <div><a id="${info.event.extendedProps.idPaciente}Paciente">${info.event.title} | (${info.event.extendedProps.remanentes})</a></div>`
                 }
             },            
         });
@@ -196,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let id_pac = infoForm.get('campoPaciente');
         let new_id_pac = id_pac.split("- ");
         let id = new_id_pac[0];
-        let nombre = new_id_pac[1];
+        let nombre = (new_id_pac[1].split(' | '))[0];
         //Tomamos el horario del turno
         let num = infoForm.get('campoTurno').split('° ');
         let turno = num[1];

@@ -186,7 +186,7 @@ class Model{
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
     function eventos(){ // DEVUELVE LA LISTA DE EVENTOS
-        $query = $this->db->prepare("SELECT turno.inicio,turno.fechaInicio,turno.final,turno.fechaFinal,turno.nombre, paciente.sesiones, paciente.ses_remanentes FROM turno INNER JOIN paciente ON turno.paciente=paciente.id_paciente");
+        $query = $this->db->prepare("SELECT turno.inicio,turno.fechaInicio,turno.final,turno.fechaFinal,turno.nombre, paciente.sesiones, paciente.ses_remanentes,paciente.id_paciente FROM turno INNER JOIN paciente ON turno.paciente=paciente.id_paciente");
         $query->execute();
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
