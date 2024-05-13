@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let offcanvasLeft = new bootstrap.Offcanvas(document.getElementById('offcanvasLeft'));
     let formNuevoTurno = document.getElementById('formCanvasTurno');
     let formNuevoPaciente = document.getElementById('formCanvasPaciente');
-
+    let eventModal =  new bootstrap.Modal(document.getElementById('eventoModal'));
     for (let i = 0 ; i<turnosHorarios.length ; i++){
         turnosHorarios[i].addEventListener('click',()=>{
             let trn = turnosHorarios[i].innerHTML;
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 offcanvasLeft.show();
             },
             selectable: true,
-            allDaySlot: true,
+            allDaySlot: false,
             allDayText: 'Hoy',
         
             defaultEventMinutes: 40,
@@ -141,8 +141,40 @@ document.addEventListener('DOMContentLoaded', function() {
             dragOpacity: {
                 agenda: .5
             },
-            minTime: 9,
-            maxTime: 15,
+            eventClick: function(eventClickInfo){
+                //console.log(eventClickInfo);
+                let titulo = document.getElementById('eventoModalTitle');
+                titulo.value = eventClickInfo.event.title;
+                let subtitle = document.getElementById('eventModalSubtitle');
+                subtitle.value = eventClickInfo.event.extendedProps.sesiones+" | "+eventClickInfo.event.extendedProps.remanentes;
+                let form = document.getElementById('modalEventoForm');
+                form.addEventListener('submit',function(e){
+                    e.preventDefault();
+                    let dato = eventClickInfo.event.extendedProps.remanentes;
+                    dato = dato-1;
+                    let envio={
+                        "remanentes":dato,
+                        "id": eventClickInfo.event.extendedProps.idPaciente,
+                        "turnoId": eventClickInfo.event.extendedProps.turno_id
+                    }
+                    fetch('turnoComplete',{
+                        'method':'POST',
+                        'headers': {
+                            "Content-Type":"application/json; charset=utf-8"
+                        },
+                        'body': JSON.stringify(envio)
+                    }).then(function(resp){
+                        return resp.text();
+                    }).then(function(envio){
+                        console.log("Enviado!:"+envio);
+                    })
+                    //cerrar el modal y terminar el evento
+                    calendar.remove(eventClickInfo.event.extendedProps.turno_id);
+                })                
+                eventModal.show();
+
+
+            },
             events: function(info,successCallback,failureCallback){
                 //------------------------EVENTOS---------------------------------
                 //TOMA LA LISTA DE EVENTOS DEL BACKEND Y LA ENTREGA COMO UN JSON
@@ -164,11 +196,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             extendedProps:{
                                 sesiones: event.sesiones,
                                 remanentes: event.ses_remanentes,
-                                idPaciente: event.id_paciente
+                                idPaciente: event.id_paciente,
+                                idTurno: event.turno_id
                             } 
                         }
                     }) 
-                    console.log(events);
+                    
                     successCallback(events);
                 }).catch(error => {
                         failureCallback('Error:', error);
@@ -178,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 //info la extrae de cada evento
                 return {
                     html:`
-                        <div><a id="${info.event.extendedProps.idPaciente}Paciente">${info.event.title} | (${info.event.extendedProps.remanentes})</a></div>`
+                        <div><a class="pacienteEvento">${info.event.title} | (${info.event.extendedProps.remanentes})</a></div>`
                 }
             },            
         });
@@ -283,6 +316,6 @@ document.addEventListener('DOMContentLoaded', function() {
         //limpio el fomulario y cierro
         formNuevoPaciente.reset();
         ejecutaPacientes();
-    })
+    })   
 });
 

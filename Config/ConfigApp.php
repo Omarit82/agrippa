@@ -16,6 +16,7 @@ class ConfigApp{
         'events'=>'CalendarController#events',//TRANSFERENCIA DE JSON EVENTS AL FRONTEND
         'pacientes'=>'CalendarController#pacientes',//TRANSFERENCIA DE JSON PACIENTES AL FRONTEND
         'registrar'=>'CalendarController#registrar',
-        'agregarPaciente'=>'PacienteController#agregarPaciente'
+        'agregarPaciente'=>'PacienteController#agregarPaciente',
+        'turnoComplete'=>'CalendarController#turnoComplete'
     ];
 }

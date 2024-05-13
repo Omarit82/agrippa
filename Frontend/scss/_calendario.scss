@@ -58,3 +58,8 @@
 .fc .fc-list-event-dot{
     border-color: map-get($colores,principal);
 }
+.pacienteEvento{
+    color: map-get($colores,extra);
+    text-decoration: none;
+    font-weight: 600;    
+}

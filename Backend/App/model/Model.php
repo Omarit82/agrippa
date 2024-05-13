@@ -186,7 +186,7 @@ class Model{
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
     function eventos(){ // DEVUELVE LA LISTA DE EVENTOS
-        $query = $this->db->prepare("SELECT turno.inicio,turno.fechaInicio,turno.final,turno.fechaFinal,turno.nombre, paciente.sesiones, paciente.ses_remanentes,paciente.id_paciente FROM turno INNER JOIN paciente ON turno.paciente=paciente.id_paciente");
+        $query = $this->db->prepare("SELECT turno.turno_id,turno.inicio,turno.fechaInicio,turno.final,turno.fechaFinal,turno.nombre, paciente.sesiones, paciente.ses_remanentes,paciente.id_paciente FROM turno INNER JOIN paciente ON turno.paciente=paciente.id_paciente");
         $query->execute();
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
@@ -195,7 +195,10 @@ class Model{
         $query->execute(array($evento['fechaInicio'],$evento['fechaFinal'],$evento['id'],$evento['inicio'],$evento['final'],$evento['name']));
     }
 
-
+    function turnoComplete($update){
+        $query = $this->db->prepare("UPDATE `paciente` SET `ses_remanentes` = ? WHERE `paciente`.`id_paciente` = ? ");
+        $query->execute(array($update['remanentes'],$update['id']));
+    }
     function getUser($user){ //BUSCA UN USUARIO PASADO POR PARAMETROS EN EL MODELO Y LO DEVUELVE
         $query = $this->db->prepare("select * from users where name_user=?");
         $query->execute(array($user));

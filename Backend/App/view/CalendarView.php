@@ -5,6 +5,13 @@ class CalendarView{
 
     }
 
+    function turnoComplete(){
+        if(isset($_POST)){
+            $datos = file_get_contents("php://input");
+            $reg = json_decode($datos,true);
+            return $reg;
+        }
+    }
     function eventos($eventos){
         header('Content-Type: application/json');
         echo json_encode($eventos);
@@ -133,15 +140,41 @@ class CalendarView{
                     </div>
                     <!-- Fin del offcanvas derecho -->
                 </div>
+                <!-- Titulo  -->
                 <div id="tituloFecha" class="text-center p-3 titulo">
 
                 </div>
                 <!-- show calendar -->
                 <div class="col-10 col-md-8 pb-5 m-auto">
-                        <div id='calendar'></div>
+                    <div id='calendar'></div>
                 </div>
                 <!-- fin del showCalendar -->  
-            </div>          
+            </div>    
+            <!-- Modal -->
+            <<!-- Modal -->
+            <div class="modal fade" id="eventoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="eventoModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="turnoComplete" method="POST" id="modalEventoForm">
+                            <div class="modal-header">
+                                <h3 class="modal-title fs-4">Paciente: </h3>
+                                <input type="text" id="eventoModalTitle" name="eventoModalTitle" class="p-2 ms-2">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h4 class="fs-5" id="">Número de sesión :</h4>
+                                <input type="text" id="eventModalSubtitle" name="eventModalSubtitle" class="p-2 ms-2">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Eliminar registro</button>
+                                <button type="submit" class="btn btn-success">Asistio</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+      
         </main> <?php
         require_once './Frontend/pages/footer.html';
     }    
