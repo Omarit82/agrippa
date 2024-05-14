@@ -325,8 +325,9 @@ document.addEventListener('DOMContentLoaded', function() {
         let horaFinal = hora[1];
         let fechaInicio = fecha+"T"+horaInicio;
         let fechaFinal = fecha+"T"+horaFinal;
-        //Tomamos las sesiones remanentes
+        //Tomamos las sesiones remanentes y las totales
         let remanentes = document.getElementById('sesionesRemanentes').value; 
+        let totales = document.getElementById('sesiones').value;
         // Creamos un objeto para pasarle - debo descontar una sesion!
         let envio = {
             "fechaInicio":fechaInicio,
@@ -335,7 +336,8 @@ document.addEventListener('DOMContentLoaded', function() {
             "name":nombre,
             "inicio": horaInicio,
             "final": horaFinal,
-            "remanentes": remanentes-1
+            "remanentes": remanentes-1,
+            "numeroTurno": totales - remanentes-1,
         }
         console.log(envio);
         if(fecha =='' || paciente ==''){
