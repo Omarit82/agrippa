@@ -182,9 +182,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             );
                         })
                     }
-                    
-                      
-                  
                 })                
                 eventModal.show();
 
@@ -202,21 +199,55 @@ document.addEventListener('DOMContentLoaded', function() {
                     return response.json();
                 }).then(data => {
                     let events = data.map(function(event){
-                        return {
-                            title: event.nombre,
-                            start: event.fechaInicio,
-                            end: event.fechaFinal,
-                            timeStart: event.inicio,
-                            timeEnd: event.final,
-                            extendedProps:{
-                                sesiones: event.sesiones,
-                                remanentes: event.ses_remanentes,
-                                idPaciente: event.id_paciente,
-                                idTurno: event.turno_id
-                            } 
+                        if(event.ses_remanentes > 1){
+                            return {
+                                title: event.nombre,
+                                start: event.fechaInicio,
+                                end: event.fechaFinal,
+                                timeStart: event.inicio,
+                                timeEnd: event.final,
+                                extendedProps:{
+                                    sesiones: event.sesiones,
+                                    remanentes: event.ses_remanentes,
+                                    idPaciente: event.id_paciente,
+                                    idTurno: event.turno_id,
+                                    image: './Frontend/assets/img/clock.png',
+                                }
+                            }
+                        }else if(event.ses_remanentes == 1){
+                            return {
+                                title: event.nombre,
+                                start: event.fechaInicio,
+                                end: event.fechaFinal,
+                                timeStart: event.inicio,
+                                timeEnd: event.final,
+                                extendedProps:{
+                                    sesiones: event.sesiones,
+                                    remanentes: event.ses_remanentes,
+                                    idPaciente: event.id_paciente,
+                                    idTurno: event.turno_id,
+                                    image: './Frontend/assets/img/clock.png',
+                                },
+                                color: '#ff4c4c',  
+                            }
+                        }else{
+                            return {
+                                title: event.nombre,
+                                start: event.fechaInicio,
+                                end: event.fechaFinal,
+                                timeStart: event.inicio,
+                                timeEnd: event.final,
+                                extendedProps:{
+                                    sesiones: event.sesiones,
+                                    remanentes: event.ses_remanentes,
+                                    idPaciente: event.id_paciente,
+                                    idTurno: event.turno_id,
+                                    image: './Frontend/assets/img/ok.png', 
+                                },
+                                color: 'lightgreen',
+                            }
                         }
-                    }) 
-                    
+                    })
                     successCallback(events);
                 }).catch(error => {
                         failureCallback('Error:', error);
@@ -226,7 +257,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 //info la extrae de cada evento
                 return {
                     html:`
-                        <div><a class="pacienteEvento">${info.event.title} | (${info.event.extendedProps.remanentes})</a></div>`
+                        <div>
+                            <a class="pacienteEvento">${info.event.title} | (${info.event.extendedProps.remanentes})</a>
+                            <img src="${info.event.extendedProps.image}">
+                        </div>`
                 }
             },            
         });
@@ -288,6 +322,11 @@ document.addEventListener('DOMContentLoaded', function() {
                
             }).then(function(datos){
                 console.log("Enviado!:");
+                Swal.fire(
+                    'Aviso',
+                    'Nuevo turno cargado!',
+                    'success'
+                )
             })
         }
         //limpio el fomulario y cierro
