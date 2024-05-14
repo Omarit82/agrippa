@@ -6,13 +6,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     ejecutarCalendario();
     ejecutaPacientes();
-    //dentro del canvas izquierdo permite seleccionar un turno y lo muestra en el html
+    /**
+    *  ----------VARIABLES------------
+    */
     let turnosHorarios = document.querySelectorAll(".turno"); // Array con todos los posibles turnos
     let turnoElegido = document.getElementById('campoTurno'); // 
+    // INICIO DE LOS COMPONENTES DE BOOSTSTRAP
     let offcanvasLeft = new bootstrap.Offcanvas(document.getElementById('offcanvasLeft'));
+    let eventModal =  new bootstrap.Modal(document.getElementById('eventoModal'));
+    // FORMULARIOS DE LOS CANVAS
     let formNuevoTurno = document.getElementById('formCanvasTurno');
     let formNuevoPaciente = document.getElementById('formCanvasPaciente');
-    let eventModal =  new bootstrap.Modal(document.getElementById('eventoModal'));
+    
     for (let i = 0 ; i<turnosHorarios.length ; i++){
         turnosHorarios[i].addEventListener('click',()=>{
             let trn = turnosHorarios[i].innerHTML;
@@ -23,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function ejecutaPacientes(){
         //------------------------PACIENTES---------------------------------
         //TOMA LA LISTA DE PACIENTES DEL BACKEND Y LA ENTREGA COMO UN JSON
-        // vaciar la lista antes de inciar
         let selecPaciente = document.getElementById('dropPacientes');
+         // vaciar la lista antes de inciar
         selecPaciente.innerHTML="";
         fetch('pacientes').then(response => {
             // Verificar si la respuesta es exitosa
@@ -64,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error:', error);
         });
     }
+
     function ejecutarCalendario(){
         //----------------------CALENDARIO-------------------------//   
         let calendar = new FullCalendar.Calendar(calendarEl, {
@@ -85,7 +91,17 @@ document.addEventListener('DOMContentLoaded', function() {
             headerToolbar: {
                 left: 'prev,next,today,list',
                 center: 'title',
-                right: 'timeGridWeek,timeGridDay,dayGridMonth' // user can switch between the two
+                right: 'timeGridWeek,timeGridDay' // user can switch between the two
+            },
+            selectable: true,
+            allDaySlot: false,
+            //defaultEventMinutes: 40,
+            axisFormat: 'h(:mm)tt', 
+            timeFormat: {
+                agenda: 'h:mm{ - h:mm}'
+            },
+            dragOpacity: {
+                agenda: .5
             },
             dateClick: function(info){
                 let cadena = info.dateStr.split('T');
@@ -129,24 +145,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('fechaTurno').value =dia;
                 offcanvasLeft.show();
             },
-            selectable: true,
-            allDaySlot: false,
-            allDayText: 'Hoy',
-        
-            defaultEventMinutes: 40,
-            axisFormat: 'h(:mm)tt', 
-            timeFormat: {
-                agenda: 'h:mm{ - h:mm}'
-            },
-            dragOpacity: {
-                agenda: .5
-            },
             eventClick: function(eventClickInfo){
-                console.log(eventClickInfo);
-                let titulo = document.getElementById('eventoModalTitle');
-                titulo.value = eventClickInfo.event.title;
-                let subtitle = document.getElementById('eventModalSubtitle');
-                subtitle.value = eventClickInfo.event.extendedProps.sesiones+" | "+eventClickInfo.event.extendedProps.remanentes;
+                //***********INFO PARA EL MODAL**********************/
+                document.getElementById('eventoModalTitle').value = eventClickInfo.event.title;
+                document.getElementById('eventModalSubtitle').value = eventClickInfo.event.extendedProps.sesiones+" | "+eventClickInfo.event.extendedProps.remanentes;
+                //***********EVENTO FINALIZADO CORRECTAMENTE*********/
                 let modal = document.getElementById('modalEventoForm');
                 modal.addEventListener('submit',function(e){
                     e.preventDefault();
@@ -158,11 +161,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             'error'
                         );
                     }else{
-                        dato = dato-1;
+                        dato = dato-1; //las remanentes deben restarse al asignar un turno!!!**
                         let envio={
                             "remanentes":dato,
                             "id": eventClickInfo.event.extendedProps.idPaciente,
-                            "turnoId": eventClickInfo.event.extendedProps.turno_id
+                            "turnoId": eventClickInfo.event.extendedProps.idTurno,
+                            "estado": "listo"
                         }
                         fetch('turnoComplete',{
                             'method':'POST',
@@ -173,20 +177,20 @@ document.addEventListener('DOMContentLoaded', function() {
                         }).then(function(resp){
                             return resp.text();
                         }).then(function(envio){
-                            console.log("Enviado!:"+envio);
-                            //cerrar el modal - cambiar el color del evento y agregar un tilde con animacion!!
                             Swal.fire(
                                 'Aviso',
                                 'Sesion realizada!',
                                 'success'
                             );
+                            setTimeout(ejecutarCalendario(),3000);
                         })
                     }
-                })                
-                eventModal.show();
-
-
+                })
+                //************ELIMINAR EVENTO*************** *//
+                /** Elimina un evento pero recupera la sesion - elimina en caso de error. */
+                eventModal.show();  
             },
+            //--------------------EVENTOS-------------------
             events: function(info,successCallback,failureCallback){
                 //------------------------EVENTOS---------------------------------
                 //TOMA LA LISTA DE EVENTOS DEL BACKEND Y LA ENTREGA COMO UN JSON
@@ -199,53 +203,88 @@ document.addEventListener('DOMContentLoaded', function() {
                     return response.json();
                 }).then(data => {
                     let events = data.map(function(event){
-                        if(event.ses_remanentes > 1){
-                            return {
-                                title: event.nombre,
-                                start: event.fechaInicio,
-                                end: event.fechaFinal,
-                                timeStart: event.inicio,
-                                timeEnd: event.final,
-                                extendedProps:{
-                                    sesiones: event.sesiones,
-                                    remanentes: event.ses_remanentes,
-                                    idPaciente: event.id_paciente,
-                                    idTurno: event.turno_id,
-                                    image: './Frontend/assets/img/clock.png',
-                                }
-                            }
-                        }else if(event.ses_remanentes == 1){
-                            return {
-                                title: event.nombre,
-                                start: event.fechaInicio,
-                                end: event.fechaFinal,
-                                timeStart: event.inicio,
-                                timeEnd: event.final,
-                                extendedProps:{
-                                    sesiones: event.sesiones,
-                                    remanentes: event.ses_remanentes,
-                                    idPaciente: event.id_paciente,
-                                    idTurno: event.turno_id,
-                                    image: './Frontend/assets/img/clock.png',
-                                },
-                                color: '#ff4c4c',  
-                            }
-                        }else{
-                            return {
-                                title: event.nombre,
-                                start: event.fechaInicio,
-                                end: event.fechaFinal,
-                                timeStart: event.inicio,
-                                timeEnd: event.final,
-                                extendedProps:{
-                                    sesiones: event.sesiones,
-                                    remanentes: event.ses_remanentes,
-                                    idPaciente: event.id_paciente,
-                                    idTurno: event.turno_id,
-                                    image: './Frontend/assets/img/ok.png', 
-                                },
-                                color: 'lightgreen',
-                            }
+                        switch(event.estado){
+                            case 'listo' : // Evento que se finalizo con exito
+                                return {
+                                    title: event.nombre,
+                                    start: event.fechaInicio,
+                                    end: event.fechaFinal,
+                                    timeStart: event.inicio,
+                                    timeEnd: event.final,
+                                    extendedProps:{
+                                        sesiones: event.sesiones,
+                                        remanentes: event.ses_remanentes,
+                                        idPaciente: event.id_paciente,
+                                        idTurno: event.turno_id,
+                                        image: './Frontend/assets/img/ok.png', 
+                                    },
+                                    color: 'lightgreen', // Que hacer con los botones??
+                                }; 
+                            case 'ausente' : // Evento cancelado por ausencia sin aviso
+                                return {
+                                    title: event.nombre,
+                                    start: event.fechaInicio,
+                                    end: event.fechaFinal,
+                                    timeStart: event.inicio,
+                                    timeEnd: event.final,
+                                    extendedProps:{
+                                        sesiones: event.sesiones,
+                                        remanentes: event.ses_remanentes,
+                                        idPaciente: event.id_paciente,
+                                        idTurno: event.turno_id,
+                                        image: './Frontend/assets/img/not.png', 
+                                    },
+                                    color: 'lightred', 
+                                }; 
+                            case 'reprogramado' : //Evento reprogramado
+                                return {
+                                    title: event.nombre,
+                                    start: event.fechaInicio,
+                                    end: event.fechaFinal,
+                                    timeStart: event.inicio,
+                                    timeEnd: event.final,
+                                    extendedProps:{
+                                        sesiones: event.sesiones,
+                                        remanentes: event.ses_remanentes,
+                                        idPaciente: event.id_paciente,
+                                        idTurno: event.turno_id,
+                                        image: './Frontend/assets/img/refatto.png',
+                                    },
+                                    color: 'lightblue',  
+                                };
+                            default: // Evento a espera de estado!
+                                if(event.ses_remanentes == 1){
+                                    return {
+                                        title: event.nombre,
+                                        start: event.fechaInicio,
+                                        end: event.fechaFinal,
+                                        timeStart: event.inicio,
+                                        timeEnd: event.final,
+                                        extendedProps:{
+                                            sesiones: event.sesiones,
+                                            remanentes: event.ses_remanentes,
+                                            idPaciente: event.id_paciente,
+                                            idTurno: event.turno_id,
+                                            image: './Frontend/assets/img/alert.png',
+                                        },
+                                        color: 'orange',  
+                                    };
+                                }else{
+                                    return {
+                                        title: event.nombre,
+                                        start: event.fechaInicio,
+                                        end: event.fechaFinal,
+                                        timeStart: event.inicio,
+                                        timeEnd: event.final,
+                                        extendedProps:{
+                                            sesiones: event.sesiones,
+                                            remanentes: event.ses_remanentes,
+                                            idPaciente: event.id_paciente,
+                                            idTurno: event.turno_id,
+                                            image: './Frontend/assets/img/clock.png',
+                                        }, 
+                                    };
+                                }       
                         }
                     })
                     successCallback(events);
@@ -258,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return {
                     html:`
                         <div>
-                            <a class="pacienteEvento">${info.event.title} | (${info.event.extendedProps.remanentes})</a>
+                            <a class="pacienteEvento">${info.event.title} | ${info.event.extendedProps.sesiones-info.event.extendedProps.remanentes} de ${info.event.extendedProps.sesiones}</a>
                             <img src="${info.event.extendedProps.image}">
                         </div>`
                 }
@@ -286,16 +325,17 @@ document.addEventListener('DOMContentLoaded', function() {
         let horaFinal = hora[1];
         let fechaInicio = fecha+"T"+horaInicio;
         let fechaFinal = fecha+"T"+horaFinal;
-        let remanentes = document.getElementById('sesionesRemanentes').value;
-        
-        // Creamos un objeto para pasarle
+        //Tomamos las sesiones remanentes
+        let remanentes = document.getElementById('sesionesRemanentes').value; 
+        // Creamos un objeto para pasarle - debo descontar una sesion!
         let envio = {
             "fechaInicio":fechaInicio,
             "fechaFinal":fechaFinal, //fecha
             "id": id, //id del paciente
             "name":nombre,
             "inicio": horaInicio,
-            "final": horaFinal
+            "final": horaFinal,
+            "remanentes": remanentes-1
         }
         console.log(envio);
         if(fecha =='' || paciente ==''){
@@ -321,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return resp.text();
                
             }).then(function(datos){
-                console.log("Enviado!:");
+                console.log("Enviado!:"+datos);
                 Swal.fire(
                     'Aviso',
                     'Nuevo turno cargado!',
@@ -354,7 +394,6 @@ document.addEventListener('DOMContentLoaded', function() {
             "estudios": infoForm.get('estudios'),
             "sesiones": infoForm.get('sesiones'),
         }
-    
         fetch('agregarPaciente',{
             'method':'POST',
             'headers': {
@@ -366,7 +405,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }).then(function(datos){
             console.log("Enviado!:");
         })
-        
         //limpio el fomulario y cierro
         formNuevoPaciente.reset();
         ejecutaPacientes();

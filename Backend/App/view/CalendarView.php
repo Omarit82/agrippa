@@ -156,8 +156,8 @@ class CalendarView{
                     <div class="modal-content">
                         <form action="turnoComplete" method="POST" id="modalEventoForm">
                             <div class="modal-header">
-                                <h3 class="modal-title fs-4">Paciente: </h3>
-                                <input type="text" id="eventoModalTitle" name="eventoModalTitle" class="p-2 ms-2">
+                                <h3 class="modal-title fs-4 col-5">Paciente: </h3>
+                                <input type="text" id="eventoModalTitle" name="eventoModalTitle" class="p-2 ms-2 col-5">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
