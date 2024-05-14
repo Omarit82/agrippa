@@ -142,34 +142,49 @@ document.addEventListener('DOMContentLoaded', function() {
                 agenda: .5
             },
             eventClick: function(eventClickInfo){
-                //console.log(eventClickInfo);
+                console.log(eventClickInfo);
                 let titulo = document.getElementById('eventoModalTitle');
                 titulo.value = eventClickInfo.event.title;
                 let subtitle = document.getElementById('eventModalSubtitle');
                 subtitle.value = eventClickInfo.event.extendedProps.sesiones+" | "+eventClickInfo.event.extendedProps.remanentes;
-                let form = document.getElementById('modalEventoForm');
-                form.addEventListener('submit',function(e){
+                let modal = document.getElementById('modalEventoForm');
+                modal.addEventListener('submit',function(e){
                     e.preventDefault();
                     let dato = eventClickInfo.event.extendedProps.remanentes;
-                    dato = dato-1;
-                    let envio={
-                        "remanentes":dato,
-                        "id": eventClickInfo.event.extendedProps.idPaciente,
-                        "turnoId": eventClickInfo.event.extendedProps.turno_id
+                    if(dato == 0){
+                        Swal.fire(
+                            'Aviso',
+                            'El paciente no posee mas sesiones!',
+                            'error'
+                        );
+                    }else{
+                        dato = dato-1;
+                        let envio={
+                            "remanentes":dato,
+                            "id": eventClickInfo.event.extendedProps.idPaciente,
+                            "turnoId": eventClickInfo.event.extendedProps.turno_id
+                        }
+                        fetch('turnoComplete',{
+                            'method':'POST',
+                            'headers': {
+                                "Content-Type":"application/json; charset=utf-8"
+                            },
+                            'body': JSON.stringify(envio)
+                        }).then(function(resp){
+                            return resp.text();
+                        }).then(function(envio){
+                            console.log("Enviado!:"+envio);
+                            //cerrar el modal - cambiar el color del evento y agregar un tilde con animacion!!
+                            Swal.fire(
+                                'Aviso',
+                                'Sesion realizada!',
+                                'success'
+                            );
+                        })
                     }
-                    fetch('turnoComplete',{
-                        'method':'POST',
-                        'headers': {
-                            "Content-Type":"application/json; charset=utf-8"
-                        },
-                        'body': JSON.stringify(envio)
-                    }).then(function(resp){
-                        return resp.text();
-                    }).then(function(envio){
-                        console.log("Enviado!:"+envio);
-                    })
-                    //cerrar el modal y terminar el evento
-                    calendar.remove(eventClickInfo.event.extendedProps.turno_id);
+                    
+                      
+                  
                 })                
                 eventModal.show();
 

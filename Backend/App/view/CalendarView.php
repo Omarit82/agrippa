@@ -151,7 +151,6 @@ class CalendarView{
                 <!-- fin del showCalendar -->  
             </div>    
             <!-- Modal -->
-            <<!-- Modal -->
             <div class="modal fade" id="eventoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="eventoModal" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -166,8 +165,10 @@ class CalendarView{
                                 <input type="text" id="eventModalSubtitle" name="eventModalSubtitle" class="p-2 ms-2">
                             </div>
                             <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ausente sin aviso</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ausente con aviso</button>
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Eliminar registro</button>
-                                <button type="submit" class="btn btn-success">Asistio</button>
+                                <button id="modalAsistio" type="submit" class="btn btn-success" data-bs-dismiss="modal">Asistio</button>
                             </div>
                         </form>
                     </div>
