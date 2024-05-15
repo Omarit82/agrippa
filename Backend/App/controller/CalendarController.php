@@ -40,4 +40,8 @@ class CalendarController extends SecuredController{
         $update = $this->view->turnoComplete();
         $this->model->turnoComplete($update);
     }
+    function reprogramar(){
+        $rep = $this->view->reprogramar();
+        $this->model->reprogramar($rep);
+    }
 }

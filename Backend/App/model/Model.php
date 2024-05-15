@@ -219,4 +219,11 @@ class Model{
       header('Location: '.HOME);
       die();
     }
+
+    function reprogramar($rep){
+        $query = $this->db->prepare("UPDATE `paciente` SET `ses_remanentes`= ? WHERE `paciente`.`id_paciente`=?");
+        $query->execute(array($rep['remanentes'], $rep['id']));
+        $query = $this->db->prepare("UPDATE `turno` SET `estado` = ?  WHERE `turno`.`turno_id` = ?");
+        $query->execute(array($rep['estado'], $rep['turnoId']));
+    }
 }

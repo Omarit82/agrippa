@@ -29,6 +29,13 @@ class CalendarView{
             return $reg;
         }
     }
+    function reprogramar(){
+        if(isset($_POST)){
+            $datos = file_get_contents("php://input");
+            $reg = json_decode($datos,true);
+            return $reg;
+        }
+    }
     
     function calendar(){   
         require_once './Frontend/pages/header.html'; 
@@ -85,10 +92,10 @@ class CalendarView{
                                             <li><a class="dropdown-item turno" id="turno_9">9° 14:20 - 15:00</a></li>
                                         </ul>
                                         <input class="w-100 campoPaciente mt-2 text-center" type="text" name="campoTurno" id="campoTurno">
-                                        <label for="sesiones" class=" botonUno btn w-100 mt-2">Sesiones Totales</label>
-                                        <input class="mt-2 w-100 text-center campoPaciente" type="number" name="sesiones" id="sesiones"> 
-                                        <label for="sesionesRemanentes" class="botonUno btn w-100 mt-2">Sesiones Remanentes</label>
-                                        <input type="number"class="mt-2 w-100 text-center campoPaciente" name="sesionesRemanentes" id="sesionesRemanentes">
+                                        <label for="sesiones" class=" botonUno btn w-100 mt-2 d-none">Sesiones Totales</label>
+                                        <input class="mt-2 w-100 text-center campoPaciente d-none" type="number" name="sesiones" id="sesiones"> 
+                                        <label for="sesionesRemanentes" class="botonUno btn w-100 mt-2 d-none">Sesiones Remanentes</label>
+                                        <input type="number"class="mt-2 w-100 text-center campoPaciente d-none" name="sesionesRemanentes" id="sesionesRemanentes">
                                     </div>
                                 </div>
                                 <div class="mt-5 d-flex justify-content-around">
@@ -166,7 +173,7 @@ class CalendarView{
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ausente sin aviso</button>
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ausente con aviso</button>
+                                <button id="reprogramar" type="button" class="btn btn-primary" data-bs-dismiss="modal">Reprogramar</button>
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Eliminar registro</button>
                                 <button id="modalAsistio" type="submit" class="btn btn-success" data-bs-dismiss="modal">Asistio</button>
                             </div>

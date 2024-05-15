@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 for (let i=0; i<data.length;i++){
                     let newLi = document.createElement("li");
                     let anchor = document.createElement("a");
-                    let contenido = document.createTextNode(data[i].id_paciente+"- "+data[i].apellido+", "+data[i].nombre+" | ("+data[i].ses_remanentes+") / "+data[i].sesiones);
+                    let contenido = document.createTextNode(data[i].id_paciente+"- "+data[i].apellido+", "+data[i].nombre);
                     anchor.appendChild(contenido);
                     anchor.classList.add("dropdown-item","selectPaciente");
                     anchor.setAttribute("id",data[i].id_paciente);
@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error:', error);
         });
     }
-
     function ejecutarCalendario(){
         //----------------------CALENDARIO-------------------------//   
         let calendar = new FullCalendar.Calendar(calendarEl, {
@@ -148,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
             eventClick: function(eventClickInfo){
                 //***********INFO PARA EL MODAL**********************/
                 document.getElementById('eventoModalTitle').value = eventClickInfo.event.title;
-                document.getElementById('eventModalSubtitle').value = eventClickInfo.event.extendedProps.sesiones+" | "+eventClickInfo.event.extendedProps.remanentes;
+                //document.getElementById('eventModalSubtitle').value = eventClickInfo.event.extendedProps.sesiones+" | "+eventClickInfo.event.extendedProps.remanentes;
                 //***********EVENTO FINALIZADO CORRECTAMENTE*********/
                 let modal = document.getElementById('modalEventoForm');
                 modal.addEventListener('submit',function(e){
@@ -174,11 +173,40 @@ document.addEventListener('DOMContentLoaded', function() {
                             'Sesion realizada!',
                             'success'
                         );
-                        setTimeout(ejecutarCalendario(),3000);
+                        ejecutarCalendario();
                     })
                 })
                 //************ELIMINAR EVENTO*************** *//
                 /** Elimina un evento pero recupera la sesion - elimina en caso de error. */
+                //**********REPROGRAMAR EVENTO****************//
+                /** Se coloca reprogramado en el estado del turno y se debe actualizar el valor de las sesiones remanentes.*/
+                document.getElementById('reprogramar').addEventListener('click',()=>{
+                    let dato = eventClickInfo.event.extendedProps.remanentes;
+                    let envio={
+                        "remanentes":dato+1,
+                        "id": eventClickInfo.event.extendedProps.idPaciente,
+                        "turnoId": eventClickInfo.event.extendedProps.idTurno,
+                        "estado": "reprogramado"
+                    }
+                    fetch('reprogramar',{
+                        'method':'POST',
+                        'headers': {
+                            "Content-Type":"application/json; charset=utf-8"
+                        },
+                        'body': JSON.stringify(envio)
+                    }).then(function(resp){
+                        return resp.text();
+                    }).then(function(envio){
+                        Swal.fire(
+                            'Aviso',
+                            'Sesion a reprogramar...',
+                            'success'
+                        );
+                        ejecutaPacientes();
+                        ejecutarCalendario();
+                    })
+                })
+
                 eventModal.show();  
             },
             //--------------------EVENTOS-------------------
@@ -302,7 +330,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         calendar.render();
     }
-
     //----------------FORMULARIO NUEVO TURNO-----------------//
     formNuevoTurno.addEventListener('submit',function(e){
         e.preventDefault();
@@ -379,6 +406,10 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         let infoForm = new FormData(formNuevoPaciente);
         // Creamos un objeto para pasarle
+        let ses = infoForm.get('sesiones');
+        if(ses == 0){
+            ses=1;
+        }
         let envio = {
             "nombre":infoForm.get('nombre'),
             "apellido":infoForm.get('apellido'), //fecha
@@ -392,7 +423,7 @@ document.addEventListener('DOMContentLoaded', function() {
             "objetivos": infoForm.get('objetivos'),
             "tratamiento": infoForm.get('tratamiento'),
             "estudios": infoForm.get('estudios'),
-            "sesiones": infoForm.get('sesiones'),
+            "sesiones": ses,
         }
         fetch('agregarPaciente',{
             'method':'POST',
