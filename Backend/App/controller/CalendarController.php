@@ -44,4 +44,14 @@ class CalendarController extends SecuredController{
         $rep = $this->view->reprogramar();
         $this->model->reprogramar($rep);
     }
+
+    function eliminarEvento(){
+        $erased = $this->view->eliminarEvento();
+        $this->model->eliminarEvento($erased);
+    }
+
+    function ausente(){
+        $evento = $this->view->ausente();
+        $this->model->ausente($evento);
+    }
 }

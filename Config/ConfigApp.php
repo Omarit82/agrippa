@@ -18,6 +18,8 @@ class ConfigApp{
         'registrar'=>'CalendarController#registrar',
         'agregarPaciente'=>'PacienteController#agregarPaciente',
         'turnoComplete'=>'CalendarController#turnoComplete',
-        'reprogramar'=>'CalendarController#reprogramar'
+        'reprogramar'=>'CalendarController#reprogramar',
+        'eliminarEvento'=>'CalendarController#eliminarEvento',
+        'ausente'=>'CalendarController#ausente'
     ];
 }

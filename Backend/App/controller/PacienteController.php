@@ -8,26 +8,25 @@ class PacienteController extends SecuredController{
     private $model;
     function __construct(){
         parent::__construct();
-
         $this->model = new Model();
         $this->view = new PacienteView();
     }
-
-    function home(){
+    function lista(){
         if(isset($_SESSION['USERNAME'])){
-            $this->view->home();
+            $lista = $this->model->lista();
+            $this->view->lista($lista);  //MUESTRA la lista de pacientes cargadas
         }else{
             header('Location: '.LOGIN);
             die();
-        }
+        }  
     }
-    function lista(){
-        $lista = $this->model->lista();
-        $this->view->lista($lista);
-    }
-
     function formPaciente(){
-        $this->view->formPaciente();
+        if(isset($_SESSION['USERNAME'])){
+            $this->view->formPaciente(); //MUESTRA EL formulario para cargar pacientes
+        }else{
+            header('Location: '.LOGIN);
+            die();
+        }  
     }
 
     function addPaciente(){

@@ -173,11 +173,38 @@ document.addEventListener('DOMContentLoaded', function() {
                             'Sesion realizada!',
                             'success'
                         );
-                        ejecutarCalendario();
+                        calendar.refetchEvents();
+                        ejecutaPacientes();
                     })
                 })
                 //************ELIMINAR EVENTO*************** *//
                 /** Elimina un evento pero recupera la sesion - elimina en caso de error. */
+                document.getElementById('eliminarEvento').addEventListener('click',()=>{
+                    let dato = eventClickInfo.event.extendedProps.remanentes;
+                    dato++;
+                    let envio={
+                        "remanentes":dato,
+                        "id": eventClickInfo.event.extendedProps.idPaciente,
+                        "turnoId": eventClickInfo.event.extendedProps.idTurno,
+                    }
+                    fetch('eliminarEvento',{
+                        'method':'POST',
+                        'headers': {
+                            "Content-Type":"application/json; charset=utf-8"
+                        },
+                        'body': JSON.stringify(envio)
+                    }).then(function(resp){
+                        return resp.text();
+                    }).then(function(envio){
+                        Swal.fire(
+                            'Aviso',
+                            'Turno Eliminado',
+                            'success'
+                        );
+                        calendar.refetchEvents();
+                        ejecutaPacientes();
+                    })
+                })
                 //**********REPROGRAMAR EVENTO****************//
                 /** Se coloca reprogramado en el estado del turno y se debe actualizar el valor de las sesiones remanentes.*/
                 document.getElementById('reprogramar').addEventListener('click',()=>{
@@ -206,7 +233,31 @@ document.addEventListener('DOMContentLoaded', function() {
                         ejecutarCalendario();
                     })
                 })
-
+                //*********EVENTO AUSENTE*******************///
+                document.getElementById('ausente').addEventListener('click',()=>{
+                    let envio={
+                        "id": eventClickInfo.event.extendedProps.idPaciente,
+                        "turnoId": eventClickInfo.event.extendedProps.idTurno,
+                        "estado": "ausente"
+                    }
+                    fetch('reprogramar',{
+                        'method':'POST',
+                        'headers': {
+                            "Content-Type":"application/json; charset=utf-8"
+                        },
+                        'body': JSON.stringify(envio)
+                    }).then(function(resp){
+                        return resp.text();
+                    }).then(function(envio){
+                        Swal.fire(
+                            'Aviso',
+                            'Sesion perdida',
+                            'error'
+                        );
+                        ejecutaPacientes();
+                        ejecutarCalendario();
+                    })
+                })
                 eventModal.show();  
             },
             //--------------------EVENTOS-------------------
@@ -255,7 +306,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                         nroTurno: event.numero_turno,
                                         image: './Frontend/assets/img/not.png', 
                                     },
-                                    color: 'lightred', 
+                                    color: '#f3268d', 
+                                    textColor: 'white'
                                 }; 
                             case 'reprogramado' : //Evento reprogramado
                                 return {
@@ -313,20 +365,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     })
                     successCallback(events);
                 }).catch(error => {
-                        failureCallback('Error:', error);
+                    failureCallback('Error:', error);
                 });
             },
             eventContent: function(info){
                 console.log(info);
-                //info la extrae de cada evento
                 return {
                     html:`
                         <div>
                             <a class="pacienteEvento">${info.event.title} | ${info.event.extendedProps.nroTurno} de ${info.event.extendedProps.sesiones}</a>
                             <img src="${info.event.extendedProps.image}">
                         </div>`
-                }
-            },            
+                }                
+            }   
         });
         calendar.render();
     }
@@ -440,5 +491,6 @@ document.addEventListener('DOMContentLoaded', function() {
         //limpio el fomulario y cierro
         formNuevoPaciente.reset();
     })   
+          
 });
 

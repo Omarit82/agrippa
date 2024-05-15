@@ -8,8 +8,7 @@ class CalendarView{
     function turnoComplete(){
         if(isset($_POST)){
             $datos = file_get_contents("php://input");
-            $reg = json_decode($datos,true);
-            return $reg;
+            return json_decode($datos,true);
         }
     }
     function eventos($eventos){
@@ -25,15 +24,25 @@ class CalendarView{
     function registrar(){
         if(isset($_POST)){
             $datos = file_get_contents("php://input");
-            $reg = json_decode($datos,true);
-            return $reg;
+            return json_decode($datos,true);
         }
     }
     function reprogramar(){
         if(isset($_POST)){
             $datos = file_get_contents("php://input");
-            $reg = json_decode($datos,true);
-            return $reg;
+            return json_decode($datos,true);
+        }
+    }
+    function eliminarEvento(){
+        if(isset($_POST)){
+            $datos = file_get_contents("php://input");
+            return json_decode($datos,true);
+        }
+    }
+    function ausente(){
+        if(isset($_POST)){
+            $datos = file_get_contents("php:/input");
+            return json_decode($datos,true);
         }
     }
     
@@ -172,9 +181,9 @@ class CalendarView{
                                 <input type="text" id="eventModalSubtitle" name="eventModalSubtitle" class="p-2 ms-2">
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ausente sin aviso</button>
+                                <button id="ausente"type="button" class="btn btn-primary" data-bs-dismiss="modal">Ausente sin aviso</button>
                                 <button id="reprogramar" type="button" class="btn btn-primary" data-bs-dismiss="modal">Reprogramar</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Eliminar registro</button>
+                                <button id="eliminarEvento"type="button" class="btn btn-danger" data-bs-dismiss="modal">Eliminar registro</button>
                                 <button id="modalAsistio" type="submit" class="btn btn-success" data-bs-dismiss="modal">Asistio</button>
                             </div>
                         </form>

@@ -226,4 +226,14 @@ class Model{
         $query = $this->db->prepare("UPDATE `turno` SET `estado` = ?  WHERE `turno`.`turno_id` = ?");
         $query->execute(array($rep['estado'], $rep['turnoId']));
     }
+    function eliminarEvento($evento){
+        $query = $this->db->prepare("DELETE FROM `turno` WHERE `turno`.`turno_id`=?");
+        $query->execute(array($evento['turnoId']));
+        $query = $this->db->prepare("UPDATE `paciente` SET `ses_remanentes`= ? WHERE `paciente`.`id_paciente`=?");
+        $query->execute(array($evento['remanentes'], $evento['id']));
+    }
+    function ausente($evento){
+        $query = $this->db->prepare("UPDATE `turno` SET `estado` = ?  WHERE `turno`.`turno_id` = ?");
+        $query->execute(array($evento['estado'], $evento['turnoId']));
+    }
 }
