@@ -174,8 +174,6 @@ class CalendarView{
                     </div>
                 </div>
             </div>
-
-      
         </main> <?php
         require_once './Frontend/pages/footer.html';
     }    

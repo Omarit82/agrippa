@@ -154,37 +154,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 modal.addEventListener('submit',function(e){
                     e.preventDefault();
                     let dato = eventClickInfo.event.extendedProps.remanentes;
-                    if(dato == 0){
+                    let envio={
+                        "remanentes":dato,
+                        "id": eventClickInfo.event.extendedProps.idPaciente,
+                        "turnoId": eventClickInfo.event.extendedProps.idTurno,
+                        "estado": "listo"
+                    }
+                    fetch('turnoComplete',{
+                        'method':'POST',
+                        'headers': {
+                            "Content-Type":"application/json; charset=utf-8"
+                        },
+                        'body': JSON.stringify(envio)
+                    }).then(function(resp){
+                        return resp.text();
+                    }).then(function(envio){
                         Swal.fire(
                             'Aviso',
-                            'El paciente no posee mas sesiones!',
-                            'error'
+                            'Sesion realizada!',
+                            'success'
                         );
-                    }else{
-                        dato = dato-1; //las remanentes deben restarse al asignar un turno!!!**
-                        let envio={
-                            "remanentes":dato,
-                            "id": eventClickInfo.event.extendedProps.idPaciente,
-                            "turnoId": eventClickInfo.event.extendedProps.idTurno,
-                            "estado": "listo"
-                        }
-                        fetch('turnoComplete',{
-                            'method':'POST',
-                            'headers': {
-                                "Content-Type":"application/json; charset=utf-8"
-                            },
-                            'body': JSON.stringify(envio)
-                        }).then(function(resp){
-                            return resp.text();
-                        }).then(function(envio){
-                            Swal.fire(
-                                'Aviso',
-                                'Sesion realizada!',
-                                'success'
-                            );
-                            setTimeout(ejecutarCalendario(),3000);
-                        })
-                    }
+                        setTimeout(ejecutarCalendario(),3000);
+                    })
                 })
                 //************ELIMINAR EVENTO*************** *//
                 /** Elimina un evento pero recupera la sesion - elimina en caso de error. */
@@ -216,6 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         remanentes: event.ses_remanentes,
                                         idPaciente: event.id_paciente,
                                         idTurno: event.turno_id,
+                                        nroTurno: event.numero_turno,
                                         image: './Frontend/assets/img/ok.png', 
                                     },
                                     color: 'lightgreen', // Que hacer con los botones??
@@ -232,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         remanentes: event.ses_remanentes,
                                         idPaciente: event.id_paciente,
                                         idTurno: event.turno_id,
+                                        nroTurno: event.numero_turno,
                                         image: './Frontend/assets/img/not.png', 
                                     },
                                     color: 'lightred', 
@@ -248,12 +241,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                         remanentes: event.ses_remanentes,
                                         idPaciente: event.id_paciente,
                                         idTurno: event.turno_id,
+                                        nroTurno: event.numero_turno,
                                         image: './Frontend/assets/img/refatto.png',
                                     },
                                     color: 'lightblue',  
                                 };
                             default: // Evento a espera de estado!
-                                if(event.ses_remanentes == 1){
+                                if(event.ses_remanentes == 0 && event.numero_turno === event.sesiones){
                                     return {
                                         title: event.nombre,
                                         start: event.fechaInicio,
@@ -265,6 +259,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             remanentes: event.ses_remanentes,
                                             idPaciente: event.id_paciente,
                                             idTurno: event.turno_id,
+                                            nroTurno: event.numero_turno,
                                             image: './Frontend/assets/img/alert.png',
                                         },
                                         color: 'orange',  
@@ -281,6 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             remanentes: event.ses_remanentes,
                                             idPaciente: event.id_paciente,
                                             idTurno: event.turno_id,
+                                            nroTurno: event.numero_turno,
                                             image: './Frontend/assets/img/clock.png',
                                         }, 
                                     };
@@ -293,11 +289,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             },
             eventContent: function(info){
+                console.log(info);
                 //info la extrae de cada evento
                 return {
                     html:`
                         <div>
-                            <a class="pacienteEvento">${info.event.title} | ${info.event.extendedProps.sesiones-info.event.extendedProps.remanentes} de ${info.event.extendedProps.sesiones}</a>
+                            <a class="pacienteEvento">${info.event.title} | ${info.event.extendedProps.nroTurno} de ${info.event.extendedProps.sesiones}</a>
                             <img src="${info.event.extendedProps.image}">
                         </div>`
                 }
@@ -337,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
             "inicio": horaInicio,
             "final": horaFinal,
             "remanentes": remanentes-1,
-            "numeroTurno": totales - remanentes-1,
+            "numeroTurno": totales - remanentes + 1,
         }
         console.log(envio);
         if(fecha =='' || paciente ==''){
@@ -363,18 +360,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 return resp.text();
                
             }).then(function(datos){
-                console.log("Enviado!:"+datos);
+                console.log("Enviado!:");
                 Swal.fire(
                     'Aviso',
                     'Nuevo turno cargado!',
                     'success'
                 )
+                //debo actualizar el calendario. y la lista de pacientes
+                ejecutaPacientes();
+                ejecutarCalendario();
             })
         }
         //limpio el fomulario y cierro
         formNuevoTurno.reset();
-        //debo actualizar el calendario.
-        ejecutarCalendario();
     })
     //--------------FORMULARIO NUEVO PACIENTE----------------//
     formNuevoPaciente.addEventListener('submit',function(e){
@@ -406,10 +404,10 @@ document.addEventListener('DOMContentLoaded', function() {
             return resp.text();
         }).then(function(datos){
             console.log("Enviado!:");
+            ejecutaPacientes();
         })
         //limpio el fomulario y cierro
         formNuevoPaciente.reset();
-        ejecutaPacientes();
     })   
 });
 
