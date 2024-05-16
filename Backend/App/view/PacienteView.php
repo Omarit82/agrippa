@@ -23,12 +23,12 @@ class PacienteView{
                 <?php
                 foreach ($pacientes as $paciente) { ?>
                     <div class="d-inline-flex gap-1 botones mb-2">
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target= <?php echo'"#collapse'.$paciente->id_paciente.'"' ?>aria-expanded="false" aria-controls="collapseExample">
+                        <button class="btn btn-primary listaPaciente" type="button" data-bs-toggle="collapse" data-bs-target= <?php echo'"#collapse'.$paciente->id_paciente.'"' ?>aria-expanded="false" aria-controls="collapseExample">
                             <?php echo $paciente->apellido.', '.$paciente->nombre; ?>
                         </button>
                     </div>
-                    <div class="collapse mb-2 row" id=<?php echo'"collapse'.$paciente->id_paciente.'"' ?>>
-                        <div class="card card-body mb-2 col-5">
+                    <div class="collapse mb-2 row card card-body" id=<?php echo'"collapse'.$paciente->id_paciente.'"' ?>>
+                        <div class="mb-2 col-5">
                             <ul class="list-group m-1">
                                 <li class="list-group-item d-flex justify-content-between"><p class="m-0">DNI:</p> <?php echo '<p class="m-0">'.$paciente->dni.'</p>'?></li>
                                 <li class="list-group-item d-flex justify-content-between"><p>TELEFONO:</p> <?php echo '<p>'.$paciente->telefono.'</p>' ?></li>
@@ -37,7 +37,7 @@ class PacienteView{
                                 <li class="list-group-item d-flex justify-content-between"><p>FECHA DE INGRESO:</p> <?php echo '<p>'.$paciente->fecha_ingreso.'</p>' ?></li>
                             </ul>
                         </div>
-                        <div class="card card-body mb-2 col-5">
+                        <div class="mb-2 col-5">
                             <ul class="list-group m-1">
                                 <li class="list-group-item d-flex justify-content-between"><p>ANAMNESIS:</p> <?php echo '<p>'.$paciente->anamnesis.'</p>' ?></li>
                                 <li class="list-group-item d-flex justify-content-between"><p>EVALUACION INICIAL:</p> <?php echo '<p>'.$paciente->evaluacion_inicial.'</p>' ?></li>

@@ -166,9 +166,19 @@ input, textarea {
 }
 
 .fc-event-main {
+  display: flex;
+  justify-content: center;
+  align-items: end;
   width: 80%;
-  margin-left: 2%;
-  margin-right: 2%;
+  height: 80%;
+}
+.fc-event-main img {
+  width: 25px;
+  height: 25px;
+}
+
+.fc-timegrid-event-harness > .fc-timegrid-event {
+  height: 75%;
 }
 
 .fc-direction-ltr {
@@ -188,6 +198,13 @@ input, textarea {
   text-decoration: none;
   font-weight: 600;
   display: block;
+}
+
+.giro {
+  transform: rotate(-90deg);
+  color: blue;
+  margin-top: 0;
+  align-self: flex-start;
 }
 
 .footer {

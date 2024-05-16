@@ -24,6 +24,12 @@ document.addEventListener('DOMContentLoaded', function() {
             turnoElegido.value = trn;
         })
     }
+    let listaPaciente = document.querySelectorAll('.listaPaciente');
+    for(let i=0;i<listaPaciente.length;i++){
+        listaPaciente[i].addEventListener('click',()=>{
+            
+        })
+    }
 
     function ejecutaPacientes(){
         //------------------------PACIENTES---------------------------------
@@ -368,16 +374,35 @@ document.addEventListener('DOMContentLoaded', function() {
                     failureCallback('Error:', error);
                 });
             },
-            eventContent: function(info){
+           /* eventContent: function(info){
                 console.log(info);
                 return {
                     html:`
                         <div>
-                            <a class="pacienteEvento">${info.event.title} | ${info.event.extendedProps.nroTurno} de ${info.event.extendedProps.sesiones}</a>
+                            <a class="pacienteEvento d-block" id="giro${info.event.extendedProps.idPaciente}">${info.event.title}</a>
+                            <p class="pacienteEvento">${info.event.extendedProps.nroTurno} de ${info.event.extendedProps.sesiones}</p>
                             <img src="${info.event.extendedProps.image}">
                         </div>`
-                }                
-            }   
+                }            
+            },  */
+            eventContent: function(info) {
+                console.log(info);
+                let view = info.view.type;
+                if(view === 'timeGridDay') {
+                    return { html: `
+                        <div class="d-flex">
+                            <p class="fw-bold pacienteEvento w-100">${info.event.title}</p><img class="mb-3" src="${info.event.extendedProps.image}">
+                        </div>
+                        `
+                    }
+                } else if(view === 'timeGridWeek') {
+                    let titulo = info.event.title.split(','); 
+                    return {
+                        html: `
+                        <p class="giro">${titulo[0]}</p>`
+                    }
+                }
+            }
         });
         calendar.render();
     }
