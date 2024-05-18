@@ -391,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if(view === 'timeGridDay') {
                     return { html: `
                         <div class="d-flex">
-                            <p class="fw-bold pacienteEvento w-100">${info.event.title}</p><img class="mb-3" src="${info.event.extendedProps.image}">
+                            <p class="fw-bold pacienteEvento w-50">${info.event.title}</p><img class="mb-3 ms-2" src="${info.event.extendedProps.image}">
                         </div>
                         `
                     }
