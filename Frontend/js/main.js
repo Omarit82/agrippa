@@ -1,23 +1,17 @@
-"use strict";
-// inicializacion de documento
 document.addEventListener('DOMContentLoaded', function() {
-
+    "use strict";
+    // inicializacion de documento
     let calendarEl = document.getElementById('calendar');  //Div del calendario
-
-    ejecutarCalendario();
     ejecutaPacientes();
-    /**
-    *  ----------VARIABLES------------
-    */
+    /***  ----------VARIABLES------------ ***/
     let turnosHorarios = document.querySelectorAll(".turno"); // Array con todos los posibles turnos
-    let turnoElegido = document.getElementById('campoTurno'); // 
+    let turnoElegido = document.getElementById('campoTurno');
     // INICIO DE LOS COMPONENTES DE BOOSTSTRAP
     let offcanvasLeft = new bootstrap.Offcanvas(document.getElementById('offcanvasLeft'));
     let eventModal =  new bootstrap.Modal(document.getElementById('eventoModal'));
     // FORMULARIOS DE LOS CANVAS
     let formNuevoTurno = document.getElementById('formCanvasTurno');
     let formNuevoPaciente = document.getElementById('formCanvasPaciente');
-    
     for (let i = 0 ; i<turnosHorarios.length ; i++){
         turnosHorarios[i].addEventListener('click',()=>{
             let trn = turnosHorarios[i].innerHTML;
@@ -30,257 +24,309 @@ document.addEventListener('DOMContentLoaded', function() {
             
         })
     }
-
-    function ejecutaPacientes(){
-        //------------------------PACIENTES---------------------------------
-        //TOMA LA LISTA DE PACIENTES DEL BACKEND Y LA ENTREGA COMO UN JSON
-        let selecPaciente = document.getElementById('dropPacientes');
-         // vaciar la lista antes de inciar
-        selecPaciente.innerHTML="";
-        fetch('pacientes').then(response => {
-            // Verificar si la respuesta es exitosa
-            if (!response.ok) {
-            throw new Error('Hubo un problema al obtener los datos.');
-            }
-            // Parsear la respuesta como JSON
-            return response.json();
-        }).then(data => {
-                //INGRESO LA LISTA DE PACIENTES DENTRO DEL CANVAS
-                selecPaciente = document.getElementById('dropPacientes');
-                // AGREGADO DE ID Y CLASE A TODOS LOS BOTONES DE PACIENTES. 
-                for (let i=0; i<data.length;i++){
-                    let newLi = document.createElement("li");
-                    let anchor = document.createElement("a");
-                    let contenido = document.createTextNode(data[i].id_paciente+"- "+data[i].apellido+", "+data[i].nombre);
-                    anchor.appendChild(contenido);
-                    anchor.classList.add("dropdown-item","selectPaciente");
-                    anchor.setAttribute("id",data[i].id_paciente);
-                    newLi.appendChild(anchor);
-                    selecPaciente.appendChild(newLi);
-                }
-                //Escucho todos los botones creados!
-                let botones = document.querySelectorAll('.selectPaciente');
-                let selected = document.getElementById('campoPaciente');
-                let sesiones = document.getElementById('sesiones');
-                let remanentes = document.getElementById('sesionesRemanentes');
-                for(let i = 0; i< botones.length ; i++){
-                    botones[i].addEventListener('click',()=>{
-                        let valor = botones[i].innerHTML;
-                        selected.value = valor;
-                        sesiones.value = data[i].sesiones;
-                        remanentes.value = data[i].ses_remanentes;
-                    })
-                }
-        }).catch(error => {
-                console.error('Error:', error);
-        });
+    function showPacientes(datos){
+        const SELECT_PACIENTE = document.getElementById('dropPacientes');
+        SELECT_PACIENTE.innerHTML="";
+        // AGREGADO DE ID Y CLASE A TODOS LOS BOTONES DE PACIENTES. 
+        for (let i=0; i<datos.length;i++){
+            let newLi = document.createElement("li");
+            let anchor = document.createElement("a");
+            let contenido = document.createTextNode(datos[i].id_paciente+"- "+datos[i].apellido+", "+datos[i].nombre);
+            anchor.appendChild(contenido);
+            anchor.classList.add("dropdown-item","selectPaciente");
+            anchor.setAttribute("id",datos[i].id_paciente);
+            newLi.appendChild(anchor);
+            SELECT_PACIENTE.appendChild(newLi);
+        }
+        //Escucho todos los botones creados!
+        let botones = document.querySelectorAll('.selectPaciente');
+        let selected = document.getElementById('campoPaciente');
+        let sesiones = document.getElementById('sesiones');
+        let remanentes = document.getElementById('sesionesRemanentes');
+        for(let i = 0; i< botones.length ; i++){
+            botones[i].addEventListener('click',()=>{
+                let valor = botones[i].innerHTML;
+                selected.value = valor;
+                sesiones.value = datos[i].sesiones;
+                remanentes.value = datos[i].ses_remanentes;
+            })
+        }
     }
-    function ejecutarCalendario(){
+    async function ejecutaPacientes(){
+        try {
+            const respuesta = await fetch('pacientes');
+            if(respuesta.ok){
+                let data = await respuesta.json();
+                showPacientes(data);
+            }
+            
+        } catch (error) {
+            console.log(error);
+            Swal.fire(
+                'Aviso',
+                'Error en la comunicacion con el servidor',
+                'error'
+            )
+        }
+    }
         //----------------------CALENDARIO-------------------------//   
-        let calendar = new FullCalendar.Calendar(calendarEl, {
-            timeZone:'local',
-            slotDuration: '00:40:00',// Duración de las franjas horarias (40 minutos)
-            slotMinTime: '09:00:00',
-            slotMaxTime: '15:00:00',
-            // Hora de finalización del último slot (15:00 PM)
-            nowIndicator: true,
-            initialView: 'timeGridDay',
-            locale: 'es',
-            buttonText: {
-                today: 'Hoy',
-                month: 'Mes',
-                week: 'Semana',
-                day: 'Dia',
-                list: 'Lista'
-            },
-            headerToolbar: {
-                left: 'prev,next,today,list',
-                center: 'title',
-                right: 'timeGridWeek,timeGridDay' // user can switch between the two
-            },
-            selectable: true,
-            allDaySlot: false,
-            //defaultEventMinutes: 40,
-            axisFormat: 'h(:mm)tt', 
-            timeFormat: {
-                agenda: 'h:mm{ - h:mm}'
-            },
-            dragOpacity: {
-                agenda: .5
-            },
-            dateClick: function(info){
-                let cadena = info.dateStr.split('T');
-                let turn = cadena[1].split('-');
-                let dia = cadena[0];
-                let turno = turn[0];
-                let seleccion;
-                switch (turno) {
-                    case '09:00:00':
-                        seleccion = document.getElementById('turno_1');
-                        break;
-                    case '09:40:00':
-                        seleccion = document.getElementById('turno_2');
-                        break;
-                    case '10:20:00':
-                        seleccion = document.getElementById('turno_3');
-                        break;
-                    case '11:00:00':
-                        seleccion = document.getElementById('turno_4');
-                        break;
-                    case '11:40:00':
-                        seleccion = document.getElementById('turno_5');
-                        break;
-                    case '12:20:00':
-                        seleccion = document.getElementById('turno_6');
-                        break;
-                    case '13:00:00':
-                        seleccion = document.getElementById('turno_7');
-                        break;
-                    case '13:40:00':
-                        seleccion = document.getElementById('turno_8');
-                        break;
-                    case '14:20:00':
-                        seleccion = document.getElementById('turno_9');
-                        break;
-                    default:
-                        seleccion = document.getElementById('turno_1');
-                        break;
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+        timeZone:'local',
+        slotDuration: '00:40:00',// Duración de las franjas horarias (40 minutos)
+        slotMinTime: '09:00:00',
+        slotMaxTime: '15:00:00',
+        // Hora de finalización del último slot (15:00 PM)
+        nowIndicator: true,
+        initialView: 'timeGridDay',
+        locale: 'es',
+        buttonText: {
+            today: 'Hoy',
+            month: 'Mes',
+            week: 'Semana',
+            day: 'Dia',
+            list: 'Lista'
+        },
+        headerToolbar: {
+            left: 'prev,next,today,list',
+            center: 'title',
+            right: 'timeGridWeek,timeGridDay' // user can switch between the two
+        },
+        selectable: true,
+        allDaySlot: false,
+        //defaultEventMinutes: 40,
+        axisFormat: 'h(:mm)tt', 
+        timeFormat: {
+            agenda: 'h:mm{ - h:mm}'
+        },
+        dragOpacity: {
+            agenda: .5
+        },
+        dateClick: function(info){
+            let cadena = info.dateStr.split('T');
+            let turn = cadena[1].split('-');
+            let dia = cadena[0];
+            let turno = turn[0];
+            let seleccion;
+            switch (turno) {
+                case '09:00:00':
+                    seleccion = document.getElementById('turno_1');
+                    break;
+                case '09:40:00':
+                    seleccion = document.getElementById('turno_2');
+                    break;
+                case '10:20:00':
+                    seleccion = document.getElementById('turno_3');
+                    break;
+                case '11:00:00':
+                    seleccion = document.getElementById('turno_4');
+                    break;
+                case '11:40:00':
+                    seleccion = document.getElementById('turno_5');
+                    break;
+                case '12:20:00':
+                    seleccion = document.getElementById('turno_6');
+                    break;
+                case '13:00:00':
+                    seleccion = document.getElementById('turno_7');
+                    break;
+                case '13:40:00':
+                    seleccion = document.getElementById('turno_8');
+                    break;
+                case '14:20:00':
+                    seleccion = document.getElementById('turno_9');
+                    break;
+                default:
+                    seleccion = document.getElementById('turno_1');
+                    break;
+            }
+            turnoElegido.value = seleccion.innerHTML;
+            document.getElementById('fechaTurno').value =dia;
+            offcanvasLeft.show();
+        },
+        eventClick: function(eventClickInfo){
+            //***********INFO PARA EL MODAL**********************/
+            document.getElementById('eventoModalTitle').value = eventClickInfo.event.title;
+            //document.getElementById('eventModalSubtitle').value = eventClickInfo.event.extendedProps.sesiones+" | "+eventClickInfo.event.extendedProps.remanentes;
+            //***********EVENTO FINALIZADO CORRECTAMENTE*********/
+            let modal = document.getElementById('modalEventoForm');
+            modal.addEventListener('submit',function(e){
+                e.preventDefault();
+                let dato = eventClickInfo.event.extendedProps.remanentes;
+                let envio={
+                    "remanentes":dato,
+                    "id": eventClickInfo.event.extendedProps.idPaciente,
+                    "turnoId": eventClickInfo.event.extendedProps.idTurno,
+                    "estado": "listo"
                 }
-                turnoElegido.value = seleccion.innerHTML;
-                document.getElementById('fechaTurno').value =dia;
-                offcanvasLeft.show();
-            },
-            eventClick: function(eventClickInfo){
-                //***********INFO PARA EL MODAL**********************/
-                document.getElementById('eventoModalTitle').value = eventClickInfo.event.title;
-                //document.getElementById('eventModalSubtitle').value = eventClickInfo.event.extendedProps.sesiones+" | "+eventClickInfo.event.extendedProps.remanentes;
-                //***********EVENTO FINALIZADO CORRECTAMENTE*********/
-                let modal = document.getElementById('modalEventoForm');
-                modal.addEventListener('submit',function(e){
-                    e.preventDefault();
-                    let dato = eventClickInfo.event.extendedProps.remanentes;
-                    let envio={
-                        "remanentes":dato,
-                        "id": eventClickInfo.event.extendedProps.idPaciente,
-                        "turnoId": eventClickInfo.event.extendedProps.idTurno,
-                        "estado": "listo"
-                    }
-                    fetch('turnoComplete',{
-                        'method':'POST',
-                        'headers': {
-                            "Content-Type":"application/json; charset=utf-8"
-                        },
-                        'body': JSON.stringify(envio)
-                    }).then(function(resp){
-                        return resp.text();
-                    }).then(function(envio){
-                        Swal.fire(
-                            'Aviso',
-                            'Sesion realizada!',
-                            'success'
-                        );
-                        calendar.refetchEvents();
-                        ejecutaPacientes();
-                    })
+                fetch('turnoComplete',{
+                    'method':'POST',
+                    'headers': {
+                        "Content-Type":"application/json; charset=utf-8"
+                    },
+                    'body': JSON.stringify(envio)
+                }).then(function(resp){
+                    return resp.text();
+                }).then(function(envio){
+                    Swal.fire(
+                        'Aviso',
+                        'Sesion realizada!',
+                        'success'
+                    );
+                    calendar.refetchEvents();
+                    ejecutaPacientes();
                 })
-                //************ELIMINAR EVENTO*************** *//
-                /** Elimina un evento pero recupera la sesion - elimina en caso de error. */
-                document.getElementById('eliminarEvento').addEventListener('click',()=>{
-                    let dato = eventClickInfo.event.extendedProps.remanentes;
-                    dato++;
-                    let envio={
-                        "remanentes":dato,
-                        "id": eventClickInfo.event.extendedProps.idPaciente,
-                        "turnoId": eventClickInfo.event.extendedProps.idTurno,
-                    }
-                    fetch('eliminarEvento',{
-                        'method':'POST',
-                        'headers': {
-                            "Content-Type":"application/json; charset=utf-8"
-                        },
-                        'body': JSON.stringify(envio)
-                    }).then(function(resp){
-                        return resp.text();
-                    }).then(function(envio){
-                        Swal.fire(
-                            'Aviso',
-                            'Turno Eliminado',
-                            'success'
-                        );
-                        calendar.refetchEvents();
-                        ejecutaPacientes();
-                    })
+            })
+            //************ELIMINAR EVENTO*************** *//
+            /** Elimina un evento pero recupera la sesion - elimina en caso de error. */
+            document.getElementById('eliminarEvento').addEventListener('click',()=>{
+                let dato = eventClickInfo.event.extendedProps.remanentes;
+                dato++;
+                let envio={
+                    "remanentes":dato,
+                    "id": eventClickInfo.event.extendedProps.idPaciente,
+                    "turnoId": eventClickInfo.event.extendedProps.idTurno,
+                }
+                fetch('eliminarEvento',{
+                    'method':'POST',
+                    'headers': {
+                        "Content-Type":"application/json; charset=utf-8"
+                    },
+                    'body': JSON.stringify(envio)
+                }).then(function(resp){
+                    return resp.text();
+                }).then(function(envio){
+                    Swal.fire(
+                        'Aviso',
+                        'Turno Eliminado',
+                        'success'
+                    );
+                    calendar.refetchEvents();
+                    ejecutaPacientes();
                 })
-                //**********REPROGRAMAR EVENTO****************//
-                /** Se coloca reprogramado en el estado del turno y se debe actualizar el valor de las sesiones remanentes.*/
-                document.getElementById('reprogramar').addEventListener('click',()=>{
-                    let dato = eventClickInfo.event.extendedProps.remanentes;
-                    let envio={
-                        "remanentes":dato+1,
-                        "id": eventClickInfo.event.extendedProps.idPaciente,
-                        "turnoId": eventClickInfo.event.extendedProps.idTurno,
-                        "estado": "reprogramado"
-                    }
-                    fetch('reprogramar',{
-                        'method':'POST',
-                        'headers': {
-                            "Content-Type":"application/json; charset=utf-8"
-                        },
-                        'body': JSON.stringify(envio)
-                    }).then(function(resp){
-                        return resp.text();
-                    }).then(function(envio){
-                        Swal.fire(
-                            'Aviso',
-                            'Sesion a reprogramar...',
-                            'success'
-                        );
-                        ejecutaPacientes();
-                        ejecutarCalendario();
-                    })
+            })
+            //**********REPROGRAMAR EVENTO****************//
+            /** Se coloca reprogramado en el estado del turno y se debe actualizar el valor de las sesiones remanentes.*/
+            document.getElementById('reprogramar').addEventListener('click',()=>{
+                let dato = eventClickInfo.event.extendedProps.remanentes;
+                let envio={
+                    "remanentes":dato+1,
+                    "id": eventClickInfo.event.extendedProps.idPaciente,
+                    "turnoId": eventClickInfo.event.extendedProps.idTurno,
+                    "estado": "reprogramado"
+                }
+                fetch('reprogramar',{
+                    'method':'POST',
+                    'headers': {
+                        "Content-Type":"application/json; charset=utf-8"
+                    },
+                    'body': JSON.stringify(envio)
+                }).then(function(resp){
+                    return resp.text();
+                }).then(function(envio){
+                    Swal.fire(
+                        'Aviso',
+                        'Sesion a reprogramar...',
+                        'success'
+                    );
+                    ejecutaPacientes();
+                    ejecutarCalendario();
                 })
-                //*********EVENTO AUSENTE*******************///
-                document.getElementById('ausente').addEventListener('click',()=>{
-                    let envio={
-                        "id": eventClickInfo.event.extendedProps.idPaciente,
-                        "turnoId": eventClickInfo.event.extendedProps.idTurno,
-                        "estado": "ausente"
-                    }
-                    fetch('reprogramar',{
-                        'method':'POST',
-                        'headers': {
-                            "Content-Type":"application/json; charset=utf-8"
-                        },
-                        'body': JSON.stringify(envio)
-                    }).then(function(resp){
-                        return resp.text();
-                    }).then(function(envio){
-                        Swal.fire(
-                            'Aviso',
-                            'Sesion perdida',
-                            'error'
-                        );
-                        ejecutaPacientes();
-                        ejecutarCalendario();
-                    })
+            })
+            //*********EVENTO AUSENTE*******************///
+            document.getElementById('ausente').addEventListener('click',()=>{
+                let envio={
+                    "id": eventClickInfo.event.extendedProps.idPaciente,
+                    "turnoId": eventClickInfo.event.extendedProps.idTurno,
+                    "estado": "ausente"
+                }
+                fetch('reprogramar',{
+                    'method':'POST',
+                    'headers': {
+                        "Content-Type":"application/json; charset=utf-8"
+                    },
+                    'body': JSON.stringify(envio)
+                }).then(function(resp){
+                    return resp.text();
+                }).then(function(envio){
+                    Swal.fire(
+                        'Aviso',
+                        'Sesion perdida',
+                        'error'
+                    );
+                    ejecutaPacientes();
+                    ejecutarCalendario();
                 })
-                eventModal.show();  
-            },
-            //--------------------EVENTOS-------------------
-            events: function(info,successCallback,failureCallback){
-                //------------------------EVENTOS---------------------------------
-                //TOMA LA LISTA DE EVENTOS DEL BACKEND Y LA ENTREGA COMO UN JSON
-                fetch('events').then(response => {
-                    // Verificar si la respuesta es exitosa
-                    if (!response.ok) {
-                        throw new Error('Hubo un problema al obtener los datos.');
-                    }
-                    // Parsear la respuesta como JSON
-                    return response.json();
-                }).then(data => {
-                    let events = data.map(function(event){
-                        switch(event.estado){
-                            case 'listo' : // Evento que se finalizo con exito
+            })
+            eventModal.show();  
+        },
+        //--------------------EVENTOS-------------------
+        events: function(info,successCallback,failureCallback){
+            //------------------------EVENTOS---------------------------------
+            //TOMA LA LISTA DE EVENTOS DEL BACKEND Y LA ENTREGA COMO UN JSON
+            fetch('events').then(response => {
+                // Verificar si la respuesta es exitosa
+                if (!response.ok) {
+                    throw new Error('Hubo un problema al obtener los datos.');
+                }
+                // Parsear la respuesta como JSON
+                return response.json();
+            }).then(data => {
+                let events = data.map(function(event){
+                    switch(event.estado){
+                        case 'listo' : // Evento que se finalizo con exito
+                            return {
+                                title: event.nombre,
+                                start: event.fechaInicio,
+                                end: event.fechaFinal,
+                                timeStart: event.inicio,
+                                timeEnd: event.final,
+                                extendedProps:{
+                                    sesiones: event.sesiones,
+                                    remanentes: event.ses_remanentes,
+                                    idPaciente: event.id_paciente,
+                                    idTurno: event.turno_id,
+                                    nroTurno: event.numero_turno,
+                                    image: './Frontend/assets/img/ok.png', 
+                                },
+                                color: 'lightgreen', // Que hacer con los botones??
+                            }; 
+                        case 'ausente' : // Evento cancelado por ausencia sin aviso
+                            return {
+                                title: event.nombre,
+                                start: event.fechaInicio,
+                                end: event.fechaFinal,
+                                timeStart: event.inicio,
+                                timeEnd: event.final,
+                                extendedProps:{
+                                    sesiones: event.sesiones,
+                                    remanentes: event.ses_remanentes,
+                                    idPaciente: event.id_paciente,
+                                    idTurno: event.turno_id,
+                                    nroTurno: event.numero_turno,
+                                    image: './Frontend/assets/img/not.png', 
+                                },
+                                color: '#f3268d', 
+                                textColor: 'white'
+                            }; 
+                        case 'reprogramado' : //Evento reprogramado
+                            return {
+                                title: event.nombre,
+                                start: event.fechaInicio,
+                                end: event.fechaFinal,
+                                timeStart: event.inicio,
+                                timeEnd: event.final,
+                                extendedProps:{
+                                    sesiones: event.sesiones,
+                                    remanentes: event.ses_remanentes,
+                                    idPaciente: event.id_paciente,
+                                    idTurno: event.turno_id,
+                                    nroTurno: event.numero_turno,
+                                    image: './Frontend/assets/img/refatto.png',
+                                },
+                                color: 'lightblue',  
+                            };
+                        default: // Evento a espera de estado!
+                            if(event.ses_remanentes == 0 && event.numero_turno === event.sesiones){
                                 return {
                                     title: event.nombre,
                                     start: event.fechaInicio,
@@ -293,124 +339,59 @@ document.addEventListener('DOMContentLoaded', function() {
                                         idPaciente: event.id_paciente,
                                         idTurno: event.turno_id,
                                         nroTurno: event.numero_turno,
-                                        image: './Frontend/assets/img/ok.png', 
+                                        image: './Frontend/assets/img/alert.png',
                                     },
-                                    color: 'lightgreen', // Que hacer con los botones??
-                                }; 
-                            case 'ausente' : // Evento cancelado por ausencia sin aviso
-                                return {
-                                    title: event.nombre,
-                                    start: event.fechaInicio,
-                                    end: event.fechaFinal,
-                                    timeStart: event.inicio,
-                                    timeEnd: event.final,
-                                    extendedProps:{
-                                        sesiones: event.sesiones,
-                                        remanentes: event.ses_remanentes,
-                                        idPaciente: event.id_paciente,
-                                        idTurno: event.turno_id,
-                                        nroTurno: event.numero_turno,
-                                        image: './Frontend/assets/img/not.png', 
-                                    },
-                                    color: '#f3268d', 
-                                    textColor: 'white'
-                                }; 
-                            case 'reprogramado' : //Evento reprogramado
-                                return {
-                                    title: event.nombre,
-                                    start: event.fechaInicio,
-                                    end: event.fechaFinal,
-                                    timeStart: event.inicio,
-                                    timeEnd: event.final,
-                                    extendedProps:{
-                                        sesiones: event.sesiones,
-                                        remanentes: event.ses_remanentes,
-                                        idPaciente: event.id_paciente,
-                                        idTurno: event.turno_id,
-                                        nroTurno: event.numero_turno,
-                                        image: './Frontend/assets/img/refatto.png',
-                                    },
-                                    color: 'lightblue',  
+                                    color: 'orange',  
                                 };
-                            default: // Evento a espera de estado!
-                                if(event.ses_remanentes == 0 && event.numero_turno === event.sesiones){
-                                    return {
-                                        title: event.nombre,
-                                        start: event.fechaInicio,
-                                        end: event.fechaFinal,
-                                        timeStart: event.inicio,
-                                        timeEnd: event.final,
-                                        extendedProps:{
-                                            sesiones: event.sesiones,
-                                            remanentes: event.ses_remanentes,
-                                            idPaciente: event.id_paciente,
-                                            idTurno: event.turno_id,
-                                            nroTurno: event.numero_turno,
-                                            image: './Frontend/assets/img/alert.png',
-                                        },
-                                        color: 'orange',  
-                                    };
-                                }else{
-                                    return {
-                                        title: event.nombre,
-                                        start: event.fechaInicio,
-                                        end: event.fechaFinal,
-                                        timeStart: event.inicio,
-                                        timeEnd: event.final,
-                                        extendedProps:{
-                                            sesiones: event.sesiones,
-                                            remanentes: event.ses_remanentes,
-                                            idPaciente: event.id_paciente,
-                                            idTurno: event.turno_id,
-                                            nroTurno: event.numero_turno,
-                                            image: './Frontend/assets/img/clock.png',
-                                        }, 
-                                    };
-                                }       
-                        }
-                    })
-                    successCallback(events);
-                }).catch(error => {
-                    failureCallback('Error:', error);
-                });
-            },
-           /* eventContent: function(info){
-                console.log(info);
+                            }else{
+                                return {
+                                    title: event.nombre,
+                                    start: event.fechaInicio,
+                                    end: event.fechaFinal,
+                                    timeStart: event.inicio,
+                                    timeEnd: event.final,
+                                    extendedProps:{
+                                        sesiones: event.sesiones,
+                                        remanentes: event.ses_remanentes,
+                                        idPaciente: event.id_paciente,
+                                        idTurno: event.turno_id,
+                                        nroTurno: event.numero_turno,
+                                        image: './Frontend/assets/img/clock.png',
+                                    }, 
+                                };
+                            }       
+                    }
+                })
+                successCallback(events);
+            }).catch(error => {
+                failureCallback('Error:', error);
+            });
+        },
+        eventContent: function(info) {
+            let view = info.view.type;
+            if(view === 'timeGridDay') {
+                return { html: `
+                    <div class="d-flex">
+                        <p class="fw-bold pacienteEvento w-50">${info.event.title}</p>
+                        <img class="mb-3 ms-2" src="${info.event.extendedProps.image}">
+                    </div>
+                    `
+                }
+            } else if(view === 'timeGridWeek') {
+                let titulo = info.event.title.split(','); 
                 return {
-                    html:`
-                        <div>
-                            <a class="pacienteEvento d-block" id="giro${info.event.extendedProps.idPaciente}">${info.event.title}</a>
-                            <p class="pacienteEvento">${info.event.extendedProps.nroTurno} de ${info.event.extendedProps.sesiones}</p>
-                            <img src="${info.event.extendedProps.image}">
-                        </div>`
-                }            
-            },  */
-            eventContent: function(info) {
-                console.log(info);
-                let view = info.view.type;
-                if(view === 'timeGridDay') {
-                    return { html: `
-                        <div class="d-flex">
-                            <p class="fw-bold pacienteEvento w-50">${info.event.title}</p><img class="mb-3 ms-2" src="${info.event.extendedProps.image}">
-                        </div>
-                        `
-                    }
-                } else if(view === 'timeGridWeek') {
-                    let titulo = info.event.title.split(','); 
-                    return {
-                        html: `
-                        <p class="giro">${titulo[0]}</p>`
-                    }
+                    html: `
+                    <p class="giro">${titulo[0]}</p>`
                 }
             }
-        });
-        calendar.render();
-    }
+        }
+    });
+    calendar.render();
     //----------------FORMULARIO NUEVO TURNO-----------------//
     formNuevoTurno.addEventListener('submit',function(e){
         e.preventDefault();
-        const fecha = document.getElementById('fechaTurno').value;
-        const paciente = document.getElementById('campoPaciente').value;
+        const FECHA = document.getElementById('fechaTurno').value;
+        const PACIENTE = document.getElementById('campoPaciente').value;
         let infoForm = new FormData(formNuevoTurno);
         //Tomamos el id del paciente
         let id_pac = infoForm.get('campoPaciente');
@@ -421,26 +402,21 @@ document.addEventListener('DOMContentLoaded', function() {
         let num = infoForm.get('campoTurno').split('° ');
         let turno = num[1];
         let hora = turno.split(" - ");
-        let horaInicio = hora[0];
-        let horaFinal = hora[1];
-        let fechaInicio = fecha+"T"+horaInicio;
-        let fechaFinal = fecha+"T"+horaFinal;
         //Tomamos las sesiones remanentes y las totales
         let remanentes = document.getElementById('sesionesRemanentes').value; 
         let totales = document.getElementById('sesiones').value;
         // Creamos un objeto para pasarle - debo descontar una sesion!
         let envio = {
-            "fechaInicio":fechaInicio,
-            "fechaFinal":fechaFinal, //fecha
+            "fechaInicio":FECHA+"T"+hora[0],
+            "fechaFinal":FECHA+"T"+ hora[1],
             "id": id, //id del paciente
             "name":nombre,
-            "inicio": horaInicio,
-            "final": horaFinal,
+            "inicio": hora[0],
+            "final": hora[1],
             "remanentes": remanentes-1,
             "numeroTurno": totales - remanentes + 1,
         }
-        console.log(envio);
-        if(fecha =='' || paciente ==''){
+        if(FECHA =='' || PACIENTE ==''){
             Swal.fire(
                 'Aviso',
                 'Todos los campos son necesarios',
@@ -453,30 +429,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 'error'
             )
         }else{
-            fetch('registrar',{
-                'method':'POST',
-                'headers': {
-                    "Content-Type":"application/json; charset=utf-8"
-                },
-                'body': JSON.stringify(envio)
-            }).then(function(resp){
-                return resp.text();
-               
-            }).then(function(datos){
-                console.log("Enviado!:");
-                Swal.fire(
-                    'Aviso',
-                    'Nuevo turno cargado!',
-                    'success'
-                )
-                //debo actualizar el calendario. y la lista de pacientes
-                ejecutaPacientes();
-                ejecutarCalendario();
-            })
-        }
+        agregarTurno(envio);
         //limpio el fomulario y cierro
         formNuevoTurno.reset();
-    })
+        }
+    });
     //--------------FORMULARIO NUEVO PACIENTE----------------//
     formNuevoPaciente.addEventListener('submit',function(e){
         e.preventDefault();
@@ -501,21 +458,62 @@ document.addEventListener('DOMContentLoaded', function() {
             "estudios": infoForm.get('estudios'),
             "sesiones": ses,
         }
-        fetch('agregarPaciente',{
-            'method':'POST',
-            'headers': {
-                "Content-Type":"application/json; charset=utf-8"
-            },
-            'body': JSON.stringify(envio)
-        }).then(function(resp){
-            return resp.text();
-        }).then(function(datos){
-            console.log("Enviado!:");
-            ejecutaPacientes();
-        })
-        //limpio el fomulario y cierro
+        agregarPaciente(envio);
         formNuevoPaciente.reset();
-    })   
-          
+    })
+
+    async function agregarPaciente(envio){
+        try {
+            const response = await fetch('agregarPaciente',{
+                'method':'POST',
+                'headers': {
+                    "Content-Type":"application/json; charset=utf-8"
+                },
+                'body': JSON.stringify(envio)
+            })
+            if(response.ok){
+                Swal.fire(
+                    'Aviso',
+                    'Nuevo Paciente Cargado!',
+                    'success'
+                )
+            }
+        } catch (error) {
+            console.log(error);
+            Swal.fire(
+                'Aviso',
+                'Error en la comunicacion con el servidor',
+                'error'
+            )
+        }
+        ejecutaPacientes();
+    }
+
+    async function agregarTurno(envio){
+        try {
+            let respuesta = await fetch('registrar',{
+                'method':'POST',
+                'headers': {
+                "Content-Type":"application/json; charset=utf-8"
+                },
+                'body': JSON.stringify(envio)
+            })
+            if(respuesta.ok){
+                Swal.fire(
+                    'Aviso',
+                    'Nuevo turno cargado!',
+                    'success'
+                )
+            }
+        } catch (error) {
+            console.log(error);
+            Swal.fire(
+                'Aviso',
+                'Error en la comunicacion con el servidor',
+                'error'
+            )
+        }
+        calendar.refetchEvents();
+    }
 });
 
