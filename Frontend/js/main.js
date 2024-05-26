@@ -367,7 +367,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 failureCallback('Error:', error);
             });
         },
-        eventContent: function(info) {
+        eventContent: function(info) { // DEBO ACOMODAR ESTO!
             let view = info.view.type;
             if(view === 'timeGridDay') {
                 return { html: `
@@ -402,17 +402,21 @@ document.addEventListener('DOMContentLoaded', function() {
         let num = infoForm.get('campoTurno').split('° ');
         let turno = num[1];
         let hora = turno.split(" - ");
+        let inicio = hora[0];
+        let final = hora[1];
+        let fechaInicio = FECHA+"T"+inicio;
+        let fechaFinal = FECHA+"T"+final;
         //Tomamos las sesiones remanentes y las totales
         let remanentes = document.getElementById('sesionesRemanentes').value; 
         let totales = document.getElementById('sesiones').value;
         // Creamos un objeto para pasarle - debo descontar una sesion!
         let envio = {
-            "fechaInicio":FECHA+"T"+hora[0],
-            "fechaFinal":FECHA+"T"+ hora[1],
+            "fechaInicio":fechaInicio,
+            "fechaFinal":fechaFinal,
             "id": id, //id del paciente
             "name":nombre,
-            "inicio": hora[0],
-            "final": hora[1],
+            "inicio": inicio,
+            "final": final,
             "remanentes": remanentes-1,
             "numeroTurno": totales - remanentes + 1,
         }
@@ -443,6 +447,26 @@ document.addEventListener('DOMContentLoaded', function() {
         if(ses == 0){
             ses=1;
         }
+        let dni = infoForm.get('dni');
+        if(dni == ""){
+            dni=0;
+        }
+        let telefono = infoForm.get('telefono');
+        if(telefono == ""){
+            telefono = 0;
+        }
+        let nacimiento = infoForm.get('fechaNacimiento');
+        if(nacimiento ==''){
+            nacimiento = '1900-1-1';
+        }
+        let edad = infoForm.get('edad');
+        if(edad == ""){
+            edad=0;
+        }
+        let ingreso = infoForm.get('fechaIngreso');
+        if(ingreso ==''){
+            ingreso = '1900-1-1';
+        }
         let envio = {
             "nombre":infoForm.get('nombre'),
             "apellido":infoForm.get('apellido'), //fecha
@@ -464,56 +488,83 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function agregarPaciente(envio){
         try {
-            const response = await fetch('agregarPaciente',{
+            let pacientes = await fetch('agregarPaciente',{
                 'method':'POST',
                 'headers': {
                     "Content-Type":"application/json; charset=utf-8"
                 },
                 'body': JSON.stringify(envio)
             })
-            if(response.ok){
+            if(pacientes.ok){
                 Swal.fire(
                     'Aviso',
-                    'Nuevo Paciente Cargado!',
+                    'Paciente cargado con exito',
                     'success'
-                )
+                );
+                }else{
+                    Swal.fire(
+                        'Aviso',
+                        'No pudo cargarse el paciente',
+                        'success'
+                    );
+                }
             }
-        } catch (error) {
-            console.log(error);
+        catch (error) {
             Swal.fire(
                 'Aviso',
-                'Error en la comunicacion con el servidor',
+                'Erro en la comunicacion con la db',
                 'error'
-            )
-        }
+            );
+        }/*
+        fetch('agregarPaciente',{
+            'method':'POST',
+            'headers': {
+                "Content-Type":"application/json; charset=utf-8"
+            },
+            'body': JSON.stringify(envio)
+        }).then(function(resp){
+            return resp.text();
+        }).then(function(resp){
+             Swal.fire(
+                'Aviso',
+                'Nuevo Paciente Cargado!',
+                'success'
+            );
+        })*/
         ejecutaPacientes();
     }
 
     async function agregarTurno(envio){
         try {
-            let respuesta = await fetch('registrar',{
+            let registro = await fetch('registrar',{
                 'method':'POST',
                 'headers': {
-                "Content-Type":"application/json;1 charset=utf-8"
+                    "Content-Type":"application/json; charset=utf-8"
                 },
                 'body': JSON.stringify(envio)
             })
-            if(respuesta.ok){
+            if(registro.ok){
                 Swal.fire(
                     'Aviso',
-                    'Nuevo turno cargado!',
+                    'Nuevo turno Cargado!',
                     'success'
-                )
+                );
+            }else{
+                Swal.fire(
+                    'Aviso',
+                    'No pudo cargarse el turno',
+                    'success'
+                );
             }
         } catch (error) {
-            console.log(error);
             Swal.fire(
                 'Aviso',
-                'Error en la comunicacion con el servidor',
+                'Erro en la comunicacion con la db',
                 'error'
-            )
+            );
         }
         calendar.refetchEvents();
+        ejecutaPacientes();
     }
 });
 

@@ -201,6 +201,8 @@ class Model{
         $query->execute(array($evento['fechaInicio'],$evento['fechaFinal'],$evento['id'],$evento['inicio'],$evento['final'],$evento['name'],$evento['numeroTurno']));
         $query = $this->db->prepare("UPDATE `paciente` SET `ses_remanentes` = ? WHERE `paciente`.`id_paciente` = ? ");
         $query->execute(array($evento['remanentes'],$evento['id']));
+        header('Location: '.HOME);
+        die();
     }
 
     function turnoComplete($update){

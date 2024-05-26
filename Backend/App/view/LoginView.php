@@ -27,7 +27,7 @@ class LoginView{
             ?>
         </main>
         <?php
-        require_once './Frontend/pages/footer.html';
+        require_once './Frontend/pages/footerLogin.html';
     }
 
 }

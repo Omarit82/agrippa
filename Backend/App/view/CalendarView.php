@@ -24,7 +24,8 @@ class CalendarView{
     function registrar(){
         if(isset($_POST)){
             $datos = file_get_contents("php://input");
-            return json_decode($datos,true);
+            $reg =  json_decode($datos,true);
+            return $reg;
         }
     }
     function reprogramar(){

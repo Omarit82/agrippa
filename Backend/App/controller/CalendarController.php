@@ -36,6 +36,7 @@ class CalendarController extends SecuredController{
         $evento = $this->view->registrar();
         $this->model->registrar($evento);
     }
+    
     function turnoComplete(){
         $update = $this->view->turnoComplete();
         $this->model->turnoComplete($update);
