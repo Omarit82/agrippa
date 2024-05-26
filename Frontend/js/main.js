@@ -515,22 +515,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Erro en la comunicacion con la db',
                 'error'
             );
-        }/*
-        fetch('agregarPaciente',{
-            'method':'POST',
-            'headers': {
-                "Content-Type":"application/json; charset=utf-8"
-            },
-            'body': JSON.stringify(envio)
-        }).then(function(resp){
-            return resp.text();
-        }).then(function(resp){
-             Swal.fire(
-                'Aviso',
-                'Nuevo Paciente Cargado!',
-                'success'
-            );
-        })*/
+        }
         ejecutaPacientes();
     }
 
