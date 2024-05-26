@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     "turnoId": eventClickInfo.event.extendedProps.idTurno,
                     "estado": "ausente"
                 }
-                fetch('reprogramar',{
+                fetch('ausente',{
                     'method':'POST',
                     'headers': {
                         "Content-Type":"application/json; charset=utf-8"
@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     nroTurno: event.numero_turno,
                                     image: './Frontend/assets/img/not.png', 
                                 },
-                                color: '#f3268d', 
+                                color: 'red', 
                                 textColor: 'white'
                             }; 
                         case 'reprogramado' : //Evento reprogramado
@@ -494,7 +494,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let respuesta = await fetch('registrar',{
                 'method':'POST',
                 'headers': {
-                "Content-Type":"application/json; charset=utf-8"
+                "Content-Type":"application/json;1 charset=utf-8"
                 },
                 'body': JSON.stringify(envio)
             })
