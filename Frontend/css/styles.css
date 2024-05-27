@@ -10,23 +10,26 @@ body {
 
 /*Mapas*/
 .header {
-  background-color: #FF69B4;
+  background-color: rgba(255, 105, 180, 0.4941176471);
 }
 .header .btn-success {
-  background-color: #1f4788;
-  color: #87ceeb;
+  background-color: #0f4296;
+  color: #ffffff;
   text-decoration: none;
 }
+.header .btn-success:hover {
+  background-color: rgb(5, 80, 177);
+}
 .header h1 {
-  color: #87ceeb;
+  color: #56b7dd;
 }
 .header .navbar-brand {
   margin-right: 2rem;
 }
 
 .botones .btn {
-  background-color: #1f4788;
-  color: #87ceeb;
+  background-color: #0f4296;
+  color: #56b7dd;
 }
 
 .vh-75 {
@@ -40,10 +43,10 @@ input, textarea {
 }
 
 .botones .btn {
-  background-color: #1f4788;
+  background-color: #0f4296;
 }
 .botones .btn a {
-  color: #87ceeb;
+  color: #56b7dd;
   text-decoration: none;
 }
 
@@ -65,7 +68,7 @@ input, textarea {
 }
 
 .offcanvas {
-  background-color: #1f4788;
+  background-color: #0f4296;
 }
 
 .botonUno {
@@ -73,7 +76,7 @@ input, textarea {
   color: whitesmoke;
 }
 .botonUno:hover {
-  background-color: #FF69B4;
+  background-color: rgba(255, 105, 180, 0.4941176471);
 }
 
 .eliminar {
@@ -81,7 +84,7 @@ input, textarea {
   color: whitesmoke;
 }
 .eliminar:hover {
-  background-color: #FF69B4;
+  background-color: rgba(255, 105, 180, 0.4941176471);
 }
 
 .registrar {
@@ -89,7 +92,7 @@ input, textarea {
   color: whitesmoke;
 }
 .registrar:hover {
-  background-color: #FF69B4;
+  background-color: rgba(255, 105, 180, 0.4941176471);
 }
 
 .offcanvas-title {
@@ -97,7 +100,7 @@ input, textarea {
 }
 
 .campoPaciente {
-  color: #2c3e50;
+  color: #3778b9;
 }
 
 @media only screen and (max-width: 768px) {
@@ -114,8 +117,8 @@ input, textarea {
 }
 
 .titulo {
-  color: #87ceeb;
-  text-shadow: 2px 2px 2px #1f4788;
+  color: #56b7dd;
+  text-shadow: 2px 2px 2px #0f4296;
   font-size: 50px;
 }
 
@@ -126,7 +129,7 @@ input, textarea {
 .fc-col-header-cell-cushion {
   text-transform: uppercase;
   text-decoration: none;
-  color: #1f4788;
+  color: #0f4296;
 }
 
 .fc-toolbar-title {
@@ -140,13 +143,16 @@ input, textarea {
   }
 }
 
-.fc-timegrid-slot-label-cushion, .fc-timegrid-axis-cushion {
+.fc-col-header-cell-cushion {
+  color: #0f4296;
+}
+
+.fc-timegrid-slot-label-cushion {
   font-weight: bold;
-  color: #1f4788;
 }
 
 .fc .fc-timegrid-divider {
-  background-color: #1f4788;
+  background-color: #0f4296;
 }
 
 .fc .fc-scrollgrid-section {
@@ -154,15 +160,11 @@ input, textarea {
 }
 
 .fc .fc-timegrid-now-indicator-line {
-  border: solid 2px #1f4788;
+  border: solid 2px #0f4296;
 }
 
 .fc .fc-timegrid-now-indicator-arrow {
-  border-color: #1f4788;
-}
-
-.fc-theme-standard .fc-scrollgrid {
-  border: 1px solid #1f4788;
+  border-color: #0f4296;
 }
 
 .fc-event-main {
@@ -182,32 +184,29 @@ input, textarea {
   height: 500px;
 }
 
-.fc-list-event, .fc-v-event {
-  background-color: #dd67a2;
-}
-
 .fc .fc-list-event-dot {
-  border-color: #FF69B4;
+  border-color: rgba(255, 105, 180, 0.4941176471);
 }
 
 .pacienteEvento {
-  color: #1f4788;
-  text-decoration: none;
-  font-weight: 600;
-  display: block;
+  font-size: 11px;
 }
 
 .giro {
   transform: rotate(-90deg);
-  color: #1f4788;
+  color: #0f4296;
   position: absolute;
   bottom: 5%;
   right: 15%;
 }
 
+.header .navbar-brand {
+  margin: auto 0;
+}
+
 .footer {
-  background-color: #87ceeb;
-  color: #1f4788;
+  background-color: #56b7dd;
+  color: #0f4296;
   min-height: 150px;
 }
 

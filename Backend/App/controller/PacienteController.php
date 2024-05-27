@@ -28,14 +28,11 @@ class PacienteController extends SecuredController{
             die();
         }  
     }
-
-    function addPaciente(){
-        $paciente = $_POST;
-        $this->model->addPaciente($paciente);       
-    }
-
     function agregarPaciente(){
-        $paciente = $this->view->agregarPaciente();
-        $this->model->addPaciente($paciente);
+        if(isset($_POST)){
+            $datos = file_get_contents("php://input");
+            $reg = json_decode($datos,true);
+        }
+        $this->model->addPaciente($reg);
     }
 }

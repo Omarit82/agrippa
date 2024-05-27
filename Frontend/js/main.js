@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
             modal.addEventListener('submit',function(e){
                 e.preventDefault();
                 let dato = eventClickInfo.event.extendedProps.remanentes;
-                let envio={
+                let finalizado={
                     "remanentes":dato,
                     "id": eventClickInfo.event.extendedProps.idPaciente,
                     "turnoId": eventClickInfo.event.extendedProps.idTurno,
@@ -163,25 +163,32 @@ document.addEventListener('DOMContentLoaded', function() {
                     'headers': {
                         "Content-Type":"application/json; charset=utf-8"
                     },
-                    'body': JSON.stringify(envio)
+                    'body': JSON.stringify(finalizado)
                 }).then(function(resp){
                     return resp.text();
-                }).then(function(envio){
+                }).then(function(finalizado){
+                    console.log(finalizado);
                     Swal.fire(
                         'Aviso',
                         'Sesion realizada!',
                         'success'
                     );
-                    calendar.refetchEvents();
-                    ejecutaPacientes();
-                })
+                   
+                }).catch(function(error){
+                    console.log(error);
+                });
+                calendar.refetchEvents();
+                ejecutaPacientes();
+                setTimeout(() => {
+                    location. reload();
+                }, 1500);
             })
             //************ELIMINAR EVENTO*************** *//
             /** Elimina un evento pero recupera la sesion - elimina en caso de error. */
             document.getElementById('eliminarEvento').addEventListener('click',()=>{
                 let dato = eventClickInfo.event.extendedProps.remanentes;
                 dato++;
-                let envio={
+                let eliminado={
                     "remanentes":dato,
                     "id": eventClickInfo.event.extendedProps.idPaciente,
                     "turnoId": eventClickInfo.event.extendedProps.idTurno,
@@ -191,24 +198,31 @@ document.addEventListener('DOMContentLoaded', function() {
                     'headers': {
                         "Content-Type":"application/json; charset=utf-8"
                     },
-                    'body': JSON.stringify(envio)
+                    'body': JSON.stringify(eliminado)
                 }).then(function(resp){
                     return resp.text();
-                }).then(function(envio){
+                }).then(function(eliminado){
+                    console.log(eliminado);
                     Swal.fire(
                         'Aviso',
                         'Turno Eliminado',
                         'success'
                     );
-                    calendar.refetchEvents();
-                    ejecutaPacientes();
-                })
+                    
+                }).catch(function(error){
+                    console.log(error);
+                });
+                calendar.refetchEvents();
+                ejecutaPacientes();
+                setTimeout(() => {
+                    location. reload();
+                }, 1500);
             })
             //**********REPROGRAMAR EVENTO****************//
             /** Se coloca reprogramado en el estado del turno y se debe actualizar el valor de las sesiones remanentes.*/
             document.getElementById('reprogramar').addEventListener('click',()=>{
                 let dato = eventClickInfo.event.extendedProps.remanentes;
-                let envio={
+                let reprog={
                     "remanentes":dato+1,
                     "id": eventClickInfo.event.extendedProps.idPaciente,
                     "turnoId": eventClickInfo.event.extendedProps.idTurno,
@@ -219,43 +233,58 @@ document.addEventListener('DOMContentLoaded', function() {
                     'headers': {
                         "Content-Type":"application/json; charset=utf-8"
                     },
-                    'body': JSON.stringify(envio)
+                    'body': JSON.stringify(reprog)
                 }).then(function(resp){
                     return resp.text();
-                }).then(function(envio){
+                }).then(function(reprog){
+                    console.log(reprog);
                     Swal.fire(
                         'Aviso',
                         'Sesion a reprogramar...',
                         'success'
                     );
-                    ejecutaPacientes();
-                    ejecutarCalendario();
-                })
+                    
+                }).catch(function(error){
+                    console.log(error);
+                });
+                calendar.refetchEvents();
+                ejecutaPacientes();
+                setTimeout(() => {
+                    location. reload();
+                }, 1500);
             })
             //*********EVENTO AUSENTE*******************///
             document.getElementById('ausente').addEventListener('click',()=>{
-                let envio={
+                let ausente={
                     "id": eventClickInfo.event.extendedProps.idPaciente,
                     "turnoId": eventClickInfo.event.extendedProps.idTurno,
                     "estado": "ausente"
                 }
+                console.log(ausente);
                 fetch('ausente',{
                     'method':'POST',
                     'headers': {
                         "Content-Type":"application/json; charset=utf-8"
                     },
-                    'body': JSON.stringify(envio)
+                    'body': JSON.stringify(ausente)
                 }).then(function(resp){
                     return resp.text();
-                }).then(function(envio){
+                }).then(function(ausente){
+                    console.log(ausente);
                     Swal.fire(
                         'Aviso',
                         'Sesion perdida',
                         'error'
                     );
-                    ejecutaPacientes();
-                    ejecutarCalendario();
-                })
+                    
+                }).catch(function(error){
+                    console.log(error);
+                });
+                calendar.refetchEvents();
+                ejecutaPacientes();
+                setTimeout(() => {
+                    location. reload(); //CAUSA UN REFRESCO EN LA PAGINA POR EL POST
+                }, 1500);
             })
             eventModal.show();  
         },
@@ -288,7 +317,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                     nroTurno: event.numero_turno,
                                     image: './Frontend/assets/img/ok.png', 
                                 },
-                                color: 'lightgreen', // Que hacer con los botones??
+                                color: 'lightgreen',
+                                textColor: 'black'
                             }; 
                         case 'ausente' : // Evento cancelado por ausencia sin aviso
                             return {
@@ -323,7 +353,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                     nroTurno: event.numero_turno,
                                     image: './Frontend/assets/img/refatto.png',
                                 },
-                                color: 'lightblue',  
+                                color: 'lightblue', 
+                                textColor: 'black'
                             };
                         default: // Evento a espera de estado!
                             if(event.ses_remanentes == 0 && event.numero_turno === event.sesiones){
@@ -341,7 +372,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                         nroTurno: event.numero_turno,
                                         image: './Frontend/assets/img/alert.png',
                                     },
-                                    color: 'orange',  
+                                    color: 'orange', 
+                                    textColor: 'black'
                                 };
                             }else{
                                 return {
@@ -358,6 +390,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         nroTurno: event.numero_turno,
                                         image: './Frontend/assets/img/clock.png',
                                     }, 
+                                    textColor: 'black'
                                 };
                             }       
                     }
@@ -368,20 +401,32 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         },
         eventContent: function(info) { // DEBO ACOMODAR ESTO!
+            console.log(info);
             let view = info.view.type;
+            let titulo = info.event.title.split(','); 
             if(view === 'timeGridDay') {
                 return { html: `
                     <div class="d-flex">
-                        <p class="fw-bold pacienteEvento w-50">${info.event.title}</p>
-                        <img class="mb-3 ms-2" src="${info.event.extendedProps.image}">
+                        <div class="d-flex flex-column"> 
+                            <p class="fw-bold pacienteEvento m-0">${titulo[1]}</p>
+                            <p class="fw-bold pacienteEvento m-0">${titulo[0]}</p>
+                        </div>
+                        <img class="mb-3 ms-1" src="${info.event.extendedProps.image}">
                     </div>
                     `
                 }
             } else if(view === 'timeGridWeek') {
-                let titulo = info.event.title.split(','); 
                 return {
-                    html: `
-                    <p class="giro">${titulo[0]}</p>`
+    
+                }
+            } else if(view === 'list'){
+                return {
+                    html:`
+                    <div class="d-flex">
+                        <p class="fw-bold pacienteEvento m-0">${titulo[1]}</p>
+                        <img class="mb-3 ms-1" src="${info.event.extendedProps.image}">
+                    </div>
+                    `
                 }
             }
         }

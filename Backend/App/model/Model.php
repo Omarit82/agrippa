@@ -205,10 +205,6 @@ class Model{
         die();
     }
 
-    function turnoComplete($update){
-        $query = $this->db->prepare("UPDATE `turno` SET `estado`= ? WHERE `turno`.`turno_id`=?");
-        $query->execute(array($update['estado'],$update['turnoId']));
-    }
     function getUser($user){ //BUSCA UN USUARIO PASADO POR PARAMETROS EN EL MODELO Y LO DEVUELVE
         $query = $this->db->prepare("select * from users where name_user=?");
         $query->execute(array($user));
@@ -221,21 +217,25 @@ class Model{
       header('Location: '.HOME);
       die();
     }
+    function turnoComplete($complete){
+        $query = $this->db->prepare("UPDATE `turno` SET `estado`= ? WHERE `turno`.`turno_id`=?");
+        $query->execute(array($complete['estado'],$complete['turnoId']));
+    }
 
-    function reprogramar($rep){
+    function reprogramar($reprogramado){
         $query = $this->db->prepare("UPDATE `paciente` SET `ses_remanentes`= ? WHERE `paciente`.`id_paciente`=?");
-        $query->execute(array($rep['remanentes'], $rep['id']));
+        $query->execute(array($reprogramado['remanentes'], $reprogramado['id']));
         $query = $this->db->prepare("UPDATE `turno` SET `estado` = ?  WHERE `turno`.`turno_id` = ?");
-        $query->execute(array($rep['estado'], $rep['turnoId']));
+        $query->execute(array($reprogramado['estado'], $reprogramado['turnoId']));
     }
-    function eliminarEvento($evento){
+    function eliminarEvento($deleted){
         $query = $this->db->prepare("DELETE FROM `turno` WHERE `turno`.`turno_id`=?");
-        $query->execute(array($evento['turnoId']));
+        $query->execute(array($deleted['turnoId']));
         $query = $this->db->prepare("UPDATE `paciente` SET `ses_remanentes`= ? WHERE `paciente`.`id_paciente`=?");
-        $query->execute(array($evento['remanentes'], $evento['id']));
+        $query->execute(array($deleted['remanentes'], $deleted['id']));
     }
-    function ausente($evento){
+    function ausente($ausente){
         $query = $this->db->prepare("UPDATE `turno` SET `estado` = ?  WHERE `turno`.`turno_id` = ?");
-        $query->execute(array($evento['estado'], $evento['turnoId']));
+        $query->execute(array($ausente['estado'], $ausente['turnoId']));
     }
 }

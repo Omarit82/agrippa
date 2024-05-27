@@ -5,12 +5,7 @@ class CalendarView{
 
     }
 
-    function turnoComplete(){
-        if(isset($_POST)){
-            $datos = file_get_contents("php://input");
-            return json_decode($datos,true);
-        }
-    }
+   
     function eventos($eventos){
         header('Content-Type: application/json');
         echo json_encode($eventos);
@@ -20,30 +15,82 @@ class CalendarView{
         header('Content-Type: application/json');
         echo json_encode($lista);
     }
+    /*--------------------------------*/
+    function turnoComplete(){
+        ob_start();
+        try {
+            if(isset($_POST)){
+                $completed = file_get_contents("php://input");
+                return json_decode($completed,true);
+            }
+        } catch (Exception $e) {
+            header('Content-Type: application/json', true, 400);
+            echo json_encode(array('error' => $e->getMessage()));
+        }finally{
+            unset($completed);
+            ob_end_clean();
+        }
+    }
 
     function registrar(){
-        if(isset($_POST)){
-            $datos = file_get_contents("php://input");
-            $reg =  json_decode($datos,true);
-            return $reg;
+        ob_start();
+        try {
+            if(isset($_POST)){
+                $registro = file_get_contents("php://input");
+                return json_decode($registro,true);
+            }
+        } catch (Exception $e) {
+            header('Content-Type: application/json', true, 400);
+            echo json_encode(array('error' => $e->getMessage()));
+        }finally{
+            unset($registros);
+            ob_end_clean();
         }
     }
     function reprogramar(){
-        if(isset($_POST)){
-            $datos = file_get_contents("php://input");
-            return json_decode($datos,true);
+        ob_start();
+        try {
+            if(isset($_POST)){
+                $reprog = file_get_contents("php://input");
+                return json_decode($reprog,true);
+            }
+        } catch (Exception $e) {
+            header('Content-Type: application/json', true, 400);
+            echo json_encode(array('error' => $e->getMessage()));
+        }finally{
+            unset($reprog);
+            ob_end_clean();
         }
     }
+
     function eliminarEvento(){
-        if(isset($_POST)){
-            $datos = file_get_contents("php://input");
-            return json_decode($datos,true);
+       ob_start();
+        try {
+            if(isset($_POST)){
+                $reprog = file_get_contents("php://input");
+                return json_decode($reprog,true);
+            }
+        } catch (Exception $e) {
+            header('Content-Type: application/json', true, 400);
+            echo json_encode(array('error' => $e->getMessage()));
+        }finally{
+            unset($reprog);
+            ob_end_clean();
         }
     }
     function ausente(){
-        if(isset($_POST)){
-            $datos = file_get_contents("php:/input");
-            return json_decode($datos,true);
+        ob_start();
+        try {
+            if(isset($_POST)){
+                $ausente = file_get_contents("php://input");
+                return json_decode($ausente,true);
+            }
+        } catch (Exception $e) {
+            header('Content-Type: application/json', true, 400);
+            echo json_encode(array('error' => $e->getMessage()));
+        }finally{
+            unset($ausente);
+            ob_end_clean();
         }
     }
     
@@ -123,7 +170,7 @@ class CalendarView{
                         </div>
                         <div class="offcanvas-body p-0">
                             <div class="container p-0">
-                                <form action="addPaciente" method="POST" id="formCanvasPaciente" class="d-flex flex-column col-11 m-auto pb-2">
+                                <form action="" method="POST" id="formCanvasPaciente" class="d-flex flex-column col-11 m-auto pb-2">
                                     <label for="nombre" class="elementoForm m-2 text-center">NOMBRE</label>
                                     <input type="text" name="nombre" id="nombrePaciente" placeholder="  NOMBRE" class="m-2">
                                     <label for="apellido" class="elementoForm m-2 text-center">APELLIDO</label>

@@ -22,14 +22,14 @@
         padding: 5px 5px; /* Ajusta el padding para cambiar el tamaño del botón */
     }
 }
-
-.fc-timegrid-slot-label-cushion , .fc-timegrid-axis-cushion{
-    font-weight: bold;
+.fc-col-header-cell-cushion{
     color: map-get($colores,extra );
 }
+.fc-timegrid-slot-label-cushion{
+    font-weight: bold;
+}
 .fc .fc-timegrid-divider{
-    background-color: map-get($colores,extra );
-     
+    background-color: map-get($colores,extra ); 
 }
 .fc .fc-scrollgrid-section{
     height:10px;
@@ -40,9 +40,7 @@
 .fc .fc-timegrid-now-indicator-arrow{
     border-color: map-get($colores,extra);
 }
-.fc-theme-standard .fc-scrollgrid{
-    border: 1px solid map-get($colores,extra);
-}
+
 .fc-event-main{
     img{
         width: 20px;
@@ -58,17 +56,14 @@
 .fc-direction-ltr{
     height: 500px;
 }
-.fc-list-event , .fc-v-event {
-    background-color:map-get($colores, evento);
+.fc-list-event , .fc-v-event, .fc-list-day-cushion {
+    background-color: map-get($colores,$color-evento);
 }
 .fc .fc-list-event-dot{
     border-color: map-get($colores,principal);
 }
 .pacienteEvento{
-    color: map-get($colores,extra);
-    text-decoration: none;
-    font-weight: 600;    
-    display: block;
+    font-size: 11px;
 }
 .giro{
     transform: rotate(-90deg);
@@ -76,4 +71,9 @@
     position: absolute;
     bottom:5%;
     right: 15%;
+}
+.header {
+    .navbar-brand{
+        margin: auto 0;
+    }
 }

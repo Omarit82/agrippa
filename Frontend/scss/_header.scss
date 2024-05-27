@@ -2,8 +2,11 @@
     background-color: map-get($colores,principal);
     .btn-success{
         background-color: map-get($colores ,extra);
-        color: map-get($colores , tipoPrincipal);
+        color: #ffffff;
         text-decoration: none;
+        &:hover {
+            background-color: rgb(5, 80, 177);
+        }
     }
     h1{
         color: map-get($colores,tipoPrincipal);
