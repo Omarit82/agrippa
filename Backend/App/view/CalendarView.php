@@ -101,12 +101,6 @@ class CalendarView{
             <div class="container-fluid p-0">
                     <!-- Botones de offcanvas -->
                 <div class=" d-flex justify-content-between p-0">
-                    <button class="btn-lateral-izq position-fixed bottom-50" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
-                        <img src="./Frontend/assets/img/izquierda.png" alt=""class="imagenBoton">
-                    </button>
-                    <button class="btn-lateral-der  position-fixed bottom-50 end-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                        <img src="./Frontend/assets/img/derecha.png" alt=""class="imagenBoton">
-                    </button>
                 </div>
                 <div class="row justify-content-center">
                     <!-- Insertamos la offcanvas izquierda CARGA DE TURNO-->
@@ -138,15 +132,20 @@ class CalendarView{
                                             Turno
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item turno" id="turno_1">1° 09:00 - 09:40</a></li>                                           
-                                            <li><a class="dropdown-item turno" id="turno_2">2° 09:40 - 10:20</a></li> 
-                                            <li><a class="dropdown-item turno" id="turno_3">3° 10:20 - 11:00</a></li>
-                                            <li><a class="dropdown-item turno" id="turno_4">4° 11:00 - 11:40</a></li>
-                                            <li><a class="dropdown-item turno" id="turno_5">5° 11:40 - 12:20</a></li>
-                                            <li><a class="dropdown-item turno" id="turno_6">6° 12:20 - 13:00</a></li>
-                                            <li><a class="dropdown-item turno" id="turno_7">7° 13:00 - 13:40</a></li>
-                                            <li><a class="dropdown-item turno" id="turno_8">8° 13:40 - 14:20</a></li>
-                                            <li><a class="dropdown-item turno" id="turno_9">9° 14:20 - 15:00</a></li>
+                                            <li><a class="dropdown-item turno" id="turno_1">1° 09:00 - 09:30</a></li>                                           
+                                            <li><a class="dropdown-item turno" id="turno_2">2° 09:30 - 10:00</a></li> 
+                                            <li><a class="dropdown-item turno" id="turno_3">3° 10:00 - 10:30</a></li>
+                                            <li><a class="dropdown-item turno" id="turno_4">4° 10:30 - 11:00</a></li>
+                                            <li><a class="dropdown-item turno" id="turno_5">5° 11:00 - 11:30</a></li>
+                                            <li><a class="dropdown-item turno" id="turno_6">6° 11:30 - 12:00</a></li>
+                                            <li><a class="dropdown-item turno" id="turno_7">7° 12:00 - 12:30</a></li>
+                                            <li><a class="dropdown-item turno" id="turno_8">8° 12:30 - 13:00</a></li>
+                                            <li><a class="dropdown-item turno" id="turno_9">9° 13:00 - 13:30</a></li>
+                                            <li><a class="dropdown-item turno" id="turno_10">10° 13:30 - 14:00</a></li>
+                                            <li><a class="dropdown-item turno" id="turno_11">11° 14:00 - 14:30</a></li>
+                                            <li><a class="dropdown-item turno" id="turno_12">12° 14:30 - 15:00</a></li>
+                                            <li><a class="dropdown-item turno" id="turno_13">13° 15:00 - 15:30</a></li>
+                                            <li><a class="dropdown-item turno" id="turno_14">14° 15:30 - 16:00</a></li>
                                         </ul>
                                         <input class="w-100 campoPaciente mt-2 text-center" type="text" name="campoTurno" id="campoTurno">
                                         <label for="sesiones" class=" botonUno btn w-100 mt-2 d-none">Sesiones Totales</label>

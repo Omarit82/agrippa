@@ -72,9 +72,9 @@ document.addEventListener('DOMContentLoaded', function() {
         //----------------------CALENDARIO-------------------------//   
     let calendar = new FullCalendar.Calendar(calendarEl, {
         timeZone:'local',
-        slotDuration: '00:40:00',// Duración de las franjas horarias (40 minutos)
+        slotDuration: '00:30:00',// Duración de las franjas horarias (40 minutos)
         slotMinTime: '09:00:00',
-        slotMaxTime: '15:00:00',
+        slotMaxTime: '16:00:00',
         // Hora de finalización del último slot (15:00 PM)
         nowIndicator: true,
         initialView: 'timeGridDay',
@@ -111,29 +111,44 @@ document.addEventListener('DOMContentLoaded', function() {
                 case '09:00:00':
                     seleccion = document.getElementById('turno_1');
                     break;
-                case '09:40:00':
+                case '09:30:00':
                     seleccion = document.getElementById('turno_2');
                     break;
-                case '10:20:00':
+                case '10:00:00':
                     seleccion = document.getElementById('turno_3');
                     break;
-                case '11:00:00':
+                case '10:30:00':
                     seleccion = document.getElementById('turno_4');
                     break;
-                case '11:40:00':
+                case '11:00:00':
                     seleccion = document.getElementById('turno_5');
                     break;
-                case '12:20:00':
+                case '11:30:00':
                     seleccion = document.getElementById('turno_6');
                     break;
-                case '13:00:00':
+                case '12:00:00':
                     seleccion = document.getElementById('turno_7');
                     break;
-                case '13:40:00':
+                case '12:30:00':
                     seleccion = document.getElementById('turno_8');
                     break;
-                case '14:20:00':
+                case '13:00:00':
                     seleccion = document.getElementById('turno_9');
+                    break;
+                case '13:30:00':
+                    seleccion = document.getElementById('turno_10');
+                    break;
+                case '14:00:00':
+                    seleccion = document.getElementById('turno_11');
+                    break;
+                case '14:30:00':
+                    seleccion = document.getElementById('turno_12');
+                    break;
+                case '15:00:00':
+                    seleccion = document.getElementById('turno_13');
+                    break;
+                case '15:30:00':
+                    seleccion = document.getElementById('turno_14');
                     break;
                 default:
                     seleccion = document.getElementById('turno_1');

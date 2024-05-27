@@ -4,10 +4,11 @@ class ConfigApp{
     public static $ACTION = 'action';
     public static $PARAMS = 'params';
     public static $ACTIONS = [
-        ''=>'CalendarController#calendar',
-        'home'=>'CalendarController#calendar',
+        ''=>'HomeController#home',
+        'home'=>'HomeController#home',
         'calendar'=>'CalendarController#calendar',
         'lista'=>'PacienteController#lista',
+        'turnos'=>'TurnosController#turnos',
         'login'=>'LoginController#login',
         'verifyLogin'=>'LoginController#verifyLogin',
         'formPaciente'=>'PacienteController#formPaciente',

@@ -20,14 +20,7 @@ class PacienteController extends SecuredController{
             die();
         }  
     }
-    function formPaciente(){
-        if(isset($_SESSION['USERNAME'])){
-            $this->view->formPaciente(); //MUESTRA EL formulario para cargar pacientes
-        }else{
-            header('Location: '.LOGIN);
-            die();
-        }  
-    }
+   
     function agregarPaciente(){
         if(isset($_POST)){
             $datos = file_get_contents("php://input");
