@@ -4,8 +4,6 @@ class CalendarView{
     public function __construct(){
 
     }
-
-   
     function eventos($eventos){
         header('Content-Type: application/json');
         echo json_encode($eventos);
@@ -17,7 +15,6 @@ class CalendarView{
     }
     /*--------------------------------*/
     function turnoComplete(){
-        ob_start();
         try {
             if(isset($_POST)){
                 $completed = file_get_contents("php://input");
@@ -26,14 +23,10 @@ class CalendarView{
         } catch (Exception $e) {
             header('Content-Type: application/json', true, 400);
             echo json_encode(array('error' => $e->getMessage()));
-        }finally{
-            unset($completed);
-            ob_end_clean();
         }
     }
 
     function registrar(){
-        ob_start();
         try {
             if(isset($_POST)){
                 $registro = file_get_contents("php://input");
@@ -42,13 +35,9 @@ class CalendarView{
         } catch (Exception $e) {
             header('Content-Type: application/json', true, 400);
             echo json_encode(array('error' => $e->getMessage()));
-        }finally{
-            unset($registros);
-            ob_end_clean();
         }
     }
     function reprogramar(){
-        ob_start();
         try {
             if(isset($_POST)){
                 $reprog = file_get_contents("php://input");
@@ -57,14 +46,10 @@ class CalendarView{
         } catch (Exception $e) {
             header('Content-Type: application/json', true, 400);
             echo json_encode(array('error' => $e->getMessage()));
-        }finally{
-            unset($reprog);
-            ob_end_clean();
         }
     }
 
     function eliminarEvento(){
-       ob_start();
         try {
             if(isset($_POST)){
                 $reprog = file_get_contents("php://input");
@@ -73,13 +58,9 @@ class CalendarView{
         } catch (Exception $e) {
             header('Content-Type: application/json', true, 400);
             echo json_encode(array('error' => $e->getMessage()));
-        }finally{
-            unset($reprog);
-            ob_end_clean();
         }
     }
     function ausente(){
-        ob_start();
         try {
             if(isset($_POST)){
                 $ausente = file_get_contents("php://input");
@@ -88,9 +69,6 @@ class CalendarView{
         } catch (Exception $e) {
             header('Content-Type: application/json', true, 400);
             echo json_encode(array('error' => $e->getMessage()));
-        }finally{
-            unset($ausente);
-            ob_end_clean();
         }
     }
     
@@ -99,9 +77,6 @@ class CalendarView{
         ?>
         <main class="pages-background">
             <div class="container-fluid p-0">
-                    <!-- Botones de offcanvas -->
-                <div class=" d-flex justify-content-between p-0">
-                </div>
                 <div class="row justify-content-center">
                     <!-- Insertamos la offcanvas izquierda CARGA DE TURNO-->
                     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasLeftLabel">
@@ -213,7 +188,7 @@ class CalendarView{
                 </div>
                 <!-- fin del showCalendar -->  
             </div>    
-            <!-- Modal -->
+            <!-- Modal al hacer click en un evento -->
             <div class="modal fade" id="eventoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="eventoModal" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -238,6 +213,6 @@ class CalendarView{
                 </div>
             </div>
         </main> <?php
-        require_once './Frontend/pages/footer.html';
+        require_once './Frontend/pages/footerCalendario.html';
     }    
 }

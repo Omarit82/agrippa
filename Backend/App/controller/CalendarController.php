@@ -21,22 +21,18 @@ class CalendarController extends SecuredController{
             die();
         }  
     }
-
     function events(){  //TRAE DEL MODELO LOS EVENTOS Y LOS PASA A LA VISTA
         $eventos = $this->model->eventos();
         $this->view->eventos($eventos);
     }
-
     function pacientes(){   //TRAE DEL MODELO LOS PACIENTES Y LOS PASA A LA VISTA
         $lista = $this->model->lista();
         $this->view->lista($lista);
     }
-
     function registrar(){
         $evento = $this->view->registrar();
         $this->model->registrar($evento);
     }
-    
     function turnoComplete(){
         $update = $this->view->turnoComplete();
         $this->model->turnoComplete($update);
@@ -45,12 +41,10 @@ class CalendarController extends SecuredController{
         $rep = $this->view->reprogramar();
         $this->model->reprogramar($rep);
     }
-
     function eliminarEvento(){
         $erased = $this->view->eliminarEvento();
         $this->model->eliminarEvento($erased);
     }
-
     function ausente(){
         $evento = $this->view->ausente();
         $this->model->ausente($evento);

@@ -1,8 +1,11 @@
 document.addEventListener('DOMContentLoaded',function(){
+    "use strict";
+    // inicializacion de documento
     const arrayPacientes = document.querySelectorAll('.listado');
     const arrayTurnos = document.querySelectorAll('.turno');
     const campo = document.getElementById('cPaciente');
     const campoTurno = document.getElementById('campoTurno');
+    const formNuevoTurno = document.getElementById('formCanvasTurno');
     arrayPacientes.forEach(paciente => {
         paciente.addEventListener('click',()=>{
             let valor= paciente.innerHTML;
@@ -15,15 +18,12 @@ document.addEventListener('DOMContentLoaded',function(){
             campoTurno.value = valor;
         })
     });
-    const formTurno = document.getElementById('turno');
-    formTurno.addEventListener('submit',function(e){
+    //----------------FORMULARIO NUEVO TURNO-----------------//
+    formNuevoTurno.addEventListener('submit',function(e){
         e.preventDefault();
-        const FECHA = document.getElementById('fTurno').value;
-        console.log(FECHA);
-        const PACIENTE = document.getElementById('cPaciente').value;
-        console.log(PACIENTE);
-        let infoForm = new FormData(formTurno);
-        console.log(infoForm.get('campoPaciente'));
+        const FECHA = document.getElementById('fechaTurno').value;
+        const PACIENTE = document.getElementById('campoPaciente').value;
+        let infoForm = new FormData(formNuevoTurno);
         //Tomamos el id del paciente
         let id_pac = infoForm.get('campoPaciente');
         let new_id_pac = id_pac.split("- ");
@@ -66,10 +66,9 @@ document.addEventListener('DOMContentLoaded',function(){
         }else{
         agregarTurno(envio);
         //limpio el fomulario y cierro
-        formTurno.reset();
+        formNuevoTurno.reset();
         }
     });
-
     async function agregarTurno(envio){
         try {
             let registro = await fetch('registrar',{
