@@ -5,23 +5,6 @@ document.addEventListener('DOMContentLoaded',function(){
     "use strict";
     // inicializacion de documento
     ejecutaPacientes();
-    const arrayPacientes = document.querySelectorAll('.listado');
-    const arrayTurnos = document.querySelectorAll('.turno');
-    const campo = document.getElementById('campoPaciente');
-    const campoTurno = document.getElementById('campoTurno');
-    const formNuevoTurno = document.getElementById('formCanvasTurno');
-    arrayPacientes.forEach(paciente => {
-        paciente.addEventListener('click',()=>{
-            let valor= paciente.innerHTML;
-            campo.value = valor;
-        });
-    });
-    arrayTurnos.forEach(turno =>{
-        turno.addEventListener('click',()=>{
-            let valor =turno.innerHTML;
-            campoTurno.value = valor;
-        })
-    });
     //----------------FORMULARIO NUEVO TURNO-----------------//
     formNuevoTurno.addEventListener('submit',function(e){
         e.preventDefault();
