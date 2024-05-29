@@ -29,10 +29,15 @@ class CalendarController extends SecuredController{
         $lista = $this->model->lista();
         $this->view->lista($lista);
     }
+
+    //NUEVO TURNO
     function registrar(){
         $evento = $this->view->registrar();
         $this->model->registrar($evento);
     }
+
+
+    //GESTIONAN LAS ACCIONES SOBRE LOS TURNOS
     function turnoComplete(){
         $update = $this->view->turnoComplete();
         $this->model->turnoComplete($update);

@@ -1,10 +1,13 @@
 "use strict";
 // inicializacion de documento
-function showPacientes(datos){
+
+async function showPacientes(){
     const SELECT_PACIENTE = document.getElementById('dropPacientes');
     SELECT_PACIENTE.innerHTML="";
+    let datos = await fetchPacientes();
+    console.log(datos);
     // AGREGADO DE ID Y CLASE A TODOS LOS BOTONES DE PACIENTES. 
-    for (let i=0; i<datos.length;i++){
+   for (let i=0; i<datos.length;i++){
         let newLi = document.createElement("li");
         let anchor = document.createElement("a");
         let contenido = document.createTextNode(datos[i].id_paciente+"- "+datos[i].apellido+", "+datos[i].nombre);
@@ -28,14 +31,13 @@ function showPacientes(datos){
         })
     }
 }
-async function ejecutaPacientes(){
+async function fetchPacientes(){
     try {
         const respuesta = await fetch('pacientes');
         if(respuesta.ok){
             let data = await respuesta.json();
-            showPacientes(data);
+            return data
         }
-        
     } catch (error) {
         console.log(error);
         Swal.fire(
@@ -45,6 +47,7 @@ async function ejecutaPacientes(){
         )
     }
 }
+
 async function agregarPaciente(envio){
     try {
         let pacientes = await fetch('agregarPaciente',{
@@ -109,6 +112,5 @@ async function agregarTurno(envio){
     }
     ejecutaPacientes();
 }
-export { ejecutaPacientes };
 export { agregarTurno };
 export { showPacientes };

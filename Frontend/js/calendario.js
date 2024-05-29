@@ -1,12 +1,12 @@
-import { ejecutaPacientes } from "./funciones.js";
+
 "use strict";
 // inicializacion de documento
 let calendarEl = document.getElementById('calendar');  //Div del calendario
 let turnoElegido = document.getElementById('campoTurno');//CAMPO DONDE COMPLETAR EL TURNO ELEGIDO
 let offcanvasLeft = new bootstrap.Offcanvas(document.getElementById('offcanvasLeft'));//CANVAS PARA CREAR UN TURNO DESDE EL CALENDARIO
 let eventModal =  new bootstrap.Modal(document.getElementById('eventoModal'));//MODAL PARA CLICK DE EVENTOS
-ejecutaPacientes();
-//----------------------CALENDARIO-------------------------//   
+
+//----------------------CALENDARIO-------------------------//  
 let calendar = new FullCalendar.Calendar(calendarEl, {
     timeZone:'local',
     slotDuration: '00:30:00',// Duración de las franjas horarias (40 minutos)

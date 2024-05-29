@@ -1,11 +1,12 @@
-import { agregarTurno, ejecutaPacientes } from "./funciones.js";
+import { agregarTurno, showPacientes } from "./funciones.js";
 import { refetch } from "./calendario.js";
 
 document.addEventListener('DOMContentLoaded',function(){
     "use strict";
     // inicializacion de documento
-    ejecutaPacientes();
-    //----------------FORMULARIO NUEVO TURNO-----------------//
+    showPacientes();
+    let formNuevoTurno = document.getElementById('formCanvasTurno');
+   
     formNuevoTurno.addEventListener('submit',function(e){
         e.preventDefault();
         const FECHA = document.getElementById('fechaTurno').value;
