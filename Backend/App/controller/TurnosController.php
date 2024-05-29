@@ -13,7 +13,6 @@ class TurnosController extends SecuredController{
     }
 
     function Turnos(){
-        $lista = $this->model->lista();
-        $this->view->showTurnos($lista);
+        $this->view->showTurnos();
     }
 }

@@ -1,13 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     "use strict";
     // inicializacion de documento
-    
     /***  ----------VARIABLES------------ ***/
-    let turnosHorarios = document.querySelectorAll(".turno"); // Array con todos los posibles turnos
-   
-    // INICIO DE LOS COMPONENTES DE BOOSTSTRAP
-    
-    
+    let turnosHorarios = document.querySelectorAll(".turno"); // Array con todos los posibles turnos 
     // FORMULARIOS DE LOS CANVAS
     let formNuevoTurno = document.getElementById('formCanvasTurno');
     let formNuevoPaciente = document.getElementById('formCanvasPaciente');
@@ -23,8 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
         })
     }
-       
-    
     //----------------FORMULARIO NUEVO TURNO-----------------//
     formNuevoTurno.addEventListener('submit',function(e){
         e.preventDefault();

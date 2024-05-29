@@ -1,9 +1,13 @@
+import { agregarTurno, ejecutaPacientes } from "./funciones.js";
+import { refetch } from "./calendario.js";
+
 document.addEventListener('DOMContentLoaded',function(){
     "use strict";
     // inicializacion de documento
+    ejecutaPacientes();
     const arrayPacientes = document.querySelectorAll('.listado');
     const arrayTurnos = document.querySelectorAll('.turno');
-    const campo = document.getElementById('cPaciente');
+    const campo = document.getElementById('campoPaciente');
     const campoTurno = document.getElementById('campoTurno');
     const formNuevoTurno = document.getElementById('formCanvasTurno');
     arrayPacientes.forEach(paciente => {
@@ -65,38 +69,9 @@ document.addEventListener('DOMContentLoaded',function(){
             )
         }else{
         agregarTurno(envio);
+        refetch();
         //limpio el fomulario y cierro
         formNuevoTurno.reset();
         }
     });
-    async function agregarTurno(envio){
-        try {
-            let registro = await fetch('registrar',{
-                'method':'POST',
-                'headers': {
-                    "Content-Type":"application/json; charset=utf-8"
-                },
-                'body': JSON.stringify(envio)
-            })
-            if(registro.ok){
-                Swal.fire(
-                    'Aviso',
-                    'Nuevo turno Cargado!',
-                    'success'
-                );
-            }else{
-                Swal.fire(
-                    'Aviso',
-                    'No pudo cargarse el turno',
-                    'success'
-                );
-            }
-        } catch (error) {
-            Swal.fire(
-                'Aviso',
-                'Erro en la comunicacion con la db',
-                'error'
-            );
-        }
-    }
 })
